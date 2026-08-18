@@ -1,4 +1,5 @@
 import React from 'react';
+import { Analytics } from '@vercel/analytics/react';
 import Navbar from '../layout/Navbar';
 import Hero from '../section/Hero';
 import About from '../section/About';
@@ -31,6 +32,7 @@ export default function Index() {
         </div>
         <Footer />
       </div>
+      <Analytics />
     </div>
   );
 }
