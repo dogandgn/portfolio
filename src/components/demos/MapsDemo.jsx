@@ -234,7 +234,7 @@ export default function MapsDemo() {
             animate={{ x: 0, opacity: 1 }}
             exit={{ x: '100%', opacity: 0 }}
             transition={{ type: 'spring', damping: 28, stiffness: 250 }}
-            className="w-full lg:w-72 bg-slate-900/95 border-t lg:border-t-0 lg:border-l border-slate-700/50 shadow-2xl z-30 flex flex-col lg:absolute lg:top-0 lg:right-0 lg:h-full"
+            className="w-full lg:w-72 bg-slate-900/95 border-t lg:border-t-0 lg:border-l border-slate-700/50 shadow-2xl z-[1000] flex flex-col lg:absolute lg:top-0 lg:right-0 lg:h-full"
           >
             <div className="p-3 flex items-center justify-between border-b border-slate-700/50 bg-slate-800/60">
               <button onClick={closePanel} className="text-slate-400 hover:text-white transition-colors">
@@ -256,11 +256,11 @@ export default function MapsDemo() {
 
             <div className="flex-grow p-3 space-y-2 overflow-y-auto custom-scrollbar">
               {[
-                { icon: 'fa-file-lines', text: 'Genel Bilgiler', color: 'text-sky-400', bg: 'bg-sky-500/10' },
-                { icon: 'fa-file-signature', text: 'Tapu Bilgileri', color: 'text-indigo-400', bg: 'bg-indigo-500/10' },
-                { icon: 'fa-map-pin', text: 'Plan ve Plan Notları', color: 'text-rose-400', bg: 'bg-rose-500/10' },
-                { icon: 'fa-money-bill-transfer', text: 'Edinim-Devir Durumu', color: 'text-blue-400', bg: 'bg-blue-500/10' },
-                { icon: 'fa-sack-dollar', text: 'Değer Bilgileri', color: 'text-emerald-400', bg: 'bg-emerald-500/10' },
+                { icon: 'fa-file-lines', text: 'Mekansal Analiz', color: 'text-sky-400', bg: 'bg-sky-500/10' },
+                { icon: 'fa-file-signature', text: 'Geometrik Özellikler', color: 'text-indigo-400', bg: 'bg-indigo-500/10' },
+                { icon: 'fa-map-pin', text: 'İmar Uygunluk', color: 'text-rose-400', bg: 'bg-rose-500/10' },
+                { icon: 'fa-money-bill-transfer', text: 'Proje Geliştirme Süreçleri', color: 'text-blue-400', bg: 'bg-blue-500/10' },
+                { icon: 'fa-sack-dollar', text: 'Finansal Göstergeler', color: 'text-emerald-400', bg: 'bg-emerald-500/10' },
               ].map((item, idx) => (
                 <div key={idx} className={`${item.bg} border border-slate-700/30 p-3 rounded-lg hover:border-slate-600/50 cursor-pointer flex items-center transition-all`}>
                   <i className={`fa-solid ${item.icon} ${item.color} w-5 text-center mr-2.5 text-sm`}></i>
@@ -281,7 +281,7 @@ export default function MapsDemo() {
 
               <div className="bg-slate-800/50 border border-slate-700/30 p-3 rounded-lg hover:border-slate-600/50 cursor-pointer flex items-center transition-all">
                 <i className="fa-solid fa-building-columns text-slate-400 w-5 text-center mr-2.5 text-sm"></i>
-                <span className="text-slate-300 text-xs font-medium">Kadastro Sorgula</span>
+                <span className="text-slate-300 text-xs font-medium">Dış Sistem Entegrasyonu</span>
                 <i className="fa-solid fa-external-link text-slate-600 text-[10px] ml-auto"></i>
               </div>
             </div>

@@ -1,8 +1,8 @@
 export const projects = [
   {
     id: 1,
-    title: "Mülkiyet Analiz ve Portföy Yönetim Sistemleri",
-    description: "Gayrimenkul portföyünü yöneten, holding düzeyindeki tüm mülkiyet verilerini mekansal olarak analiz eden, süreçleri dijitalleştiren kurumsal Web-GIS platformu mimarisi. Excel, PDF ve fiziksel evraklardaki karmaşık verilerin işlenip dijital ortama aktarılması (dijital dönüşüm) sağlanmıştır.",
+    title: "Mülkiyet Yönetim Sistemleri",
+    description: "Gayrimenkul portföyünü yöneten, tüm mülkiyet verilerini mekansal olarak analiz eden, süreçleri dijitalleştiren kurumsal Web-GIS platformu mimarisi. Excel, PDF ve fiziksel evraklardaki karmaşık verilerin işlenip dijital ortama aktarılması (dijital dönüşüm) sağlanmıştır.",
     tech: ["ArcGIS Enterprise", "Experience Builder", "React", "Node.js"],
     image: "/projects/1.jpg"
   },
@@ -16,8 +16,8 @@ export const projects = [
   {
     id: 3,
     title: "Mekansal Veri Mühendisliği & Otomasyon",
-    description: "Selenium tabanlı botlarla kurumsal portallardan KML coğrafi verilerinin otomatik indirilmesi ve Python/ArcPy ile CBS katmanlarına entegrasyonu.",
-    tech: ["Python", "ArcPy", "Selenium", "Pandas"],
+    description: "Geliştirilen Python/ArcPy otomasyon betikleri ile mekansal veri bütünlüğünü koruyarak veri entegrasyonu ve yönetimi sağlanması.",
+    tech: ["Python", "ArcPy", "Pandas"],
     image: "/projects/3.jpg"
   },
   {

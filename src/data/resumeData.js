@@ -2,10 +2,10 @@ export const experiences = [
   {
     id: 1,
     category: "CBS ÇALIŞMALARI",
-    title: "Mülkiyet Analiz ve Portföy Yönetim Sistemleri",
-    date: "Mayıs 2020 - Günümüz",
+    title: "Mülkiyet Yönetim Sistemleri",
+    date: "Mayıs 2020 - Temmuz 2026",
     description: [
-      "Kurumun gayrimenkul portföyünü yöneten, holding düzeyindeki tüm mülkiyet verilerini mekansal olarak analiz eden, süreçleri dijitalleştiren kurumsal Web-GIS platformu mimarisinin kurgulanması ve geliştirilmesi süreçlerinde aktif rol aldım.",
+      "Kurumların gayrimenkul portföyünü yöneten, tüm mülkiyet verilerini mekansal olarak analiz eden, süreçleri dijitalleştiren kurumsal Web-GIS platformu mimarisinin kurgulanması ve geliştirilmesi süreçlerinde aktif rol aldım.",
       "Excel, PDF ve fiziksel evraklardaki karmaşık verilerin işlenip dijital ortama aktarılması (dijital dönüşüm) operasyonlarını yürüttüm.",
       "Çoklu şirket ve kamu verilerini tek veri tabanı hiyerarşisinde toplayan, rol tabanlı yetkilendirme ile yönetilen, ölçeklenebilir bir sistemin tasarımında görev aldım.",
       "Parsel, taşınmaz, imar durumu, plan kararları ve proje envanterinin dinamik katmanlarla analiz edilebilir hale getirilmesi çalışmalarında yer aldım.",
@@ -17,7 +17,7 @@ export const experiences = [
     id: 2,
     category: "CBS ÇALIŞMALARI",
     title: "ArcGIS Experience Builder Özel Widget (Custom Widget) Mimarisi",
-    date: "Mayıs 2020 - Günümüz",
+    date: "Mayıs 2020 - Temmuz 2026",
     description: [
       "Hiyerarşik Katman Yöneticisi: Tarayıcıda geçici veri katmanlarının dondurulmasını sağlayan özel widget geliştirerek kullanıcı deneyimini optimize ettim.",
       "Dinamik PDF Raporlama: Harita görünümlerini ve analiz grafiklerini kurumsal şablonda anlık raporlayan modül tasarladım.",
@@ -29,21 +29,20 @@ export const experiences = [
     id: 3,
     category: "CBS ÇALIŞMALARI",
     title: "Mekansal Veri Mühendisliği, Web Scraping & Otomasyon Betikleri",
-    date: "Mayıs 2020 - Günümüz",
+    date: "Mayıs 2020 - Temmuz 2026",
     description: [
-      "Selenium tabanlı botlar ile kurumsal portallardan KML coğrafi verilerini otomatik indirerek CBS katmanlarına entegre ettim.",
       "Geliştirdiğim Python/ArcPy otomasyon betiklerini, orijinal veri içeriğine ve sütun başlıklarına kesinlikle müdahale etmeyecek şekilde (veri bütünlüğünü koruyarak) yapılandırdım."
     ],
-    tech: ["Python", "ArcPy", "Selenium WebDriver", "Pandas"]
+    tech: ["Python", "ArcPy", "Pandas"]
   },
   {
     id: 4,
     category: "CBS ÇALIŞMALARI",
     title: "Açık Kaynak Web-GIS ve Özel Harita Uygulamaları",
-    date: "Mayıs 2020 - Günümüz",
+    date: "Mayıs 2020 - Temmuz 2026",
     description: [
-      "Lisans bağımlılığı olmayan, devasa Excel envanter verilerinin tarayıcı üzerinde mekansal analizinin yapılabildiği Web-GIS portallarının kodlanması ve geliştirilmesi süreçlerinde aktif rol aldım.",
-      "İleri düzey etkileşimli web deneyimlerinin geliştirilmesi; portföy sistemleri ve veri analiz süreçleri için modern, estetik arayüz tasarımlarının oluşturulması çalışmalarında yer aldım."
+      "Lisans bağımlılığı gerektirmeyen, geniş kapsamlı Excel envanter verilerinin doğrudan tarayıcı üzerinde mekansal analizinin yapılabildiği açık kaynaklı Web-GIS portalları kodluyor ve bağımsız projeler geliştiriyorum.",
+      "İleri düzey etkileşimli web deneyimleri tasarlıyor; portföy sistemleri ve veri analiz süreçleri için modern ve estetik arayüzler geliştiriyorum."
     ],
     tech: ["React-Leaflet", "OpenLayers", "WebGL"]
   },
@@ -51,7 +50,7 @@ export const experiences = [
     id: 5,
     category: "KENTSEL DÖNÜŞÜM ÇALIŞMALARI",
     title: "Kentsel Dönüşüm ve Uzlaşma Yönetimi",
-    date: "Mayıs 2020 - Günümüz",
+    date: "Mayıs 2020 - Temmuz 2026",
     description: [
       "Fizibilite ve Matematiksel Modelleme: Kentsel dönüşüm alanları için çok kriterli fizibilite çalışmaları yürütülerek; hak sahipliği tespitleri üzerinden matematiksel değerleme ve adil dağıtım modellerinin kurgulanmasında rol aldım.",
       "Mekansal ve Sosyal Veri Analitiği: Dönüşüm alanlarının mekansal veri üretimini ve haritalandırma süreçlerini yönettim. Sahadan toplanan anket verilerini Excel kullanarak işleyip, projenin sosyal doku analizlerinin ve demografik raporlamalarının yapılmasında görev aldım.",

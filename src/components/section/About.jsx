@@ -52,8 +52,17 @@ export default function About() {
               <p className="text-emerald-400 font-medium mb-1">{education[0].department}</p>
               <p className="text-slate-400 text-sm mb-4">{education[0].faculty}</p>
               
-              <div className="bg-slate-900/50 border border-slate-700/50 px-4 py-2 rounded-full text-slate-300 text-sm font-medium w-fit flex items-center gap-2 mb-6">
-                <i className="fa-regular fa-calendar text-emerald-400"></i> {education[0].date}
+              <div className="flex flex-wrap items-center gap-3 mb-6">
+                <div className="bg-slate-900/50 border border-slate-700/50 px-4 py-2 rounded-full text-slate-300 text-sm font-medium w-fit flex items-center gap-2">
+                  <i className="fa-regular fa-calendar text-emerald-400"></i> {education[0].date}
+                </div>
+                <a 
+                  href="/lisans-portfolyo.pdf" 
+                  download 
+                  className="bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:text-emerald-300 px-4 py-2 rounded-full text-sm font-medium flex items-center gap-2 transition-colors"
+                >
+                  <i className="fa-solid fa-download"></i> Lisans Portfolyo
+                </a>
               </div>
               
               <p className="text-slate-300 leading-relaxed text-[15px] border-t border-slate-700/50 pt-6">
