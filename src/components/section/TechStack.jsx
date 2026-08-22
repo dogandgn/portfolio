@@ -14,22 +14,24 @@ const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { staggerChildren: 0.15 }
+    transition: { staggerChildren: 0.1 }
   }
 };
 
 const cardVariants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: "easeOut" } }
 };
 
 export default function TechStack() {
   return (
-    <section id="techstack" className="py-20 px-6 max-w-7xl mx-auto">
+    <section id="techstack" className="py-24 px-6 max-w-[1344px] mx-auto">
       
-      <div className="mb-16 text-center">
-        <h2 className="text-sky-400 font-semibold tracking-widest uppercase mb-2 text-sm">Uzmanlıklar</h2>
-        <h3 className="text-3xl md:text-4xl font-bold text-white">Temel Yetkinlikler</h3>
+      <div className="mb-4">
+        <span className="text-muted text-xs font-medium uppercase tracking-[0.84px]">Uzmanlıklar</span>
+      </div>
+      <div className="mb-14">
+        <h3 className="text-3xl md:text-[32px] font-bold text-white leading-snug tracking-tight">Temel Yetkinlikler</h3>
       </div>
 
       <motion.div 
@@ -37,18 +39,18 @@ export default function TechStack() {
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, margin: "-50px" }}
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
       >
         {coreCompetencies.map((comp, index) => (
           <motion.div 
             key={index}
             variants={cardVariants}
-            className="flex items-start bg-slate-800/40 backdrop-blur-md border border-slate-700/50 p-6 rounded-2xl hover:border-sky-500/50 hover:bg-slate-800/60 transition-colors group"
+            className="flex items-start bg-deep border border-gunmetal p-6 rounded-[24px] hover:border-signal/30 transition-colors group"
           >
-            <div className="text-3xl mr-4 opacity-80 group-hover:opacity-100 transition-opacity">
+            <div className="text-2xl mr-4 opacity-70 group-hover:opacity-100 transition-opacity">
               {comp.icon}
             </div>
-            <h4 className="text-lg font-medium text-slate-200 group-hover:text-white transition-colors">
+            <h4 className="text-sm font-medium text-fog group-hover:text-white transition-colors leading-relaxed">
               {comp.title}
             </h4>
           </motion.div>

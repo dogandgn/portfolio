@@ -56,10 +56,10 @@ export default function InteractiveBackground() {
     const draw = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       
-      ctx.strokeStyle = 'rgba(56, 189, 248, 0.25)';
-      ctx.lineWidth = 1.5;
-      ctx.shadowBlur = 10;
-      ctx.shadowColor = 'rgba(56, 189, 248, 0.3)';
+      ctx.strokeStyle = 'rgba(0, 122, 252, 0.12)';
+      ctx.lineWidth = 1;
+      ctx.shadowBlur = 8;
+      ctx.shadowColor = 'rgba(0, 122, 252, 0.15)';
 
       for (let i = 0; i < rows; i++) {
         for (let j = 0; j < cols; j++) {
@@ -123,7 +123,7 @@ export default function InteractiveBackground() {
   return (
     <canvas 
       ref={canvasRef} 
-      className="fixed top-0 left-0 w-full h-full pointer-events-none z-0 opacity-80"
+      className="fixed top-0 left-0 w-full h-full pointer-events-none z-0 opacity-60"
     />
   );
 }

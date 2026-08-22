@@ -94,17 +94,17 @@ function LayerManagerInteractive() {
   const activeCount = items.filter(i => i.checked).length;
 
   return (
-    <div className="bg-slate-800/60 rounded-lg border border-slate-700/50 overflow-hidden">
-      <div className="px-3 py-2 bg-slate-800 border-b border-slate-700/50 flex items-center justify-between">
-        <span className="text-xs text-slate-300 font-semibold">Katman Ağacı</span>
-        <span className="text-[10px] text-sky-400 bg-sky-500/10 px-2 py-0.5 rounded-full">{activeCount} aktif</span>
+    <div className="bg-deep/60 rounded-lg border border-gunmetal overflow-hidden">
+      <div className="px-3 py-2 bg-deep border-b border-gunmetal flex items-center justify-between">
+        <span className="text-xs text-fog font-semibold">Katman Ağacı</span>
+        <span className="text-[10px] text-signal bg-signal/10 px-2 py-0.5 rounded-full">{activeCount} aktif</span>
       </div>
-      <div className="divide-y divide-slate-700/30">
+      <div className="divide-y divide-gunmetal">
         {items.map(item => (
-          <button key={item.id} onClick={() => toggle(item.id)} className="w-full flex items-center gap-2.5 px-3 py-2 hover:bg-slate-700/30 transition-colors text-left">
-            <i className={`fa-${item.checked ? 'solid fa-square-check text-sky-400' : 'regular fa-square text-slate-600'} text-sm`}></i>
-            <span className={`text-xs ${item.checked ? 'text-slate-200' : 'text-slate-500'}`}>{item.label}</span>
-            {item.checked && <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="w-1.5 h-1.5 rounded-full bg-sky-400 ml-auto"></motion.div>}
+          <button key={item.id} onClick={() => toggle(item.id)} className="w-full flex items-center gap-2.5 px-3 py-2 hover:bg-graphite/50 transition-colors text-left">
+            <i className={`fa-${item.checked ? 'solid fa-square-check text-signal' : 'regular fa-square text-steel'} text-sm`}></i>
+            <span className={`text-xs ${item.checked ? 'text-silver' : 'text-pewter'}`}>{item.label}</span>
+            {item.checked && <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="w-1.5 h-1.5 rounded-full bg-signal ml-auto"></motion.div>}
           </button>
         ))}
       </div>
@@ -116,16 +116,16 @@ function FilterInteractive() {
   const [selected, setSelected] = useState('Tümü');
   const filters = ['Tümü', 'Merkez', 'Kuzey', 'Güney'];
   return (
-    <div className="bg-slate-800/60 rounded-lg border border-slate-700/50 p-3">
-      <div className="text-[10px] text-slate-400 uppercase tracking-wider mb-2">Bölge Filtresi</div>
+    <div className="bg-deep/60 rounded-lg border border-gunmetal p-3">
+      <div className="text-[10px] text-ash uppercase tracking-wider mb-2">Bölge Filtresi</div>
       <div className="flex flex-wrap gap-1.5">
         {filters.map(f => (
-          <button key={f} onClick={() => setSelected(f)} className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${selected === f ? 'bg-violet-500/20 text-violet-300 border border-violet-500/40' : 'bg-slate-700/50 text-slate-400 hover:text-slate-200 border border-transparent'}`}>
+          <button key={f} onClick={() => setSelected(f)} className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${selected === f ? 'bg-signal/20 text-signal border border-signal/40' : 'bg-gunmetal/50 text-ash hover:text-silver border border-transparent'}`}>
             {f}
           </button>
         ))}
       </div>
-      <div className="mt-3 text-[10px] text-slate-500 flex items-center gap-1.5">
+      <div className="mt-3 text-[10px] text-pewter flex items-center gap-1.5">
         <i className="fa-solid fa-circle-info"></i>
         <span>Seçim tüm katmanlara uygulanır</span>
       </div>
@@ -138,24 +138,24 @@ function SearchInteractive() {
   const results = ['2741/3 — Konut Alanı', '1180/12 — Toplu Konut', '3052/1 — Eğitim Tesis'];
   const filtered = query ? results.filter(r => r.toLowerCase().includes(query.toLowerCase())) : [];
   return (
-    <div className="bg-slate-800/60 rounded-lg border border-slate-700/50 overflow-hidden">
+    <div className="bg-deep/60 rounded-lg border border-gunmetal overflow-hidden">
       <div className="p-3">
         <div className="relative">
-          <i className="fa-solid fa-magnifying-glass absolute left-2.5 top-2 text-slate-500 text-xs"></i>
-          <input type="text" value={query} onChange={e => setQuery(e.target.value)} placeholder="Ada veya parsel ara..." className="w-full bg-slate-900/60 border border-slate-700/50 rounded-lg text-xs text-white pl-8 pr-3 py-2 outline-none focus:border-emerald-500/60" />
+          <i className="fa-solid fa-magnifying-glass absolute left-2.5 top-2 text-pewter text-xs"></i>
+          <input type="text" value={query} onChange={e => setQuery(e.target.value)} placeholder="Ada veya parsel ara..." className="w-full bg-void/60 border border-gunmetal rounded-lg text-xs text-white pl-8 pr-3 py-2 outline-none focus:border-signal/60" />
         </div>
       </div>
       {filtered.length > 0 && (
-        <div className="border-t border-slate-700/30 divide-y divide-slate-700/20">
+        <div className="border-t border-gunmetal divide-y divide-gunmetal">
           {filtered.map((r, i) => (
-            <div key={i} className="px-3 py-2 hover:bg-slate-700/30 cursor-pointer flex items-center gap-2 text-xs text-slate-300">
-              <i className="fa-solid fa-location-dot text-emerald-400 text-[10px]"></i>
+            <div key={i} className="px-3 py-2 hover:bg-graphite/50 cursor-pointer flex items-center gap-2 text-xs text-fog">
+              <i className="fa-solid fa-location-dot text-signal text-[10px]"></i>
               {r}
             </div>
           ))}
         </div>
       )}
-      {query && filtered.length === 0 && <div className="px-3 py-2 text-[10px] text-slate-500 border-t border-slate-700/30">Sonuç bulunamadı</div>}
+      {query && filtered.length === 0 && <div className="px-3 py-2 text-[10px] text-pewter border-t border-gunmetal">Sonuç bulunamadı</div>}
     </div>
   );
 }
@@ -168,12 +168,12 @@ function ExcelInteractive() {
     setTimeout(() => { setExporting(false); setDone(true); }, 2000);
   };
   return (
-    <div className="bg-slate-800/60 rounded-lg border border-slate-700/50 p-3 space-y-3">
-      <div className="flex items-center gap-2 text-xs text-slate-300">
-        <i className="fa-solid fa-table text-amber-400"></i>
+    <div className="bg-deep/60 rounded-lg border border-gunmetal p-3 space-y-3">
+      <div className="flex items-center gap-2 text-xs text-fog">
+        <i className="fa-solid fa-table text-signal"></i>
         <span>3 aktif katman • 12 sütun seçili</span>
       </div>
-      <button onClick={doExport} disabled={exporting} className={`w-full py-2 rounded-lg text-xs font-semibold flex items-center justify-center gap-2 transition-all ${exporting ? 'bg-slate-700 text-slate-400' : done ? 'bg-emerald-600 text-white' : 'bg-amber-500/20 text-amber-300 hover:bg-amber-500/30 border border-amber-500/30'}`}>
+      <button onClick={doExport} disabled={exporting} className={`w-full py-2 rounded-lg text-xs font-semibold flex items-center justify-center gap-2 transition-all ${exporting ? 'bg-gunmetal text-ash' : done ? 'bg-signal text-white' : 'bg-signal/20 text-signal hover:bg-signal/30 border border-signal/30'}`}>
         <i className={`fa-solid ${exporting ? 'fa-spinner fa-spin' : done ? 'fa-check' : 'fa-download'}`}></i>
         {exporting ? 'Hazırlanıyor...' : done ? 'İndirildi!' : 'Excel Olarak İndir'}
       </button>
@@ -191,22 +191,22 @@ function PdfInteractive() {
     }, 60);
   };
   return (
-    <div className="bg-slate-800/60 rounded-lg border border-slate-700/50 p-3 space-y-3">
+    <div className="bg-deep/60 rounded-lg border border-gunmetal p-3 space-y-3">
       <div className="flex items-center justify-between text-xs">
-        <span className="text-slate-300"><i className="fa-solid fa-file-pdf text-rose-400 mr-1.5"></i>Bilgi Paftası</span>
-        <span className="text-[10px] text-slate-500">A4 Dikey</span>
+        <span className="text-fog"><i className="fa-solid fa-file-pdf text-signal mr-1.5"></i>Bilgi Paftası</span>
+        <span className="text-[10px] text-pewter">A4 Dikey</span>
       </div>
       {(running || progress === 100) && (
         <div>
-          <div className="w-full h-1.5 bg-slate-900 rounded-full overflow-hidden">
-            <motion.div className={`h-full rounded-full ${progress === 100 ? 'bg-emerald-400' : 'bg-rose-400'}`} animate={{ width: `${progress}%` }}></motion.div>
+          <div className="w-full h-1.5 bg-void rounded-full overflow-hidden">
+            <motion.div className={`h-full rounded-full ${progress === 100 ? 'bg-signal' : 'bg-signal/80'}`} animate={{ width: `${progress}%` }}></motion.div>
           </div>
-          <p className={`text-[10px] mt-1 ${progress === 100 ? 'text-emerald-400' : 'text-slate-500'}`}>
+          <p className={`text-[10px] mt-1 ${progress === 100 ? 'text-signal' : 'text-pewter'}`}>
             {progress === 100 ? '✓ PDF oluşturuldu' : `Ekran görüntüsü alınıyor... %${progress}`}
           </p>
         </div>
       )}
-      <button onClick={generate} disabled={running} className={`w-full py-2 rounded-lg text-xs font-semibold flex items-center justify-center gap-2 transition-all ${running ? 'bg-slate-700 text-slate-400' : 'bg-rose-500/20 text-rose-300 hover:bg-rose-500/30 border border-rose-500/30'}`}>
+      <button onClick={generate} disabled={running} className={`w-full py-2 rounded-lg text-xs font-semibold flex items-center justify-center gap-2 transition-all ${running ? 'bg-gunmetal text-ash' : 'bg-signal/20 text-signal hover:bg-signal/30 border border-signal/30'}`}>
         <i className={`fa-solid ${running ? 'fa-spinner fa-spin' : 'fa-wand-magic-sparkles'}`}></i>
         {running ? 'Oluşturuluyor...' : 'PDF Oluştur'}
       </button>
@@ -217,22 +217,22 @@ function PdfInteractive() {
 function AdminInteractive() {
   const [values, setValues] = useState({ search: true, export: true, theme: 'Koyu' });
   return (
-    <div className="bg-slate-800/60 rounded-lg border border-slate-700/50 p-3 space-y-3">
+    <div className="bg-deep/60 rounded-lg border border-gunmetal p-3 space-y-3">
       <div className="flex items-center justify-between text-xs">
-        <span className="text-slate-300">Arama İzni</span>
-        <button onClick={() => setValues(v => ({ ...v, search: !v.search }))} className={`w-9 h-5 rounded-full transition-colors flex items-center px-0.5 ${values.search ? 'bg-sky-500 justify-end' : 'bg-slate-600 justify-start'}`}>
-          <div className="w-4 h-4 bg-white rounded-full shadow"></div>
+        <span className="text-fog">Arama İzni</span>
+        <button onClick={() => setValues(v => ({ ...v, search: !v.search }))} className={`w-9 h-5 rounded-full transition-colors flex items-center px-0.5 ${values.search ? 'bg-signal justify-end' : 'bg-steel justify-start'}`}>
+          <div className="w-4 h-4 bg-white rounded-full"></div>
         </button>
       </div>
       <div className="flex items-center justify-between text-xs">
-        <span className="text-slate-300">Dışa Aktarım</span>
-        <button onClick={() => setValues(v => ({ ...v, export: !v.export }))} className={`w-9 h-5 rounded-full transition-colors flex items-center px-0.5 ${values.export ? 'bg-sky-500 justify-end' : 'bg-slate-600 justify-start'}`}>
-          <div className="w-4 h-4 bg-white rounded-full shadow"></div>
+        <span className="text-fog">Dışa Aktarım</span>
+        <button onClick={() => setValues(v => ({ ...v, export: !v.export }))} className={`w-9 h-5 rounded-full transition-colors flex items-center px-0.5 ${values.export ? 'bg-signal justify-end' : 'bg-steel justify-start'}`}>
+          <div className="w-4 h-4 bg-white rounded-full"></div>
         </button>
       </div>
       <div className="flex items-center justify-between text-xs">
-        <span className="text-slate-300">Tema</span>
-        <select value={values.theme} onChange={e => setValues(v => ({ ...v, theme: e.target.value }))} className="bg-slate-900 text-slate-300 border border-slate-700/50 rounded text-[10px] px-2 py-1 outline-none">
+        <span className="text-fog">Tema</span>
+        <select value={values.theme} onChange={e => setValues(v => ({ ...v, theme: e.target.value }))} className="bg-void text-fog border border-gunmetal rounded text-[10px] px-2 py-1 outline-none">
           <option>Koyu</option>
           <option>Açık</option>
         </select>
@@ -260,22 +260,22 @@ export default function WidgetDemo() {
   return (
     <div className="w-full space-y-4">
       
-      <div className="bg-slate-900/60 border border-slate-700/40 rounded-xl p-4 md:p-6">
+      <div className="bg-deep border border-gunmetal rounded-xl p-4 md:p-6">
         <div className="flex items-start gap-3 mb-3">
-          <div className="w-10 h-10 rounded-xl bg-sky-500/15 flex items-center justify-center shrink-0">
-            <i className="fa-solid fa-cubes text-sky-400"></i>
+          <div className="w-10 h-10 rounded-xl bg-signal/15 flex items-center justify-center shrink-0">
+            <i className="fa-solid fa-cubes text-signal"></i>
           </div>
           <div>
             <h3 className="text-lg md:text-xl font-bold text-white">Custom Widget Mimarisi</h3>
-            <p className="text-sky-400 text-xs font-semibold tracking-wider uppercase mt-0.5">ArcGIS Experience Builder — React.js & TypeScript</p>
+            <p className="text-signal text-xs font-semibold tracking-wider uppercase mt-0.5">ArcGIS Experience Builder — React.js & TypeScript</p>
           </div>
         </div>
-        <p className="text-slate-400 text-sm leading-relaxed">
+        <p className="text-ash text-sm leading-relaxed">
           Karmaşık mekansal verilerin hiyerarşik olarak yönetilmesini, katmanlar arası çapraz filtreleme yapılmasını ve harita üzerindeki verilerin otomatik olarak kurumsal formatta Excel ve PDF raporlarına dönüştürülmesini sağlayan özel widget sistemi. Yöneticiler tüm kuralları koda müdahale etmeden ayarlar arayüzünden yapılandırabilir.
         </p>
         <div className="flex flex-wrap gap-1.5 mt-4">
           {['React.js', 'TypeScript', 'ArcGIS Maps SDK', 'Jimu Core/UI', 'CSS Grid', 'XLSX'].map(t => (
-            <span key={t} className="bg-slate-800/80 border border-slate-700/50 px-2.5 py-1 rounded-md text-[10px] text-sky-300/80 font-mono">{t}</span>
+            <span key={t} className="bg-gunmetal border border-steel/50 px-2.5 py-1 rounded-md text-[10px] text-signal/80 font-mono">{t}</span>
           ))}
         </div>
       </div>
@@ -286,18 +286,18 @@ export default function WidgetDemo() {
           const InteractiveComponent = interactiveMap[w.id];
           
           return (
-            <div key={w.id} className={`rounded-xl border transition-all overflow-hidden ${isOpen ? 'border-slate-600/60 bg-slate-900/60' : 'border-slate-700/30 bg-slate-900/30 hover:bg-slate-900/50'}`}>
+            <div key={w.id} className={`rounded-xl border transition-all overflow-hidden ${isOpen ? 'border-steel/60 bg-deep/60' : 'border-gunmetal bg-deep/30 hover:bg-deep/50'}`}>
               <button onClick={() => toggle(w.id)} className="w-full flex items-center gap-3 p-3 md:p-4 text-left transition-colors">
                 <div className="w-9 h-9 rounded-lg flex items-center justify-center shrink-0" style={{ backgroundColor: w.color + '18', border: `1px solid ${w.color}30` }}>
                   <i className={`fa-solid ${w.icon} text-sm`} style={{ color: w.color }}></i>
                 </div>
                 <div className="flex-grow min-w-0">
-                  <h4 className={`text-sm font-semibold ${isOpen ? 'text-white' : 'text-slate-200'}`}>{w.title}</h4>
-                  <p className="text-[10px] text-slate-500 truncate">{w.subtitle}</p>
+                  <h4 className={`text-sm font-semibold ${isOpen ? 'text-white' : 'text-silver'}`}>{w.title}</h4>
+                  <p className="text-[10px] text-pewter truncate">{w.subtitle}</p>
                 </div>
                 <motion.i 
                   animate={{ rotate: isOpen ? 180 : 0 }}
-                  className="fa-solid fa-chevron-down text-slate-500 text-xs shrink-0"
+                  className="fa-solid fa-chevron-down text-pewter text-xs shrink-0"
                 ></motion.i>
               </button>
 
@@ -314,17 +314,17 @@ export default function WidgetDemo() {
                       <div className="flex flex-col lg:flex-row gap-4">
                         
                         <div className="w-full lg:w-1/2">
-                          <div className="text-[10px] text-slate-500 uppercase tracking-wider mb-2 font-semibold flex items-center gap-1.5">
+                          <div className="text-[10px] text-pewter uppercase tracking-wider mb-2 font-semibold flex items-center gap-1.5">
                             <i className="fa-solid fa-play text-[8px]"></i> İnteraktif Demo
                           </div>
                           <InteractiveComponent />
                         </div>
 
                         <div className="w-full lg:w-1/2">
-                          <div className="text-[10px] text-slate-500 uppercase tracking-wider mb-2 font-semibold">Özellikler</div>
+                          <div className="text-[10px] text-pewter uppercase tracking-wider mb-2 font-semibold">Özellikler</div>
                           <div className="space-y-2">
                             {w.features.map((feat, idx) => (
-                              <div key={idx} className="flex items-start gap-2 text-xs text-slate-300 leading-relaxed">
+                              <div key={idx} className="flex items-start gap-2 text-xs text-fog leading-relaxed">
                                 <i className="fa-solid fa-check text-[8px] mt-1.5 shrink-0" style={{ color: w.color }}></i>
                                 <span>{feat}</span>
                               </div>

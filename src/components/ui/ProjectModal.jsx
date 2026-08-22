@@ -40,7 +40,7 @@ export default function ProjectModal({ project, isOpen, onClose }) {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={onClose}
-              className="fixed inset-0 bg-black/80 backdrop-blur-sm cursor-pointer"
+              className="fixed inset-0 bg-void/90 backdrop-blur-sm cursor-pointer"
             ></motion.div>
 
             <motion.div
@@ -48,17 +48,17 @@ export default function ProjectModal({ project, isOpen, onClose }) {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
               transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-              className="relative w-full max-w-5xl bg-slate-900 border border-slate-700/50 rounded-2xl overflow-hidden shadow-2xl z-10 flex flex-col"
+              className="relative w-full max-w-5xl bg-deep border border-gunmetal rounded-[24px] overflow-hidden z-10 flex flex-col"
             >
             <button
               onClick={onClose}
-              className="absolute top-4 right-4 w-10 h-10 bg-black/50 hover:bg-black/80 text-white rounded-full flex items-center justify-center transition-colors z-20"
+              className="absolute top-4 right-4 w-10 h-10 bg-void/70 hover:bg-void text-white rounded-full flex items-center justify-center transition-colors z-20"
             >
-              <i className="fa-solid fa-xmark text-xl"></i>
+              <i className="fa-solid fa-xmark text-lg"></i>
             </button>
 
-            <div className="relative w-full h-64 sm:h-80 md:h-96 shrink-0 overflow-hidden bg-slate-800">
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-900 to-transparent z-10"></div>
+            <div className="relative w-full h-64 sm:h-80 md:h-96 shrink-0 overflow-hidden bg-graphite">
+              <div className="absolute inset-0 bg-gradient-to-t from-deep to-transparent z-10"></div>
               {project.image ? (
                 <img 
                   src={project.image} 
@@ -66,35 +66,35 @@ export default function ProjectModal({ project, isOpen, onClose }) {
                   className="w-full h-full object-cover object-center"
                 />
               ) : (
-                <div className="w-full h-full flex items-center justify-center text-slate-500">
+                <div className="w-full h-full flex items-center justify-center text-steel">
                   <i className="fa-solid fa-image text-5xl opacity-20"></i>
                 </div>
               )}
             </div>
 
             <div className="p-6 md:p-8">
-              <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">
+              <h3 className="text-2xl md:text-[32px] font-bold text-white mb-4 tracking-tight">
                 {project.title}
               </h3>
               
               <div className="mb-8">
-                <h4 className="text-sky-400 font-semibold mb-2 text-sm uppercase tracking-wider">Proje Detayları</h4>
-                <p className="text-slate-300 leading-relaxed text-lg">
+                <h4 className="text-muted font-medium mb-2 text-[10px] uppercase tracking-[0.7em]">Proje Detayları</h4>
+                <p className="text-fog leading-relaxed text-base">
                   {project.description}
                 </p>
               </div>
 
               <div className="mb-8">
-                <h4 className="text-sky-400 font-semibold mb-3 text-sm uppercase tracking-wider">Kullanılan Teknolojiler</h4>
-                <div className="flex flex-wrap gap-2">
+                <h4 className="text-muted font-medium mb-3 text-[10px] uppercase tracking-[0.7em]">Kullanılan Teknolojiler</h4>
+                <div className="flex flex-wrap gap-1.5">
                   {project.tech.map((techName, index) => (
                     <TechBadge key={index} text={techName} />
                   ))}
                 </div>
               </div>
 
-              <div className="mt-12 border-t border-slate-700/50 pt-8">
-                <h4 className="text-sky-400 font-semibold mb-6 text-sm uppercase tracking-wider">İnteraktif Demo</h4>
+              <div className="mt-12 border-t border-gunmetal pt-8">
+                <h4 className="text-muted font-medium mb-6 text-[10px] uppercase tracking-[0.7em]">İnteraktif Demo</h4>
                 <DemoRenderer projectId={project.id} />
               </div>
 

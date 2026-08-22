@@ -1,11 +1,11 @@
 import React from 'react';
 
 export default function Button({ children, href, primary }) {
-  const baseStyle = "px-6 py-3 rounded-lg font-medium transition duration-300 inline-flex items-center justify-center";
+  const baseStyle = "px-6 py-3 rounded-full font-medium transition duration-300 inline-flex items-center justify-center tracking-wide text-sm";
   
   const colorStyle = primary
-    ? "bg-sky-500 text-white hover:bg-sky-400 shadow-lg shadow-sky-500/30"
-    : "bg-slate-800 text-white hover:bg-slate-700 border border-slate-700";
+    ? "bg-signal text-white hover:brightness-110"
+    : "bg-transparent text-white border border-silver hover:border-white";
 
   if (href) {
     return (

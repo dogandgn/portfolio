@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function TechBadge({ text }) {
   return (
-    <span className="px-3 py-1 bg-slate-800 text-sky-400 text-xs font-medium rounded-full border border-slate-700">
+    <span className="px-2.5 py-1 bg-deep border border-gunmetal rounded text-[10px] text-fog font-medium uppercase tracking-widest">
       {text}
     </span>
   );
