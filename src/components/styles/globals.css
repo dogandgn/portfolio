@@ -17,6 +17,25 @@
   --color-deep-signal: #a8871e;
 }
 
+.dark {
+  --color-void: #0e1012;
+  --color-deep: #15171b;
+  --color-gunmetal: #1c1f24;
+  --color-graphite: #23262d;
+  --color-steel: #333943;
+  --color-pewter: #444d5a;
+  --color-muted: #566171;
+  --color-ash: #8b96aa;
+  --color-fog: #a0aaba;
+  --color-silver: #bbc2ce;
+  --color-cloud: #d5dae2;
+  --color-ink: #ffffff;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   background-color: #e4e2de;
   color: #404040;

@@ -3,11 +3,11 @@ import { motion } from 'framer-motion';
 
 const coreCompetencies = [
   { title: "Kurumsal Coğrafi Bilgi Sistemleri (CBS) ve Veri Mimarisi", icon: "🌍" },
-  { title: "Kentsel Dönüşüm Fizibilite ve Matematiksel Dağıtım Modelleri", icon: "🏙️" },
-  { title: "Python (ArcPy, Pandas) ile Veri İşleme ve Otomasyon", icon: "⚙️" },
   { title: "JavaScript (React.js) ile Özel Web-CBS Geliştirme", icon: "💻" },
-  { title: "Sosyal Doku Analizi ve Vatandaş/Hak Sahibi Uzlaşma Süreçleri", icon: "🤝" },
-  { title: "Coğrafi Veri Tabanı (Geodatabase) Yönetimi ve Kartografya", icon: "🗺️" }
+  { title: "Python (ArcPy, Pandas) ile Veri İşleme ve Otomasyon", icon: "⚙️" },
+  { title: "Coğrafi Veri Tabanı (Geodatabase) Yönetimi ve Kartografya", icon: "🗺️" },
+  { title: "Kentsel Dönüşüm Fizibilite ve Matematiksel Dağıtım Modelleri", icon: "🏙️" },
+  { title: "Sosyal Doku Analizi ve Vatandaş/Hak Sahibi Uzlaşma Süreçleri", icon: "🤝" }
 ];
 
 const containerVariants = {
