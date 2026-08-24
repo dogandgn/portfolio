@@ -101,7 +101,7 @@ function LayerManagerInteractive() {
       </div>
       <div className="divide-y divide-gunmetal">
         {items.map(item => (
-          <button key={item.id} onClick={() => toggle(item.id)} className="w-full flex items-center gap-2.5 px-3 py-2 hover:bg-graphite/50 transition-colors text-left">
+          <button key={item.id} onClick={() => toggle(item.id)} className="w-full flex items-center gap-2.5 px-3 py-2 hover:bg-void/50 transition-colors text-left">
             <i className={`fa-${item.checked ? 'solid fa-square-check text-signal' : 'regular fa-square text-steel'} text-sm`}></i>
             <span className={`text-xs ${item.checked ? 'text-silver' : 'text-pewter'}`}>{item.label}</span>
             {item.checked && <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="w-1.5 h-1.5 rounded-full bg-signal ml-auto"></motion.div>}
@@ -120,7 +120,7 @@ function FilterInteractive() {
       <div className="text-[10px] text-ash uppercase tracking-wider mb-2">Bölge Filtresi</div>
       <div className="flex flex-wrap gap-1.5">
         {filters.map(f => (
-          <button key={f} onClick={() => setSelected(f)} className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${selected === f ? 'bg-signal/20 text-signal border border-signal/40' : 'bg-gunmetal/50 text-ash hover:text-silver border border-transparent'}`}>
+          <button key={f} onClick={() => setSelected(f)} className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${selected === f ? 'bg-signal/10 text-signal border border-signal/40' : 'bg-gunmetal/50 text-ash hover:text-silver border border-transparent'}`}>
             {f}
           </button>
         ))}
@@ -142,13 +142,13 @@ function SearchInteractive() {
       <div className="p-3">
         <div className="relative">
           <i className="fa-solid fa-magnifying-glass absolute left-2.5 top-2 text-pewter text-xs"></i>
-          <input type="text" value={query} onChange={e => setQuery(e.target.value)} placeholder="Ada veya parsel ara..." className="w-full bg-void/60 border border-gunmetal rounded-lg text-xs text-white pl-8 pr-3 py-2 outline-none focus:border-signal/60" />
+          <input type="text" value={query} onChange={e => setQuery(e.target.value)} placeholder="Ada veya parsel ara..." className="w-full bg-void/60 border border-gunmetal rounded-lg text-xs text-ink pl-8 pr-3 py-2 outline-none focus:border-signal/60" />
         </div>
       </div>
       {filtered.length > 0 && (
         <div className="border-t border-gunmetal divide-y divide-gunmetal">
           {filtered.map((r, i) => (
-            <div key={i} className="px-3 py-2 hover:bg-graphite/50 cursor-pointer flex items-center gap-2 text-xs text-fog">
+            <div key={i} className="px-3 py-2 hover:bg-void/50 cursor-pointer flex items-center gap-2 text-xs text-fog">
               <i className="fa-solid fa-location-dot text-signal text-[10px]"></i>
               {r}
             </div>
@@ -173,7 +173,7 @@ function ExcelInteractive() {
         <i className="fa-solid fa-table text-signal"></i>
         <span>3 aktif katman • 12 sütun seçili</span>
       </div>
-      <button onClick={doExport} disabled={exporting} className={`w-full py-2 rounded-lg text-xs font-semibold flex items-center justify-center gap-2 transition-all ${exporting ? 'bg-gunmetal text-ash' : done ? 'bg-signal text-white' : 'bg-signal/20 text-signal hover:bg-signal/30 border border-signal/30'}`}>
+      <button onClick={doExport} disabled={exporting} className={`w-full py-2 rounded-lg text-xs font-semibold flex items-center justify-center gap-2 transition-all ${exporting ? 'bg-gunmetal text-ash' : done ? 'bg-signal text-ink' : 'bg-signal/10 text-signal hover:bg-signal/30 border border-signal/40'}`}>
         <i className={`fa-solid ${exporting ? 'fa-spinner fa-spin' : done ? 'fa-check' : 'fa-download'}`}></i>
         {exporting ? 'Hazırlanıyor...' : done ? 'İndirildi!' : 'Excel Olarak İndir'}
       </button>
@@ -206,7 +206,7 @@ function PdfInteractive() {
           </p>
         </div>
       )}
-      <button onClick={generate} disabled={running} className={`w-full py-2 rounded-lg text-xs font-semibold flex items-center justify-center gap-2 transition-all ${running ? 'bg-gunmetal text-ash' : 'bg-signal/20 text-signal hover:bg-signal/30 border border-signal/30'}`}>
+      <button onClick={generate} disabled={running} className={`w-full py-2 rounded-lg text-xs font-semibold flex items-center justify-center gap-2 transition-all ${running ? 'bg-gunmetal text-ash' : 'bg-signal/10 text-signal hover:bg-signal/30 border border-signal/40'}`}>
         <i className={`fa-solid ${running ? 'fa-spinner fa-spin' : 'fa-wand-magic-sparkles'}`}></i>
         {running ? 'Oluşturuluyor...' : 'PDF Oluştur'}
       </button>
@@ -266,7 +266,7 @@ export default function WidgetDemo() {
             <i className="fa-solid fa-cubes text-signal"></i>
           </div>
           <div>
-            <h3 className="text-lg md:text-xl font-bold text-white">Custom Widget Mimarisi</h3>
+            <h3 className="text-lg md:text-xl font-bold text-ink">Custom Widget Mimarisi</h3>
             <p className="text-signal text-xs font-semibold tracking-wider uppercase mt-0.5">ArcGIS Experience Builder — React.js & TypeScript</p>
           </div>
         </div>
@@ -275,7 +275,7 @@ export default function WidgetDemo() {
         </p>
         <div className="flex flex-wrap gap-1.5 mt-4">
           {['React.js', 'TypeScript', 'ArcGIS Maps SDK', 'Jimu Core/UI', 'CSS Grid', 'XLSX'].map(t => (
-            <span key={t} className="bg-gunmetal border border-steel/50 px-2.5 py-1 rounded-md text-[10px] text-signal/80 font-mono">{t}</span>
+            <span key={t} className="bg-gunmetal border border-graphite/50 px-2.5 py-1 rounded-md text-[10px] text-signal/80 font-mono">{t}</span>
           ))}
         </div>
       </div>
@@ -286,13 +286,13 @@ export default function WidgetDemo() {
           const InteractiveComponent = interactiveMap[w.id];
           
           return (
-            <div key={w.id} className={`rounded-xl border transition-all overflow-hidden ${isOpen ? 'border-steel/60 bg-deep/60' : 'border-gunmetal bg-deep/30 hover:bg-deep/50'}`}>
+            <div key={w.id} className={`rounded-xl border transition-all overflow-hidden ${isOpen ? 'border-graphite/60 bg-deep/60' : 'border-gunmetal bg-deep/30 hover:bg-deep/50'}`}>
               <button onClick={() => toggle(w.id)} className="w-full flex items-center gap-3 p-3 md:p-4 text-left transition-colors">
                 <div className="w-9 h-9 rounded-lg flex items-center justify-center shrink-0" style={{ backgroundColor: w.color + '18', border: `1px solid ${w.color}30` }}>
                   <i className={`fa-solid ${w.icon} text-sm`} style={{ color: w.color }}></i>
                 </div>
                 <div className="flex-grow min-w-0">
-                  <h4 className={`text-sm font-semibold ${isOpen ? 'text-white' : 'text-silver'}`}>{w.title}</h4>
+                  <h4 className={`text-sm font-semibold ${isOpen ? 'text-ink' : 'text-silver'}`}>{w.title}</h4>
                   <p className="text-[10px] text-pewter truncate">{w.subtitle}</p>
                 </div>
                 <motion.i 

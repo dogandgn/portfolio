@@ -31,7 +31,7 @@ export default function TechStack() {
         <span className="text-muted text-xs font-medium uppercase tracking-[0.84px]">Uzmanlıklar</span>
       </div>
       <div className="mb-14">
-        <h3 className="text-3xl md:text-[32px] font-bold text-white leading-snug tracking-tight">Temel Yetkinlikler</h3>
+        <h3 className="text-3xl md:text-[32px] font-bold text-ink leading-snug tracking-tight">Temel Yetkinlikler</h3>
       </div>
 
       <motion.div 
@@ -45,12 +45,12 @@ export default function TechStack() {
           <motion.div 
             key={index}
             variants={cardVariants}
-            className="flex items-start bg-deep border border-gunmetal p-6 rounded-[24px] hover:border-signal/30 transition-colors group"
+            className="flex items-start bg-deep border border-gunmetal p-6 rounded-2xl hover:border-signal/50 transition-colors group"
           >
             <div className="text-2xl mr-4 opacity-70 group-hover:opacity-100 transition-opacity">
               {comp.icon}
             </div>
-            <h4 className="text-sm font-medium text-fog group-hover:text-white transition-colors leading-relaxed">
+            <h4 className="text-sm font-medium text-fog group-hover:text-ink transition-colors leading-relaxed">
               {comp.title}
             </h4>
           </motion.div>

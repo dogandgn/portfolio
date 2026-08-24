@@ -17,15 +17,15 @@ export default function AutomationDemo() {
       <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'linear-gradient(to right, #333943 1px, transparent 1px), linear-gradient(to bottom, #333943 1px, transparent 1px)', backgroundSize: '40px 40px' }}></div>
 
       <div className="relative z-10 w-full max-w-2xl">
-        <h4 className="text-center text-white font-bold text-xl mb-12">Otomasyon Veri Akışı</h4>
+        <h4 className="text-center text-ink font-bold text-xl mb-12">Otomasyon Veri Akışı</h4>
 
         <div className="flex flex-col md:flex-row items-center justify-between gap-8 md:gap-4 relative">
           
           <div className={`flex flex-col items-center transition-opacity duration-500 ${step >= 0 ? 'opacity-100' : 'opacity-50'}`}>
-            <div className={`w-20 h-20 rounded-[24px] flex items-center justify-center text-3xl mb-4 border-2 transition-colors ${step === 0 ? 'bg-signal/20 border-signal text-signal' : 'bg-deep border-steel text-ash'}`}>
+            <div className={`w-20 h-20 rounded-2xl flex items-center justify-center text-3xl mb-4 border-2 transition-colors ${step === 0 ? 'bg-signal/10 border-signal text-signal' : 'bg-deep border-graphite text-ash'}`}>
               <i className="fa-solid fa-globe"></i>
             </div>
-            <div className="text-white font-semibold text-sm">Kurumsal Portal</div>
+            <div className="text-ink font-semibold text-sm">Kurumsal Portal</div>
             <div className="text-ash text-xs">KML / Web Kaynağı</div>
           </div>
 
@@ -48,14 +48,14 @@ export default function AutomationDemo() {
           </div>
 
           <div className={`flex flex-col items-center transition-opacity duration-500 ${step >= 1 ? 'opacity-100' : 'opacity-50'}`}>
-            <div className={`w-24 h-24 rounded-full flex items-center justify-center text-4xl mb-4 border-2 transition-all ${step === 1 || step === 2 ? 'bg-signal/20 border-signal text-signal scale-110' : 'bg-deep border-steel text-ash scale-100'}`}>
+            <div className={`w-24 h-24 rounded-full flex items-center justify-center text-4xl mb-4 border-2 transition-all ${step === 1 || step === 2 ? 'bg-signal/10 border-signal text-signal scale-110' : 'bg-deep border-graphite text-ash scale-100'}`}>
               <motion.i 
                 animate={{ rotate: step === 1 || step === 2 ? 360 : 0 }} 
                 transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
                 className="fa-brands fa-python"
               ></motion.i>
             </div>
-            <div className="text-white font-semibold text-sm">Selenium & ArcPy</div>
+            <div className="text-ink font-semibold text-sm">Selenium & ArcPy</div>
             <div className="text-ash text-xs">Veri İşleme ve Dönüşüm</div>
           </div>
 
@@ -78,10 +78,10 @@ export default function AutomationDemo() {
           </div>
 
           <div className={`flex flex-col items-center transition-opacity duration-500 ${step >= 3 ? 'opacity-100' : 'opacity-50'}`}>
-            <div className={`w-20 h-20 rounded-[24px] flex items-center justify-center text-3xl mb-4 border-2 transition-colors ${step === 3 ? 'bg-signal/20 border-signal text-signal' : 'bg-deep border-steel text-ash'}`}>
+            <div className={`w-20 h-20 rounded-2xl flex items-center justify-center text-3xl mb-4 border-2 transition-colors ${step === 3 ? 'bg-signal/10 border-signal text-signal' : 'bg-deep border-graphite text-ash'}`}>
               <i className="fa-solid fa-server"></i>
             </div>
-            <div className="text-white font-semibold text-sm">Kurumsal Veritabanı</div>
+            <div className="text-ink font-semibold text-sm">Kurumsal Veritabanı</div>
             <div className="text-ash text-xs">CBS Katmanı Entegrasyonu</div>
           </div>
 

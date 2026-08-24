@@ -69,10 +69,10 @@ export default function MapsDemo() {
       <div className="w-full lg:w-72 bg-deep/95 border-b lg:border-b-0 lg:border-r border-gunmetal flex flex-col shrink-0 z-20 max-h-[300px] lg:max-h-none">
         
         <div className="p-3 border-b border-gunmetal flex items-center gap-2 bg-deep/60">
-          <div className="w-7 h-7 rounded-lg bg-signal/20 flex items-center justify-center">
+          <div className="w-7 h-7 rounded-lg bg-signal/10 flex items-center justify-center">
             <i className="fa-solid fa-map-location-dot text-signal text-sm"></i>
           </div>
-          <span className="text-white text-sm font-bold tracking-wide">Taşınmaz Yönetimi</span>
+          <span className="text-ink text-sm font-bold tracking-wide">Taşınmaz Yönetimi</span>
         </div>
 
         <div className="p-2 border-b border-gunmetal">
@@ -81,7 +81,7 @@ export default function MapsDemo() {
             <input 
               type="text" 
               placeholder="Kayıt ara..."
-              className="w-full bg-deep/80 border border-gunmetal rounded-lg text-xs text-white px-8 py-2 outline-none focus:border-signal/60 transition-colors placeholder-pewter"
+              className="w-full bg-deep/80 border border-gunmetal rounded-lg text-xs text-ink px-8 py-2 outline-none focus:border-signal/60 transition-colors placeholder-pewter"
             />
           </div>
         </div>
@@ -91,7 +91,7 @@ export default function MapsDemo() {
             <div key={cat.id}>
               <button 
                 onClick={() => toggleCategory(cat.id)}
-                className="w-full flex items-center gap-2 px-3 py-2.5 bg-deep/40 hover:bg-graphite/70 border-b border-gunmetal transition-colors"
+                className="w-full flex items-center gap-2 px-3 py-2.5 bg-deep/40 hover:bg-void/70 border-b border-gunmetal transition-colors"
               >
                 <i className={`fa-solid ${openCategories[cat.id] ? 'fa-angle-down' : 'fa-angle-right'} text-ash text-xs w-4`}></i>
                 <div className="w-2.5 h-2.5 rounded-sm" style={{ backgroundColor: cat.color }}></div>
@@ -116,8 +116,8 @@ export default function MapsDemo() {
                           onClick={() => selectParcel(p, cat.color)}
                           className={`w-full flex items-center gap-2 pl-9 pr-3 py-2 text-left border-b border-gunmetal transition-all text-xs
                             ${isSelected 
-                              ? 'bg-signal/15 text-white border-l-2 border-l-signal' 
-                              : 'text-ash hover:bg-graphite/50 hover:text-silver border-l-2 border-l-transparent'
+                              ? 'bg-signal/15 text-ink border-l-2 border-l-signal' 
+                              : 'text-ash hover:bg-void/50 hover:text-silver border-l-2 border-l-transparent'
                             }`}
                         >
                           <i className={`fa-solid fa-vector-square text-[10px] ${isSelected ? 'text-signal' : 'text-steel'}`}></i>
@@ -185,9 +185,9 @@ export default function MapsDemo() {
           </MapContainer>
 
           <div className="absolute top-3 left-3 z-[400] flex flex-col gap-1.5">
-            <button className="w-7 h-7 bg-deep/90 text-white border border-steel/50 hover:bg-gunmetal flex items-center justify-center rounded text-xs"><i className="fa-solid fa-plus"></i></button>
-            <button className="w-7 h-7 bg-deep/90 text-white border border-steel/50 hover:bg-gunmetal flex items-center justify-center rounded text-xs"><i className="fa-solid fa-minus"></i></button>
-            <button className="w-7 h-7 bg-deep/90 text-white border border-steel/50 hover:bg-gunmetal flex items-center justify-center rounded text-xs mt-1"><i className="fa-solid fa-expand"></i></button>
+            <button className="w-7 h-7 bg-deep/90 text-ink border border-graphite/50 hover:bg-gunmetal flex items-center justify-center rounded text-xs"><i className="fa-solid fa-plus"></i></button>
+            <button className="w-7 h-7 bg-deep/90 text-ink border border-graphite/50 hover:bg-gunmetal flex items-center justify-center rounded text-xs"><i className="fa-solid fa-minus"></i></button>
+            <button className="w-7 h-7 bg-deep/90 text-ink border border-graphite/50 hover:bg-gunmetal flex items-center justify-center rounded text-xs mt-1"><i className="fa-solid fa-expand"></i></button>
           </div>
 
           <div className="absolute bottom-0 left-0 right-0 z-[400] bg-deep/80 backdrop-blur-sm text-fog px-3 py-1 text-[10px] font-mono flex items-center gap-3 border-t border-gunmetal">
@@ -204,7 +204,7 @@ export default function MapsDemo() {
               animate={{ width: '50%', opacity: 1 }}
               exit={{ width: 0, opacity: 0 }}
               transition={{ duration: 0.4 }}
-              className="hidden lg:flex h-full bg-deep relative overflow-hidden items-center justify-center border-l-2 border-signal/30"
+              className="hidden lg:flex h-full bg-deep relative overflow-hidden items-center justify-center border-l-2 border-signal/40"
             >
               <div className="absolute inset-0 bg-gradient-to-b from-gunmetal/30 to-void/80"></div>
               <div className="relative z-10" style={{ perspective: '600px' }}>
@@ -237,11 +237,11 @@ export default function MapsDemo() {
             className="w-full lg:w-72 bg-deep/95 border-t lg:border-t-0 lg:border-l border-gunmetal z-[1000] flex flex-col lg:absolute lg:top-0 lg:right-0 lg:h-full"
           >
             <div className="p-3 flex items-center justify-between border-b border-gunmetal bg-deep/60">
-              <button onClick={closePanel} className="text-ash hover:text-white transition-colors">
+              <button onClick={closePanel} className="text-ash hover:text-ink transition-colors">
                 <i className="fa-solid fa-arrow-left"></i>
               </button>
-              <span className="text-white text-sm font-bold">Taşınmaz Detay</span>
-              <button onClick={closePanel} className="text-ash hover:text-white transition-colors">
+              <span className="text-ink text-sm font-bold">Taşınmaz Detay</span>
+              <button onClick={closePanel} className="text-ash hover:text-ink transition-colors">
                 <i className="fa-solid fa-xmark"></i>
               </button>
             </div>
@@ -250,7 +250,7 @@ export default function MapsDemo() {
               <div className="w-10 h-10 rounded-xl mx-auto mb-2 flex items-center justify-center" style={{ backgroundColor: selectedParcel.catColor + '20', border: `1px solid ${selectedParcel.catColor}40` }}>
                 <i className="fa-solid fa-map-pin" style={{ color: selectedParcel.catColor }}></i>
               </div>
-              <h4 className="text-white font-bold text-sm">Ada: {selectedParcel.ada} / Parsel: {selectedParcel.parsel}</h4>
+              <h4 className="text-ink font-bold text-sm">Ada: {selectedParcel.ada} / Parsel: {selectedParcel.parsel}</h4>
               <p className="text-ash text-xs mt-1">{selectedParcel.alan} — {selectedParcel.imar}</p>
             </div>
 
@@ -262,7 +262,7 @@ export default function MapsDemo() {
                 { icon: 'fa-money-bill-transfer', text: 'Proje Geliştirme Süreçleri', color: 'text-signal', bg: 'bg-signal/10' },
                 { icon: 'fa-sack-dollar', text: 'Finansal Göstergeler', color: 'text-signal', bg: 'bg-signal/10' },
               ].map((item, idx) => (
-                <div key={idx} className={`${item.bg} border border-gunmetal p-3 rounded-lg hover:border-steel/50 cursor-pointer flex items-center transition-all`}>
+                <div key={idx} className={`${item.bg} border border-gunmetal p-3 rounded-lg hover:border-graphite/50 cursor-pointer flex items-center transition-all`}>
                   <i className={`fa-solid ${item.icon} ${item.color} w-5 text-center mr-2.5 text-sm`}></i>
                   <span className="text-silver text-xs font-medium">{item.text}</span>
                   <i className="fa-solid fa-chevron-right text-steel text-[10px] ml-auto"></i>
@@ -272,14 +272,14 @@ export default function MapsDemo() {
               <div 
                 onClick={() => setSplit3D(!split3D)}
                 className={`border p-3 rounded-lg cursor-pointer flex items-center transition-all
-                  ${split3D ? 'bg-signal/20 border-signal/40 ring-1 ring-signal/20' : 'bg-signal/10 border-gunmetal hover:border-steel/50'}`}
+                  ${split3D ? 'bg-signal/10 border-signal/40 ring-1 ring-signal/20' : 'bg-signal/10 border-gunmetal hover:border-graphite/50'}`}
               >
                 <i className="fa-solid fa-cube text-signal w-5 text-center mr-2.5 text-sm"></i>
-                <span className="text-white text-xs font-medium">3B Veriler</span>
+                <span className="text-ink text-xs font-medium">3B Veriler</span>
                 <i className={`fa-solid ${split3D ? 'fa-toggle-on text-signal' : 'fa-toggle-off text-steel'} ml-auto`}></i>
               </div>
 
-              <div className="bg-deep/50 border border-gunmetal p-3 rounded-lg hover:border-steel/50 cursor-pointer flex items-center transition-all">
+              <div className="bg-deep/50 border border-gunmetal p-3 rounded-lg hover:border-graphite/50 cursor-pointer flex items-center transition-all">
                 <i className="fa-solid fa-building-columns text-ash w-5 text-center mr-2.5 text-sm"></i>
                 <span className="text-fog text-xs font-medium">Dış Sistem Entegrasyonu</span>
                 <i className="fa-solid fa-external-link text-steel text-[10px] ml-auto"></i>

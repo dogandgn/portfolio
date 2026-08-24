@@ -4,16 +4,15 @@ import TechBadge from './TechBadge';
 
 export default function ProjectCard({ project, onClick }) {
   return (
-    <Tilt tiltMaxAngleX={6} tiltMaxAngleY={6} glareEnable={true} glareMaxOpacity={0.08} glareColor="#007afc" glareBorderRadius="24px" className="h-full">
+    <Tilt tiltMaxAngleX={6} tiltMaxAngleY={6} glareEnable={true} glareMaxOpacity={0.06} glareColor="#c9a227" glareBorderRadius="16px" className="h-full">
       <div 
         onClick={onClick}
-        className="bg-deep border border-gunmetal rounded-[24px] h-full flex flex-col overflow-hidden transition-colors duration-300 hover:border-signal/40 cursor-pointer group"
+        className="bg-deep border border-gunmetal rounded-2xl h-full flex flex-col overflow-hidden transition-colors duration-300 hover:border-signal/60 cursor-pointer group"
       >
         
         {project.image && (
           <div className="w-full h-48 overflow-hidden relative">
-            <div className="absolute inset-0 bg-void/40 group-hover:bg-transparent transition-colors duration-500 z-10"></div>
-            <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-deep to-transparent z-10"></div>
+            <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-deep to-transparent z-10"></div>
             <img 
               src={project.image} 
               alt={project.title} 
@@ -23,7 +22,7 @@ export default function ProjectCard({ project, onClick }) {
         )}
 
         <div className="p-6 flex flex-col flex-grow">
-          <h3 className="text-base font-bold text-white mb-3 group-hover:text-signal transition-colors">{project.title}</h3>
+          <h3 className="text-base font-bold text-ink mb-3 group-hover:text-signal transition-colors">{project.title}</h3>
           <p className="text-ash text-sm mb-6 flex-grow leading-relaxed line-clamp-3">{project.description}</p>
           
           <div className="flex flex-wrap gap-1.5 mt-auto">

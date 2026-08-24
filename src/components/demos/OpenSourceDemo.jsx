@@ -24,7 +24,7 @@ export default function OpenSourceDemo() {
           <button 
             key={app.id}
             onClick={() => setActiveApp(app.id)}
-            className={`flex items-center gap-2 px-4 py-2 rounded-lg whitespace-nowrap transition-colors ${activeApp === app.id ? 'bg-signal/20 text-signal border border-signal/30' : 'bg-gunmetal text-ash hover:bg-graphite hover:text-silver'}`}
+            className={`flex items-center gap-2 px-4 py-2 rounded-lg whitespace-nowrap transition-colors ${activeApp === app.id ? 'bg-signal/10 text-signal border border-signal/40' : 'bg-gunmetal text-ash hover:bg-void hover:text-silver'}`}
           >
             <i className={`fa-solid ${app.icon}`}></i> {app.title}
           </button>
@@ -60,10 +60,10 @@ export default function OpenSourceDemo() {
             </div>
 
             <div className="p-8 text-center flex flex-col items-center justify-center min-h-[300px]">
-              <div className="w-20 h-20 bg-graphite rounded-full flex items-center justify-center text-4xl text-signal mb-6">
+              <div className="w-20 h-20 bg-void rounded-full flex items-center justify-center text-4xl text-signal mb-6">
                 <i className={`fa-solid ${currentApp.icon}`}></i>
               </div>
-              <h4 className="text-2xl font-bold text-white mb-4">{currentApp.title}</h4>
+              <h4 className="text-2xl font-bold text-ink mb-4">{currentApp.title}</h4>
               <p className="text-ash max-w-lg mb-8 leading-relaxed">
                 {currentApp.desc}
               </p>
