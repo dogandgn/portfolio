@@ -19,7 +19,7 @@
   },
   "about": {
     "badge": "Hakkımda",
-    "title": "Mekansal Veri ve Yazılımın Kesişiminde",
+    "title": "",
     "p1": "Şehir Plancısı altyapım ve CBS Geliştiricisi kimliğimle, mekansal verilerin gücünü modern web teknolojileriyle birleştiriyorum. Amacım, karmaşık coğrafi ve kentsel verileri anlaşılır, yönetilebilir ve etkileşimli dijital sistemlere dönüştürmek.",
     "p2": "Özellikle büyük ölçekli gayrimenkul portföylerinin yönetimi, kentsel dönüşüm fizibiliteleri ve otomasyon süreçleri üzerine kurumsal düzeyde çözümler üretiyorum. Haritaların sadece bir görsel değil, güçlü bir karar destek aracı olduğuna inanıyorum."
   },
@@ -35,7 +35,8 @@
   },
   "experience": {
     "badge": "İş Deneyimi",
-    "title": "Kariyer Yolculuğu",
+    "title": "İstanbul İmar A.Ş.",
+    "titleDate": "Kasım 2021 - Temmuz 2026",
     "eduBadge": "Eğitim",
     "eduTitle": "Akademik Geçmiş",
     "catGIS": "CBS ÇALIŞMALARI",

@@ -17,7 +17,10 @@ export default function Experience() {
           <div className="mb-4">
             <span className="text-muted text-xs font-medium uppercase tracking-[0.84px]">{t('experience.badge')}</span>
           </div>
-          <h3 className="text-3xl md:text-[32px] font-bold text-ink leading-snug tracking-tight mb-12">{t('experience.title')}</h3>
+          <div className="mb-12">
+            <h3 className="text-3xl md:text-[32px] font-bold text-ink leading-snug tracking-tight mb-2">{t('experience.title')}</h3>
+            <span className="text-signal font-medium">{t('experience.titleDate')}</span>
+          </div>
 
           <div className="relative border-l border-gunmetal/60 ml-3 md:ml-4 space-y-12">
             {experiences.map((exp) => (

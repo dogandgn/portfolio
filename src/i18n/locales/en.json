@@ -19,7 +19,7 @@
   },
   "about": {
     "badge": "About Me",
-    "title": "At the Intersection of Spatial Data and Software",
+    "title": "",
     "p1": "With a background in Urban Planning and expertise as a GIS Developer, I combine the power of spatial data with modern web technologies. My goal is to transform complex geographical and urban data into clear, manageable, and interactive digital systems.",
     "p2": "I specialize in enterprise-level solutions, particularly in large-scale real estate portfolio management, urban regeneration feasibilities, and automation processes. I believe maps are not just visuals, but powerful decision support tools."
   },
@@ -35,7 +35,8 @@
   },
   "experience": {
     "badge": "Work Experience",
-    "title": "Career Journey",
+    "title": "Istanbul Imar A.S.",
+    "titleDate": "Nov 2021 - Jul 2026",
     "eduBadge": "Education",
     "eduTitle": "Academic Background",
     "catGIS": "GIS PROJECTS",
