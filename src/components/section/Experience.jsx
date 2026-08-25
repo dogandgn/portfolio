@@ -1,77 +1,80 @@
 import React from 'react';
-import { motion } from 'framer-motion';
-import { experiences } from '../../data/resumeData';
+import { getExperiences, getEducation } from '../../data/resumeData';
+import { useTranslation } from 'react-i18next';
 
 export default function Experience() {
-  const cbsExperiences = experiences.filter(exp => exp.category === "CBS ÇALIŞMALARI");
-  const kentselExperiences = experiences.filter(exp => exp.category === "KENTSEL DÖNÜŞÜM ÇALIŞMALARI");
-
-  const renderExperienceList = (list) => (
-    <div className="space-y-10">
-      {list.map((exp, index) => (
-        <motion.div 
-          key={exp.id}
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.4, delay: index * 0.08 }}
-          className="relative pl-8 border-l-2 border-gunmetal"
-        >
-          <span className="absolute -left-[6px] top-1.5 h-2.5 w-2.5 rounded-full bg-signal border-2 border-deep"></span>
-          <h4 className="text-base font-bold text-ink mb-1">{exp.title}</h4>
-          <span className="text-xs font-medium text-signal block mb-4">{exp.date}</span>
-          
-          <ul className="space-y-3 mb-5">
-            {exp.description.map((item, i) => (
-              <li key={i} className="text-fog text-sm leading-relaxed">
-                <span className="text-steel mr-2">▹</span>{item}
-              </li>
-            ))}
-          </ul>
-          
-          <div className="flex flex-wrap gap-1.5">
-            {exp.tech.map((t, i) => (
-              <span key={i} className="px-2.5 py-1 bg-void border border-gunmetal rounded text-[11px] text-fog font-medium">
-                {t}
-              </span>
-            ))}
-          </div>
-        </motion.div>
-      ))}
-    </div>
-  );
+  const { t } = useTranslation();
+  const experiences = getExperiences(t);
+  const education = getEducation(t);
 
   return (
     <section id="experience" className="py-24 px-6 max-w-[1344px] mx-auto">
-      <div className="mb-4">
-        <span className="text-muted text-xs font-medium uppercase tracking-[0.84px]">İş Deneyimi</span>
-      </div>
-      <div className="mb-14">
-        <h3 className="text-3xl md:text-[32px] font-bold text-ink leading-snug tracking-tight mb-2">Şehir Plancısı & Kurumsal CBS Geliştiricisi</h3>
-        <p className="text-muted text-sm">Kasım 2021 - Temmuz 2026</p>
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
-        <div>
-          <div className="flex items-center mb-10 pb-4 border-b border-gunmetal">
-            <div className="w-10 h-10 rounded-xl bg-signal/10 flex items-center justify-center mr-4 border border-signal/20">
-              <i className="fa-solid fa-map-location-dot text-lg text-signal"></i>
-            </div>
-            <h3 className="text-xl font-bold text-ink">CBS Çalışmaları</h3>
+      
+      <div className="flex flex-col lg:flex-row gap-16">
+        
+        {/* Deneyim */}
+        <div className="lg:w-2/3">
+          <div className="mb-4">
+            <span className="text-muted text-xs font-medium uppercase tracking-[0.84px]">{t('experience.badge')}</span>
           </div>
-          {renderExperienceList(cbsExperiences)}
+          <h3 className="text-3xl md:text-[32px] font-bold text-ink leading-snug tracking-tight mb-12">{t('experience.title')}</h3>
+
+          <div className="relative border-l border-gunmetal/60 ml-3 md:ml-4 space-y-12">
+            {experiences.map((exp) => (
+              <div key={exp.id} className="relative pl-8 md:pl-12 group">
+                <div className="absolute w-3 h-3 bg-signal rounded-full -left-[6.5px] top-2 ring-4 ring-void group-hover:scale-125 group-hover:bg-deep-signal transition-all"></div>
+                
+                <div className="flex flex-col md:flex-row md:items-baseline justify-between mb-2">
+                  <h4 className="text-xl font-bold text-ink tracking-tight">{exp.title}</h4>
+                  <span className="text-sm font-medium text-signal mt-1 md:mt-0">{exp.date}</span>
+                </div>
+                
+                <div className="text-sm font-medium text-muted mb-4 tracking-wide">{exp.category}</div>
+                
+                <ul className="space-y-2 mb-6">
+                  {exp.description.map((item, i) => (
+                    <li key={i} className="text-fog text-[15px] leading-relaxed relative pl-4">
+                      <span className="absolute left-0 top-2.5 w-1 h-1 bg-pewter rounded-full"></span>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+                
+                <div className="flex flex-wrap gap-1.5">
+                  {exp.tech.map((tech, i) => (
+                    <span key={i} className="px-2.5 py-1 bg-void border border-gunmetal rounded text-[11px] text-fog font-medium">
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
 
-        <div>
-          <div className="flex items-center mb-10 pb-4 border-b border-gunmetal">
-            <div className="w-10 h-10 rounded-xl bg-signal/10 flex items-center justify-center mr-4 border border-signal/20">
-              <i className="fa-solid fa-city text-lg text-signal"></i>
-            </div>
-            <h3 className="text-xl font-bold text-ink">Kentsel Dönüşüm</h3>
+        {/* Eğitim */}
+        <div className="lg:w-1/3 mt-16 lg:mt-0">
+          <div className="mb-4">
+            <span className="text-muted text-xs font-medium uppercase tracking-[0.84px]">{t('experience.eduBadge')}</span>
           </div>
-          {renderExperienceList(kentselExperiences)}
+          <h3 className="text-3xl md:text-[32px] font-bold text-ink leading-snug tracking-tight mb-12">{t('experience.eduTitle')}</h3>
+
+          <div className="space-y-8">
+            {education.map((edu) => (
+              <div key={edu.id} className="bg-deep p-6 rounded-2xl border border-gunmetal">
+                <span className="text-xs font-bold text-signal tracking-wide mb-2 block">{edu.date}</span>
+                <h4 className="text-lg font-bold text-ink mb-1">{edu.department}</h4>
+                <div className="text-sm font-medium text-fog mb-3">{edu.school} • {edu.faculty}</div>
+                <p className="text-[15px] text-muted leading-relaxed">
+                  {edu.description}
+                </p>
+              </div>
+            ))}
+          </div>
         </div>
+
       </div>
+
     </section>
   );
 }

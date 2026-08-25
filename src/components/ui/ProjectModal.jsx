@@ -1,132 +1,75 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import TechBadge from './TechBadge';
 import DemoRenderer from '../demos/DemoRenderer';
 
-export default function ProjectModal({ project, isOpen, onClose }) {
-  const [mounted, setMounted] = useState(false);
-
+export default function ProjectModal({ project, onClose, t }) {
   useEffect(() => {
-    setMounted(true);
-  }, []);
-  
-  useEffect(() => {
-    const handleEsc = (e) => {
-      if (e.key === 'Escape') onClose();
-    };
-    window.addEventListener('keydown', handleEsc);
-    return () => window.removeEventListener('keydown', handleEsc);
-  }, [onClose]);
-
-  useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
+    document.body.style.overflow = 'hidden';
     return () => {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = 'auto';
     };
-  }, [isOpen]);
+  }, []);
 
-  const modalContent = (
+  return createPortal(
     <AnimatePresence>
-      {isOpen && project && (
-        <div className="fixed inset-0 z-[100] overflow-y-auto" style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0 }}>
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={onClose}
-            className="fixed inset-0 bg-ink/20 backdrop-blur-sm cursor-pointer"
-          ></motion.div>
+      <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 md:p-6">
+        
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          onClick={onClose}
+          className="absolute inset-0 bg-void/80 backdrop-blur-sm"
+        ></motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 30 }}
-            transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-            className="relative z-10 min-h-screen"
-          >
-            <button
-              onClick={onClose}
-              className="fixed top-6 right-6 w-10 h-10 bg-deep border border-gunmetal hover:border-ink text-ink rounded-full flex items-center justify-center transition-colors z-50"
-            >
-              <i className="fa-solid fa-xmark text-lg"></i>
-            </button>
-
-            <div className="flex flex-col lg:flex-row min-h-screen">
-              
-              <div className="lg:w-1/2 p-8 md:p-12 lg:p-16 bg-void">
-                <div className="max-w-lg mx-auto lg:mx-0 pt-12 lg:pt-8 pb-16">
-                  
-                  {project.image && (
-                    <div className="w-full h-48 rounded-2xl overflow-hidden mb-8 border border-gunmetal lg:hidden">
-                      <img 
-                        src={project.image} 
-                        alt={project.title} 
-                        className="w-full h-full object-cover object-center"
-                      />
-                    </div>
-                  )}
-
-                  <span className="text-muted text-[10px] font-medium uppercase tracking-[0.7em]">Proje Detayı</span>
-                  <h3 className="text-3xl md:text-[40px] font-bold text-ink mb-6 mt-3 tracking-tight leading-tight">
-                    {project.title}
-                  </h3>
-                  
-                  <div className="mb-10">
-                    <p className="text-fog leading-relaxed text-base">
-                      {project.description}
-                    </p>
-                  </div>
-
-                  <div className="mb-10">
-                    <h4 className="text-muted font-medium mb-3 text-[10px] uppercase tracking-[0.7em]">Kullanılan Teknolojiler</h4>
-                    <div className="flex flex-wrap gap-1.5">
-                      {project.tech.map((techName, index) => (
-                        <TechBadge key={index} text={techName} />
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="lg:hidden mt-8 border-t border-gunmetal pt-8">
-                    <h4 className="text-muted font-medium mb-6 text-[10px] uppercase tracking-[0.7em]">İnteraktif Demo</h4>
-                    <DemoRenderer projectId={project.id} />
-                  </div>
-
-                </div>
+        <motion.div 
+          initial={{ opacity: 0, y: 30, scale: 0.98 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          exit={{ opacity: 0, y: 20, scale: 0.98 }}
+          transition={{ duration: 0.3, ease: "easeOut" }}
+          className="relative w-full max-w-6xl max-h-[90vh] bg-deep border border-gunmetal rounded-2xl shadow-2xl overflow-hidden flex flex-col md:flex-row"
+        >
+          {/* Sol Panel: Açıklamalar (Scrollable) */}
+          <div className="w-full md:w-[45%] h-full max-h-[50vh] md:max-h-[90vh] overflow-y-auto border-b md:border-b-0 md:border-r border-gunmetal p-8 custom-scrollbar">
+            <div className="mb-8">
+              <h3 className="text-3xl font-bold text-ink mb-4 leading-tight">{project.title}</h3>
+              <div className="flex flex-wrap gap-2 mb-6">
+                {project.tech.map((t, i) => (
+                  <TechBadge key={i} text={t} />
+                ))}
               </div>
-
-              <div className="hidden lg:block lg:w-1/2 lg:sticky lg:top-0 lg:h-screen bg-deep border-l border-gunmetal overflow-y-auto">
-                <div className="p-8 lg:p-12 h-full flex flex-col">
-                  
-                  {project.image && (
-                    <div className="w-full h-56 rounded-2xl overflow-hidden mb-6 border border-gunmetal shrink-0">
-                      <img 
-                        src={project.image} 
-                        alt={project.title} 
-                        className="w-full h-full object-cover object-center"
-                      />
-                    </div>
-                  )}
-
-                  <div className="flex-1 min-h-0">
-                    <h4 className="text-muted font-medium mb-4 text-[10px] uppercase tracking-[0.7em]">İnteraktif Demo</h4>
-                    <DemoRenderer projectId={project.id} />
-                  </div>
-                </div>
-              </div>
-
+              <p className="text-fog text-[15px] leading-relaxed whitespace-pre-line">
+                {project.description}
+              </p>
             </div>
-          </motion.div>
-        </div>
-      )}
-    </AnimatePresence>
+            
+            <button 
+              onClick={onClose}
+              className="mt-8 px-6 py-2.5 bg-gunmetal text-ink hover:bg-signal transition-colors rounded-full font-medium text-sm inline-flex items-center gap-2"
+            >
+              <i className="fa-solid fa-arrow-left"></i>
+              {t('projects.close')}
+            </button>
+          </div>
+
+          {/* Sağ Panel: Uygulama / Demo (Sticky/Fixed) */}
+          <div className="w-full md:w-[55%] h-[50vh] md:h-[90vh] bg-void relative">
+            <DemoRenderer projectId={project.id} />
+          </div>
+
+          {/* Mobil İçin Sağ Üst Kapatma Butonu */}
+          <button 
+            onClick={onClose}
+            className="md:hidden absolute top-4 right-4 w-10 h-10 bg-deep/80 backdrop-blur-md text-ink rounded-full flex items-center justify-center border border-gunmetal z-50 shadow-lg"
+          >
+            <i className="fa-solid fa-xmark text-lg"></i>
+          </button>
+          
+        </motion.div>
+      </div>
+    </AnimatePresence>,
+    document.body
   );
-
-  if (!mounted) return null;
-
-  return createPortal(modalContent, document.body);
 }

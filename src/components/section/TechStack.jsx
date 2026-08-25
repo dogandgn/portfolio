@@ -1,14 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-
-const coreCompetencies = [
-  { title: "Kurumsal Coğrafi Bilgi Sistemleri (CBS) ve Veri Mimarisi", icon: "🌍" },
-  { title: "JavaScript (React.js) ile Özel Web-CBS Geliştirme", icon: "💻" },
-  { title: "Python (ArcPy, Pandas) ile Veri İşleme ve Otomasyon", icon: "⚙️" },
-  { title: "Coğrafi Veri Tabanı (Geodatabase) Yönetimi ve Kartografya", icon: "🗺️" },
-  { title: "Kentsel Dönüşüm Fizibilite ve Matematiksel Dağıtım Modelleri", icon: "🏙️" },
-  { title: "Sosyal Doku Analizi ve Vatandaş/Hak Sahibi Uzlaşma Süreçleri", icon: "🤝" }
-];
+import { useTranslation } from 'react-i18next';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -24,14 +16,25 @@ const cardVariants = {
 };
 
 export default function TechStack() {
+  const { t } = useTranslation();
+
+  const coreCompetencies = [
+    { title: t('techstack.c1'), icon: "🌍" },
+    { title: t('techstack.c2'), icon: "💻" },
+    { title: t('techstack.c3'), icon: "⚙️" },
+    { title: t('techstack.c4'), icon: "🗺️" },
+    { title: t('techstack.c5'), icon: "🏙️" },
+    { title: t('techstack.c6'), icon: "🤝" }
+  ];
+
   return (
     <section id="techstack" className="py-24 px-6 max-w-[1344px] mx-auto">
       
       <div className="mb-4">
-        <span className="text-muted text-xs font-medium uppercase tracking-[0.84px]">Uzmanlıklar</span>
+        <span className="text-muted text-xs font-medium uppercase tracking-[0.84px]">{t('techstack.badge')}</span>
       </div>
       <div className="mb-14">
-        <h3 className="text-3xl md:text-[32px] font-bold text-ink leading-snug tracking-tight">Temel Yetkinlikler</h3>
+        <h3 className="text-3xl md:text-[32px] font-bold text-ink leading-snug tracking-tight">{t('techstack.title')}</h3>
       </div>
 
       <motion.div 

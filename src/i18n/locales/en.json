@@ -1,0 +1,96 @@
+{
+  "nav": {
+    "about": "About",
+    "experience": "Experience",
+    "projects": "Projects",
+    "contact": "Contact",
+    "lightMode": "Light Theme",
+    "darkMode": "Dark Theme"
+  },
+  "hero": {
+    "title1": "Urban Planner",
+    "title2": "GIS Developer",
+    "subtitle": "(Şehir Plancısı ve CBS Geliştiricisi)",
+    "email": "Email",
+    "phone": "Phone",
+    "cv": "Download CV",
+    "github": "GitHub",
+    "linkedin": "LinkedIn"
+  },
+  "about": {
+    "badge": "About Me",
+    "title": "At the Intersection of Spatial Data and Software",
+    "p1": "With a background in Urban Planning and expertise as a GIS Developer, I combine the power of spatial data with modern web technologies. My goal is to transform complex geographical and urban data into clear, manageable, and interactive digital systems.",
+    "p2": "I specialize in enterprise-level solutions, particularly in large-scale real estate portfolio management, urban regeneration feasibilities, and automation processes. I believe maps are not just visuals, but powerful decision support tools."
+  },
+  "techstack": {
+    "badge": "Expertise",
+    "title": "Core Competencies",
+    "c1": "Enterprise Geographic Information Systems (GIS) & Data Architecture",
+    "c2": "Custom Web-GIS Development using JavaScript (React.js)",
+    "c3": "Data Processing & Automation with Python (ArcPy, Pandas)",
+    "c4": "Geodatabase Management & Cartography",
+    "c5": "Urban Regeneration Feasibility & Mathematical Distribution Models",
+    "c6": "Social Fabric Analysis & Stakeholder Reconciliation Processes"
+  },
+  "experience": {
+    "badge": "Work Experience",
+    "title": "Career Journey",
+    "eduBadge": "Education",
+    "eduTitle": "Academic Background",
+    "catGIS": "GIS PROJECTS",
+    "catUrban": "URBAN REGENERATION PROJECTS",
+    "exp1_title": "Property Management Systems",
+    "exp1_date": "Nov 2021 - Jul 2026",
+    "exp1_desc1": "Played an active role in architecting and developing an enterprise Web-GIS platform that manages corporate real estate portfolios, spatially analyzes property data, and digitalizes processes.",
+    "exp1_desc2": "Conducted digital transformation operations by processing complex data from Excel, PDF, and physical documents into digital environments.",
+    "exp1_desc3": "Participated in designing a scalable system managed by role-based authorization, consolidating multi-company and public data into a single hierarchical database.",
+    "exp1_desc4": "Worked on making parcels, real estate, zoning status, planning decisions, and project inventories analyzable via dynamic map layers.",
+    "exp1_desc5": "Took responsibility for developing interactive dashboards and thematic analysis tools within a map, time, and attribute-based decision support system for rapid and accurate management reporting.",
+    
+    "exp2_title": "ArcGIS Experience Builder Custom Widget Architecture",
+    "exp2_date": "Nov 2021 - Jul 2026",
+    "exp2_desc1": "Hierarchical Layer Manager: Optimized user experience by developing a custom widget that freezes temporary data layers in the browser.",
+    "exp2_desc2": "Dynamic PDF Reporting: Designed a module that generates instant reports of map views and analysis charts based on corporate templates.",
+    "exp2_desc3": "TKGM Integration: Built analysis tools that generate dynamic parcel query links directly from coordinate data.",
+
+    "exp3_title": "Spatial Data Engineering, Web Scraping & Automation Scripts",
+    "exp3_date": "Nov 2021 - Jul 2026",
+    "exp3_desc1": "Structured Python/ArcPy automation scripts to preserve data integrity, ensuring no interference with original data contents and column headers.",
+
+    "exp4_title": "Open Source Web-GIS & Custom Mapping Applications",
+    "exp4_date": "Nov 2021 - Jul 2026",
+    "exp4_desc1": "Coding open-source Web-GIS portals and developing independent projects that allow spatial analysis of extensive Excel inventory data directly in the browser without license dependencies.",
+    "exp4_desc2": "Designing advanced interactive web experiences; developing modern and aesthetic interfaces for portfolio systems and data analysis processes.",
+
+    "exp5_title": "Urban Regeneration & Reconciliation Management",
+    "exp5_date": "Nov 2021 - Jul 2026",
+    "exp5_desc1": "Feasibility & Mathematical Modeling: Conducted multi-criteria feasibility studies for urban regeneration areas; played a role in structuring mathematical valuation and fair distribution models based on beneficiary rights.",
+    "exp5_desc2": "Spatial & Social Data Analytics: Managed spatial data production and mapping processes of regeneration areas. Processed field survey data using Excel, contributing to social fabric analysis and demographic reporting of projects.",
+    "exp5_desc3": "Citizen & Contract Processes: Directly managed negotiations with beneficiaries, ensuring transparent information flow and taking an active role in official reconciliation and contracting processes.",
+
+    "edu1_school": "Dokuz Eylul University",
+    "edu1_faculty": "Faculty of Architecture",
+    "edu1_dept": "City and Regional Planning (Bachelor's)",
+    "edu1_date": "2015 - 2020",
+    "edu1_desc": "Completion of urban planning and morphology projects (1/1000, 1/5000, 1/25000 scale zoning and environmental plans) focusing on GIS technology and spatial analysis."
+  },
+  "projects": {
+    "badge": "Projects",
+    "title": "Selected Works",
+    "viewProject": "View Project",
+    "close": "Close",
+    
+    "p1_title": "Property Management Systems",
+    "p1_desc": "An enterprise Web-GIS platform that manages real estate portfolios, spatially analyzes property data, and digitalizes processes. Parcels, real estate, zoning status, planning decisions, and project inventories are made analyzable via dynamic layers. A scalable architecture managed by role-based authorization consolidates multi-company and public data into a single database hierarchy. The platform's UI includes modules for spatial analysis, geometric properties, zoning compliance, project development, financial indicators, and external system integration. Interactive dashboards and thematic analysis tools were developed over a map, time, and attribute-based decision support system. Digital transformation of complex data from Excel, PDF, and physical documents was successfully executed.",
+    
+    "p2_title": "ArcGIS Experience Builder Custom Widget Architecture",
+    "p2_desc": "Custom widgets were designed and developed to optimize enterprise GIS workflows on ArcGIS Experience Builder. User experience was improved by a Hierarchical Layer Manager allowing browser-side freezing of temporary data layers. A Dynamic PDF Reporting module enables instant corporate-template reporting of map views and analysis charts. Analysis tools were built to generate dynamic parcel query links from coordinate data via TKGM integration. Various widget components were produced featuring layer management, group filtering, smart search engines, data export, and admin panels.",
+    
+    "p3_title": "Spatial Data Engineering & Automation",
+    "p3_desc": "Data integration and management processes were executed via Python and ArcPy automation scripts, strictly preserving spatial data integrity. Digital transformation operations were carried out by converting complex data from Excel, PDFs, and physical documents without altering original content or headers. Pandas was utilized for large dataset processing, integration into the geodatabase structure, and automation of repetitive data preparation pipelines.",
+    
+    "p4_title": "Open Source Web-GIS & Custom Mapping Applications",
+    "p4_desc": "Open-source Web-GIS portals are coded and independent projects developed to enable browser-based spatial analysis of extensive Excel inventory data without commercial license dependencies. Interactive map experiences are designed using React-Leaflet and OpenLayers infrastructure, producing modern interfaces for portfolio systems and data analysis workflows. Developed as alternatives to commercial GIS software, these projects offer tailored solutions for browser-based spatial analysis and visualization needs."
+  }
+}

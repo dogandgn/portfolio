@@ -12,9 +12,12 @@
   "dependencies": {
     "@vercel/analytics": "^2.0.1",
     "framer-motion": "^12.39.0",
+    "i18next": "^26.4.0",
+    "i18next-browser-languagedetector": "^8.2.1",
     "leaflet": "^1.9.4",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
+    "react-i18next": "^17.0.12",
     "react-leaflet": "^5.0.0",
     "react-parallax-tilt": "^1.7.319",
     "react-router-dom": "^7.18.2"

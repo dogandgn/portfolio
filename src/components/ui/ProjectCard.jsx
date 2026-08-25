@@ -2,36 +2,58 @@ import React from 'react';
 import Tilt from 'react-parallax-tilt';
 import TechBadge from './TechBadge';
 
-export default function ProjectCard({ project, onClick }) {
+export default function ProjectCard({ project, onClick, t }) {
   return (
-    <Tilt tiltMaxAngleX={6} tiltMaxAngleY={6} glareEnable={true} glareMaxOpacity={0.06} glareColor="#c9a227" glareBorderRadius="16px" className="h-full">
+    <Tilt
+      tiltMaxAngleX={4}
+      tiltMaxAngleY={4}
+      scale={1.01}
+      transitionSpeed={2500}
+      glareEnable={true}
+      glareMaxOpacity={0.15}
+      glareColor="#c9a227"
+      glarePosition="all"
+      className="h-full"
+    >
       <div 
         onClick={onClick}
-        className="bg-deep border border-gunmetal rounded-2xl h-full flex flex-col overflow-hidden transition-colors duration-300 hover:border-signal/60 cursor-pointer group"
+        className="group relative flex flex-col h-full bg-deep rounded-2xl border border-gunmetal overflow-hidden cursor-pointer hover:border-signal/50 transition-colors"
       >
-        
-        {project.image && (
-          <div className="w-full h-48 overflow-hidden relative">
-            <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-deep to-transparent z-10"></div>
-            <img 
-              src={project.image} 
-              alt={project.title} 
-              className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700" 
-            />
-          </div>
-        )}
-
-        <div className="p-6 flex flex-col flex-grow">
-          <h3 className="text-base font-bold text-ink mb-3 group-hover:text-signal transition-colors">{project.title}</h3>
-          <p className="text-ash text-sm mb-6 flex-grow leading-relaxed line-clamp-3">{project.description}</p>
+        <div className="relative h-64 overflow-hidden bg-void/50">
+          <div className="absolute inset-0 bg-void mix-blend-overlay opacity-20"></div>
+          <img 
+            src={project.image} 
+            alt={project.title} 
+            className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out grayscale-[20%] group-hover:grayscale-0"
+          />
           
-          <div className="flex flex-wrap gap-1.5 mt-auto">
-            {project.tech.map((techName, index) => (
-              <TechBadge key={index} text={techName} />
-            ))}
+          <div className="absolute inset-0 bg-gradient-to-t from-void via-transparent to-transparent opacity-80"></div>
+          
+          <div className="absolute bottom-6 left-6 right-6">
+            <h4 className="text-2xl font-bold text-ink mb-2 drop-shadow-md">{project.title}</h4>
+            <div className="flex flex-wrap gap-2">
+              {project.tech.slice(0, 3).map((t, i) => (
+                <TechBadge key={i} text={t} />
+              ))}
+              {project.tech.length > 3 && (
+                <span className="px-2.5 py-1 bg-void/80 border border-gunmetal rounded text-[11px] text-fog font-medium backdrop-blur-sm">
+                  +{project.tech.length - 3}
+                </span>
+              )}
+            </div>
           </div>
         </div>
 
+        <div className="p-6 flex-grow flex flex-col justify-between">
+          <p className="text-[15px] text-fog leading-relaxed line-clamp-3 mb-6">
+            {project.description}
+          </p>
+          
+          <div className="flex items-center text-sm font-medium text-signal group-hover:text-deep-signal transition-colors">
+            <span>{t('projects.viewProject')}</span>
+            <i className="fa-solid fa-arrow-right ml-2 transform group-hover:translate-x-1 transition-transform"></i>
+          </div>
+        </div>
       </div>
     </Tilt>
   );

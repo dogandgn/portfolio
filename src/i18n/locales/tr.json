@@ -1,0 +1,96 @@
+{
+  "nav": {
+    "about": "Hakkımda",
+    "experience": "Kariyer",
+    "projects": "Projeler",
+    "contact": "İletişim",
+    "lightMode": "Açık Tema",
+    "darkMode": "Koyu Tema"
+  },
+  "hero": {
+    "title1": "Şehir Plancısı",
+    "title2": "CBS Geliştiricisi",
+    "subtitle": "(Urban Planner and GIS Developer)",
+    "email": "E-Posta",
+    "phone": "Telefon",
+    "cv": "CV İndir",
+    "github": "GitHub",
+    "linkedin": "LinkedIn"
+  },
+  "about": {
+    "badge": "Hakkımda",
+    "title": "Mekansal Veri ve Yazılımın Kesişiminde",
+    "p1": "Şehir Plancısı altyapım ve CBS Geliştiricisi kimliğimle, mekansal verilerin gücünü modern web teknolojileriyle birleştiriyorum. Amacım, karmaşık coğrafi ve kentsel verileri anlaşılır, yönetilebilir ve etkileşimli dijital sistemlere dönüştürmek.",
+    "p2": "Özellikle büyük ölçekli gayrimenkul portföylerinin yönetimi, kentsel dönüşüm fizibiliteleri ve otomasyon süreçleri üzerine kurumsal düzeyde çözümler üretiyorum. Haritaların sadece bir görsel değil, güçlü bir karar destek aracı olduğuna inanıyorum."
+  },
+  "techstack": {
+    "badge": "Uzmanlıklar",
+    "title": "Temel Yetkinlikler",
+    "c1": "Kurumsal Coğrafi Bilgi Sistemleri (CBS) ve Veri Mimarisi",
+    "c2": "JavaScript (React.js) ile Özel Web-CBS Geliştirme",
+    "c3": "Python (ArcPy, Pandas) ile Veri İşleme ve Otomasyon",
+    "c4": "Coğrafi Veri Tabanı (Geodatabase) Yönetimi ve Kartografya",
+    "c5": "Kentsel Dönüşüm Fizibilite ve Matematiksel Dağıtım Modelleri",
+    "c6": "Sosyal Doku Analizi ve Vatandaş/Hak Sahibi Uzlaşma Süreçleri"
+  },
+  "experience": {
+    "badge": "İş Deneyimi",
+    "title": "Kariyer Yolculuğu",
+    "eduBadge": "Eğitim",
+    "eduTitle": "Akademik Geçmiş",
+    "catGIS": "CBS ÇALIŞMALARI",
+    "catUrban": "KENTSEL DÖNÜŞÜM ÇALIŞMALARI",
+    "exp1_title": "Mülkiyet Yönetim Sistemleri",
+    "exp1_date": "Kasım 2021 - Temmuz 2026",
+    "exp1_desc1": "Kurumların gayrimenkul portföyünü yöneten, tüm mülkiyet verilerini mekansal olarak analiz eden, süreçleri dijitalleştiren kurumsal Web-GIS platformu mimarisinin kurgulanması ve geliştirilmesi süreçlerinde aktif rol aldım.",
+    "exp1_desc2": "Excel, PDF ve fiziksel evraklardaki karmaşık verilerin işlenip dijital ortama aktarılması (dijital dönüşüm) operasyonlarını yürüttüm.",
+    "exp1_desc3": "Çoklu şirket ve kamu verilerini tek veri tabanı hiyerarşisinde toplayan, rol tabanlı yetkilendirme ile yönetilen, ölçeklenebilir bir sistemin tasarımında görev aldım.",
+    "exp1_desc4": "Parsel, taşınmaz, imar durumu, plan kararları ve proje envanterinin dinamik katmanlarla analiz edilebilir hale getirilmesi çalışmalarında yer aldım.",
+    "exp1_desc5": "Harita, zaman ve öznitelik tabanlı karar destek sistemi ile yönetim ekiplerinin hızlı ve doğru raporlama alabileceği interaktif paneller ve tematik analiz araçlarının geliştirilmesinde sorumluluk üstlendim.",
+    
+    "exp2_title": "ArcGIS Experience Builder Özel Widget (Custom Widget) Mimarisi",
+    "exp2_date": "Kasım 2021 - Temmuz 2026",
+    "exp2_desc1": "Hiyerarşik Katman Yöneticisi: Tarayıcıda geçici veri katmanlarının dondurulmasını sağlayan özel widget geliştirerek kullanıcı deneyimini optimize ettim.",
+    "exp2_desc2": "Dinamik PDF Raporlama: Harita görünümlerini ve analiz grafiklerini kurumsal şablonda anlık raporlayan modül tasarladım.",
+    "exp2_desc3": "TKGM Entegrasyonu: Koordinat verisinden dinamik parsel sorgu bağlantıları üreten analiz araçları kurguladım.",
+
+    "exp3_title": "Mekansal Veri Mühendisliği, Web Scraping & Otomasyon Betikleri",
+    "exp3_date": "Kasım 2021 - Temmuz 2026",
+    "exp3_desc1": "Geliştirdiğim Python/ArcPy otomasyon betiklerini, orijinal veri içeriğine ve sütun başlıklarına kesinlikle müdahale etmeyecek şekilde (veri bütünlüğünü koruyarak) yapılandırdım.",
+
+    "exp4_title": "Açık Kaynak Web-GIS ve Özel Harita Uygulamaları",
+    "exp4_date": "Kasım 2021 - Temmuz 2026",
+    "exp4_desc1": "Lisans bağımlılığı gerektirmeyen, geniş kapsamlı Excel envanter verilerinin doğrudan tarayıcı üzerinde mekansal analizinin yapılabildiği açık kaynaklı Web-GIS portalları kodluyor ve bağımsız projeler geliştiriyorum.",
+    "exp4_desc2": "İleri düzey etkileşimli web deneyimleri tasarlıyor; portföy sistemleri ve veri analiz süreçleri için modern ve estetik arayüzler geliştiriyorum.",
+
+    "exp5_title": "Kentsel Dönüşüm ve Uzlaşma Yönetimi",
+    "exp5_date": "Kasım 2021 - Temmuz 2026",
+    "exp5_desc1": "Fizibilite ve Matematiksel Modelleme: Kentsel dönüşüm alanları için çok kriterli fizibilite çalışmaları yürütülerek; hak sahipliği tespitleri üzerinden matematiksel değerleme ve adil dağıtım modellerinin kurgulanmasında rol aldım.",
+    "exp5_desc2": "Mekansal ve Sosyal Veri Analitiği: Dönüşüm alanlarının mekansal veri üretimini ve haritalandırma süreçlerini yönettim. Sahadan toplanan anket verilerini Excel kullanarak işleyip, projenin sosyal doku analizlerinin ve demografik raporlamalarının yapılmasında görev aldım.",
+    "exp5_desc3": "Vatandaş ve Sözleşme Süreçleri: Projelerde hak sahipleriyle doğrudan görüşmeleri yöneterek, şeffaf bilgi akışının sağlanması ve resmi uzlaşma-sözleşme süreçlerinde aktif rol aldım.",
+
+    "edu1_school": "Dokuz Eylül Üniversitesi",
+    "edu1_faculty": "Mimarlık Fakültesi",
+    "edu1_dept": "Şehir ve Bölge Planlama (Lisans)",
+    "edu1_date": "2015 - 2020",
+    "edu1_desc": "CBS teknolojisi ve mekansal analiz konularına odaklanarak, kentsel planlama ve morfoloji projelerinin (1/1000, 1/5000, 1/25000 ölçekli imar ve çevre düzeni planları) tamamlanması."
+  },
+  "projects": {
+    "badge": "Projeler",
+    "title": "Seçilmiş Çalışmalar",
+    "viewProject": "Projeyi İncele",
+    "close": "Kapat",
+    
+    "p1_title": "Mülkiyet Yönetim Sistemleri",
+    "p1_desc": "Gayrimenkul portföyünü yöneten, tüm mülkiyet verilerini mekansal olarak analiz eden ve süreçleri dijitalleştiren kurumsal Web-GIS platformu. Parsel, taşınmaz, imar durumu, plan kararları ve proje envanteri dinamik katmanlarla analiz edilebilir hale getirilmiştir. Çoklu şirket ve kamu verilerini tek veri tabanı hiyerarşisinde toplayan, rol tabanlı yetkilendirme ile yönetilen ölçeklenebilir bir mimari kurgulanmıştır. Platformun kullanıcı arayüzünde mekansal analiz, geometrik özellikler, imar uygunluk, proje geliştirme süreçleri, finansal göstergeler ve dış sistem entegrasyonu gibi modüller yer almaktadır. Harita, zaman ve öznitelik tabanlı karar destek sistemi üzerinden yönetim ekiplerinin hızlı ve doğru raporlama alabileceği interaktif paneller ve tematik analiz araçları geliştirilmiştir. Excel, PDF ve fiziksel evraklardaki karmaşık verilerin dijital ortama aktarılması süreçleri yürütülmüştür.",
+    
+    "p2_title": "ArcGIS Experience Builder Özel Widget Mimarisi",
+    "p2_desc": "ArcGIS Experience Builder üzerinde kurumsal CBS iş akışlarını optimize eden özel widget'lar tasarlanmış ve geliştirilmiştir. Hiyerarşik Katman Yöneticisi ile tarayıcıda geçici veri katmanlarının dondurulması sağlanarak kullanıcı deneyimi iyileştirilmiştir. Dinamik PDF Raporlama modülü ile harita görünümleri ve analiz grafikleri kurumsal şablonda anlık olarak raporlanabilir hale getirilmiştir. TKGM koordinat entegrasyonu sayesinde koordinat verisinden dinamik parsel sorgu bağlantıları üreten analiz araçları kurgulanmıştır. Katman yönetimi, grup filtreleme, akıllı arama motoru, veri dışa aktarımı ve yönetim paneli gibi farklı işlevlere sahip widget bileşenleri üretilmiştir.",
+    
+    "p3_title": "Mekansal Veri Mühendisliği & Otomasyon",
+    "p3_desc": "Python ve ArcPy ile geliştirilen otomasyon betikleri aracılığıyla mekansal veri bütünlüğü korunarak veri entegrasyonu ve yönetimi süreçleri yürütülmüştür. Orijinal veri içeriğine ve sütun başlıklarına müdahale etmeksizin Excel, PDF ve fiziksel evraklardaki karmaşık verilerin dijital ortama aktarılması (dijital dönüşüm) operasyonları gerçekleştirilmiştir. Pandas ile büyük veri setlerinin işlenmesi, coğrafi veri tabanı yapısına entegrasyonu ve tekrarlayan veri hazırlama süreçlerinin otomatikleştirilmesi sağlanmıştır.",
+    
+    "p4_title": "Açık Kaynak Web-GIS ve Özel Harita Uygulamaları",
+    "p4_desc": "Lisans bağımlılığı gerektirmeyen, geniş kapsamlı Excel envanter verilerinin doğrudan tarayıcı üzerinde mekansal analizinin yapılabildiği açık kaynaklı Web-GIS portalları kodlanmakta ve bağımsız projeler geliştirilmektedir. React-Leaflet ve OpenLayers altyapısıyla etkileşimli harita deneyimleri tasarlanarak portföy sistemleri ve veri analiz süreçleri için modern arayüzler üretilmektedir. Ticari CBS yazılımlarına alternatif olarak geliştirilen bu projeler, tarayıcı tabanlı mekansal analiz ve görselleştirme ihtiyaçlarına yönelik çözümler sunmaktadır."
+  }
+}

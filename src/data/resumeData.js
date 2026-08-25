@@ -1,72 +1,72 @@
-export const experiences = [
+export const getExperiences = (t) => [
   {
     id: 1,
-    category: "CBS ÇALIŞMALARI",
-    title: "Mülkiyet Yönetim Sistemleri",
-    date: "Kasım 2021 - Temmuz 2026",
+    category: t('experience.catGIS'),
+    title: t('experience.exp1_title'),
+    date: t('experience.exp1_date'),
     description: [
-      "Kurumların gayrimenkul portföyünü yöneten, tüm mülkiyet verilerini mekansal olarak analiz eden, süreçleri dijitalleştiren kurumsal Web-GIS platformu mimarisinin kurgulanması ve geliştirilmesi süreçlerinde aktif rol aldım.",
-      "Excel, PDF ve fiziksel evraklardaki karmaşık verilerin işlenip dijital ortama aktarılması (dijital dönüşüm) operasyonlarını yürüttüm.",
-      "Çoklu şirket ve kamu verilerini tek veri tabanı hiyerarşisinde toplayan, rol tabanlı yetkilendirme ile yönetilen, ölçeklenebilir bir sistemin tasarımında görev aldım.",
-      "Parsel, taşınmaz, imar durumu, plan kararları ve proje envanterinin dinamik katmanlarla analiz edilebilir hale getirilmesi çalışmalarında yer aldım.",
-      "Harita, zaman ve öznitelik tabanlı karar destek sistemi ile yönetim ekiplerinin hızlı ve doğru raporlama alabileceği interaktif paneller ve tematik analiz araçlarının geliştirilmesinde sorumluluk üstlendim."
+      t('experience.exp1_desc1'),
+      t('experience.exp1_desc2'),
+      t('experience.exp1_desc3'),
+      t('experience.exp1_desc4'),
+      t('experience.exp1_desc5')
     ],
     tech: ["ArcGIS Pro", "ArcGIS Enterprise 11.x", "Esri REST API", "JavaScript (ES6+)", "React.js", "TypeScript", "Node.js", "Arcade", "Calcite UI"]
   },
   {
     id: 2,
-    category: "CBS ÇALIŞMALARI",
-    title: "ArcGIS Experience Builder Özel Widget (Custom Widget) Mimarisi",
-    date: "Kasım 2021 - Temmuz 2026",
+    category: t('experience.catGIS'),
+    title: t('experience.exp2_title'),
+    date: t('experience.exp2_date'),
     description: [
-      "Hiyerarşik Katman Yöneticisi: Tarayıcıda geçici veri katmanlarının dondurulmasını sağlayan özel widget geliştirerek kullanıcı deneyimini optimize ettim.",
-      "Dinamik PDF Raporlama: Harita görünümlerini ve analiz grafiklerini kurumsal şablonda anlık raporlayan modül tasarladım.",
-      "TKGM Entegrasyonu: Koordinat verisinden dinamik parsel sorgu bağlantıları üreten analiz araçları kurguladım."
+      t('experience.exp2_desc1'),
+      t('experience.exp2_desc2'),
+      t('experience.exp2_desc3')
     ],
     tech: ["React.js", "TypeScript", "JavaScript (ES6+)", "Arcade Scripting", "Calcite UI"]
   },
   {
     id: 3,
-    category: "CBS ÇALIŞMALARI",
-    title: "Mekansal Veri Mühendisliği, Web Scraping & Otomasyon Betikleri",
-    date: "Kasım 2021 - Temmuz 2026",
+    category: t('experience.catGIS'),
+    title: t('experience.exp3_title'),
+    date: t('experience.exp3_date'),
     description: [
-      "Geliştirdiğim Python/ArcPy otomasyon betiklerini, orijinal veri içeriğine ve sütun başlıklarına kesinlikle müdahale etmeyecek şekilde (veri bütünlüğünü koruyarak) yapılandırdım."
+      t('experience.exp3_desc1')
     ],
     tech: ["Python", "ArcPy", "Pandas"]
   },
   {
     id: 4,
-    category: "CBS ÇALIŞMALARI",
-    title: "Açık Kaynak Web-GIS ve Özel Harita Uygulamaları",
-    date: "Kasım 2021 - Temmuz 2026",
+    category: t('experience.catGIS'),
+    title: t('experience.exp4_title'),
+    date: t('experience.exp4_date'),
     description: [
-      "Lisans bağımlılığı gerektirmeyen, geniş kapsamlı Excel envanter verilerinin doğrudan tarayıcı üzerinde mekansal analizinin yapılabildiği açık kaynaklı Web-GIS portalları kodluyor ve bağımsız projeler geliştiriyorum.",
-      "İleri düzey etkileşimli web deneyimleri tasarlıyor; portföy sistemleri ve veri analiz süreçleri için modern ve estetik arayüzler geliştiriyorum."
+      t('experience.exp4_desc1'),
+      t('experience.exp4_desc2')
     ],
     tech: ["React-Leaflet", "OpenLayers", "WebGL"]
   },
   {
     id: 5,
-    category: "KENTSEL DÖNÜŞÜM ÇALIŞMALARI",
-    title: "Kentsel Dönüşüm ve Uzlaşma Yönetimi",
-    date: "Kasım 2021 - Temmuz 2026",
+    category: t('experience.catUrban'),
+    title: t('experience.exp5_title'),
+    date: t('experience.exp5_date'),
     description: [
-      "Fizibilite ve Matematiksel Modelleme: Kentsel dönüşüm alanları için çok kriterli fizibilite çalışmaları yürütülerek; hak sahipliği tespitleri üzerinden matematiksel değerleme ve adil dağıtım modellerinin kurgulanmasında rol aldım.",
-      "Mekansal ve Sosyal Veri Analitiği: Dönüşüm alanlarının mekansal veri üretimini ve haritalandırma süreçlerini yönettim. Sahadan toplanan anket verilerini Excel kullanarak işleyip, projenin sosyal doku analizlerinin ve demografik raporlamalarının yapılmasında görev aldım.",
-      "Vatandaş ve Sözleşme Süreçleri: Projelerde hak sahipleriyle doğrudan görüşmeleri yöneterek, şeffaf bilgi akışının sağlanması ve resmi uzlaşma-sözleşme süreçlerinde aktif rol aldım."
+      t('experience.exp5_desc1'),
+      t('experience.exp5_desc2'),
+      t('experience.exp5_desc3')
     ],
     tech: ["Excel", "Matematiksel Modelleme", "Veri Analitiği", "Sosyal Etki Analizi"]
   }
 ];
 
-export const education = [
+export const getEducation = (t) => [
   {
     id: 1,
-    school: "Dokuz Eylül Üniversitesi",
-    faculty: "Mimarlık Fakültesi",
-    department: "Şehir ve Bölge Planlama (Lisans)",
-    date: "2015 - 2020",
-    description: "CBS teknolojisi ve mekansal analiz konularına odaklanarak, kentsel planlama ve morfoloji projelerinin (1/1000, 1/5000, 1/25000 ölçekli imar ve çevre düzeni planları) tamamlanması."
+    school: t('experience.edu1_school'),
+    faculty: t('experience.edu1_faculty'),
+    department: t('experience.edu1_dept'),
+    date: t('experience.edu1_date'),
+    description: t('experience.edu1_desc')
   }
 ];
