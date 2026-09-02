@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { AnimatePresence } from 'framer-motion';
 import ProjectCard from '../ui/ProjectCard';
 import ProjectModal from '../ui/ProjectModal';
 import { getProjects } from '../../data/projectsData';
@@ -30,13 +31,16 @@ export default function Projects() {
         ))}
       </div>
 
-      {activeProject && (
-        <ProjectModal 
-          project={activeProject} 
-          onClose={() => setActiveProject(null)} 
-          t={t}
-        />
-      )}
+      <AnimatePresence>
+        {activeProject && (
+          <ProjectModal
+            key={activeProject.id}
+            project={activeProject}
+            onClose={() => setActiveProject(null)}
+            t={t}
+          />
+        )}
+      </AnimatePresence>
     </section>
   );
 }

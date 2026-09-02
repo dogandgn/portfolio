@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion as Motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 
 const containerVariants = {
@@ -37,7 +37,7 @@ export default function TechStack() {
         <h3 className="text-3xl md:text-[32px] font-bold text-ink leading-snug tracking-tight">{t('techstack.title')}</h3>
       </div>
 
-      <motion.div 
+      <Motion.div
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
@@ -45,7 +45,7 @@ export default function TechStack() {
         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
       >
         {coreCompetencies.map((comp, index) => (
-          <motion.div 
+          <Motion.div
             key={index}
             variants={cardVariants}
             className="flex items-start bg-deep border border-gunmetal p-6 rounded-2xl hover:border-signal/50 transition-colors group"
@@ -56,9 +56,9 @@ export default function TechStack() {
             <h4 className="text-sm font-medium text-fog group-hover:text-ink transition-colors leading-relaxed">
               {comp.title}
             </h4>
-          </motion.div>
+          </Motion.div>
         ))}
-      </motion.div>
+      </Motion.div>
 
     </section>
   );

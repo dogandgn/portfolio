@@ -7,17 +7,19 @@ export default function InteractiveBackground() {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
     let animationFrameId;
+    let isPageVisible = !document.hidden;
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     let points = [];
     const gap = 40;
     const mouse = { x: null, y: null, radius: 180 };
 
-    let cols, rows;
+    let cols, rows, viewportWidth, viewportHeight;
 
     const initPoints = () => {
       points = [];
-      cols = Math.ceil(canvas.width / gap) + 2;
-      rows = Math.ceil(canvas.height / gap) + 2;
+      cols = Math.ceil(viewportWidth / gap) + 2;
+      rows = Math.ceil(viewportHeight / gap) + 2;
 
       for (let i = 0; i < rows; i++) {
         let rowPoints = [];
@@ -38,9 +40,15 @@ export default function InteractiveBackground() {
     };
 
     const resizeCanvas = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+      const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+      viewportWidth = window.innerWidth;
+      viewportHeight = window.innerHeight;
+      canvas.width = Math.round(viewportWidth * pixelRatio);
+      canvas.height = Math.round(viewportHeight * pixelRatio);
+      ctx.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
       initPoints();
+
+      if (reducedMotion) draw();
     };
 
     const handleMouseMove = (e) => {
@@ -54,7 +62,7 @@ export default function InteractiveBackground() {
     };
 
     const draw = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.clearRect(0, 0, viewportWidth, viewportHeight);
       
       ctx.strokeStyle = 'rgba(201, 162, 39, 0.22)';
       ctx.lineWidth = 1.4;
@@ -100,12 +108,20 @@ export default function InteractiveBackground() {
         ctx.stroke();
       }
 
-      animationFrameId = requestAnimationFrame(draw);
+      if (!reducedMotion && isPageVisible) {
+        animationFrameId = requestAnimationFrame(draw);
+      }
+    };
+
+    const handleVisibilityChange = () => {
+      isPageVisible = !document.hidden;
+      if (isPageVisible && !reducedMotion) draw();
     };
 
     window.addEventListener('resize', resizeCanvas);
     window.addEventListener('mousemove', handleMouseMove);
     window.addEventListener('mouseleave', handleMouseLeave);
+    document.addEventListener('visibilitychange', handleVisibilityChange);
     
     resizeCanvas();
     draw();
@@ -114,6 +130,7 @@ export default function InteractiveBackground() {
       window.removeEventListener('resize', resizeCanvas);
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mouseleave', handleMouseLeave);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
       cancelAnimationFrame(animationFrameId);
     };
   }, []);

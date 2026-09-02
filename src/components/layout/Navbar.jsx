@@ -17,7 +17,8 @@ export default function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener('scroll', handleScroll);
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -33,7 +34,11 @@ export default function Navbar() {
     }
   }, [isDarkMode]);
 
-  const toggleTheme = () => setIsDarkMode(!isDarkMode);
+  useEffect(() => {
+    document.documentElement.lang = i18n.resolvedLanguage?.startsWith('en') ? 'en' : 'tr';
+  }, [i18n.resolvedLanguage]);
+
+  const toggleTheme = () => setIsDarkMode((current) => !current);
   
   const toggleLanguage = () => {
     const newLang = i18n.language.startsWith('tr') ? 'en' : 'tr';
@@ -59,6 +64,8 @@ export default function Navbar() {
           <div className="flex items-center gap-2 ml-2">
             <button 
               onClick={toggleLanguage}
+              type="button"
+              aria-label={currentLang === 'TR' ? 'Switch to English' : 'Türkçeye geç'}
               className="w-10 h-10 rounded-full flex items-center justify-center bg-gunmetal text-ink font-medium text-sm hover:text-signal transition-colors"
               title="Change Language"
             >
@@ -66,6 +73,8 @@ export default function Navbar() {
             </button>
             <button 
               onClick={toggleTheme}
+              type="button"
+              aria-label={isDarkMode ? t('nav.lightMode') : t('nav.darkMode')}
               className="w-10 h-10 rounded-full flex items-center justify-center bg-gunmetal text-ink hover:text-signal transition-colors"
               title={isDarkMode ? t('nav.lightMode') : t('nav.darkMode')}
             >
@@ -78,19 +87,27 @@ export default function Navbar() {
         <div className="md:hidden flex items-center gap-3">
           <button 
             onClick={toggleLanguage}
+            type="button"
+            aria-label={currentLang === 'TR' ? 'Switch to English' : 'Türkçeye geç'}
             className="w-8 h-8 rounded-full flex items-center justify-center bg-gunmetal text-ink font-medium text-xs hover:text-signal transition-colors"
           >
             {currentLang}
           </button>
           <button 
             onClick={toggleTheme}
+            type="button"
+            aria-label={isDarkMode ? t('nav.lightMode') : t('nav.darkMode')}
             className="w-8 h-8 rounded-full flex items-center justify-center bg-gunmetal text-ink hover:text-signal transition-colors"
           >
             <i className={`fa-solid ${isDarkMode ? 'fa-sun' : 'fa-moon'}`}></i>
           </button>
 
           <button 
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            type="button"
+            onClick={() => setIsMobileMenuOpen((current) => !current)}
+            aria-expanded={isMobileMenuOpen}
+            aria-controls="mobile-navigation"
+            aria-label={isMobileMenuOpen ? 'Menüyü kapat' : 'Menüyü aç'}
             className="text-ink hover:text-signal transition-colors p-1"
           >
             <i className={`fa-solid ${isMobileMenuOpen ? 'fa-xmark' : 'fa-bars'} text-xl`}></i>
@@ -99,7 +116,7 @@ export default function Navbar() {
       </nav>
 
       {/* Mobile Menu Dropdown */}
-      <div className={`md:hidden absolute top-[62px] left-0 w-full bg-void border-b border-gunmetal transition-all duration-300 overflow-hidden ${isMobileMenuOpen ? 'max-h-64 opacity-100' : 'max-h-0 opacity-0'}`}>
+      <div id="mobile-navigation" aria-hidden={!isMobileMenuOpen} className={`md:hidden absolute top-[62px] left-0 w-full bg-void border-b border-gunmetal transition-all duration-300 overflow-hidden ${isMobileMenuOpen ? 'max-h-64 opacity-100' : 'max-h-0 opacity-0 pointer-events-none'}`}>
         <div className="flex flex-col px-6 py-4 gap-4">
           <a href="#about" onClick={() => setIsMobileMenuOpen(false)} className="text-fog hover:text-ink transition-colors font-medium">{t('nav.about')}</a>
           <a href="#experience" onClick={() => setIsMobileMenuOpen(false)} className="text-fog hover:text-ink transition-colors font-medium">{t('nav.experience')}</a>

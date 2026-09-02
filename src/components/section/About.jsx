@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion as Motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 
 export default function About() {
@@ -20,7 +20,7 @@ export default function About() {
           )}
         </div>
 
-        <motion.div 
+        <Motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
@@ -33,7 +33,7 @@ export default function About() {
           <p>
             {t('about.p2')}
           </p>
-        </motion.div>
+        </Motion.div>
 
       </div>
     </section>

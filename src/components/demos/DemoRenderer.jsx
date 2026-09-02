@@ -1,20 +1,26 @@
-import React from 'react';
-import MapsDemo from './MapsDemo';
-import WidgetDemo from './WidgetDemo';
-import AutomationDemo from './AutomationDemo';
-import OpenSourceDemo from './OpenSourceDemo';
+import React, { lazy, Suspense } from 'react';
+
+const demoComponents = {
+  1: lazy(() => import('./MapsDemo')),
+  2: lazy(() => import('./WidgetDemo')),
+  3: lazy(() => import('./AutomationDemo')),
+  4: lazy(() => import('./OpenSourceDemo')),
+};
 
 export default function DemoRenderer({ projectId }) {
-  switch (projectId) {
-    case 1:
-      return <MapsDemo />;
-    case 2:
-      return <WidgetDemo />;
-    case 3:
-      return <AutomationDemo />;
-    case 4:
-      return <OpenSourceDemo />;
-    default:
-      return null;
-  }
+  const Demo = demoComponents[projectId];
+
+  if (!Demo) return null;
+
+  return (
+    <Suspense
+      fallback={(
+        <div className="flex h-full items-center justify-center text-sm text-muted" role="status">
+          Demo yükleniyor…
+        </div>
+      )}
+    >
+      <Demo />
+    </Suspense>
+  );
 }

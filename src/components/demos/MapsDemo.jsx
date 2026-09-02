@@ -1,6 +1,6 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { MapContainer, TileLayer, Polygon, Popup, useMap } from 'react-leaflet';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion as Motion, AnimatePresence } from 'framer-motion';
 import 'leaflet/dist/leaflet.css';
 
 const categories = [
@@ -101,7 +101,7 @@ export default function MapsDemo() {
 
               <AnimatePresence>
                 {openCategories[cat.id] && (
-                  <motion.div
+                  <Motion.div
                     initial={{ height: 0, opacity: 0 }}
                     animate={{ height: 'auto', opacity: 1 }}
                     exit={{ height: 0, opacity: 0 }}
@@ -125,7 +125,7 @@ export default function MapsDemo() {
                         </button>
                       );
                     })}
-                  </motion.div>
+                  </Motion.div>
                 )}
               </AnimatePresence>
             </div>
@@ -199,7 +199,7 @@ export default function MapsDemo() {
 
         <AnimatePresence>
           {split3D && (
-            <motion.div 
+            <Motion.div
               initial={{ width: 0, opacity: 0 }}
               animate={{ width: '50%', opacity: 1 }}
               exit={{ width: 0, opacity: 0 }}
@@ -222,14 +222,14 @@ export default function MapsDemo() {
                 </div>
               </div>
               <div className="absolute bottom-3 right-3 text-[10px] text-ash bg-void/70 px-2 py-1 rounded">3B Görünüm (Temsili)</div>
-            </motion.div>
+            </Motion.div>
           )}
         </AnimatePresence>
       </div>
 
       <AnimatePresence>
         {selectedParcel && (
-          <motion.div 
+          <Motion.div
             initial={{ x: '100%', opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             exit={{ x: '100%', opacity: 0 }}
@@ -285,7 +285,7 @@ export default function MapsDemo() {
                 <i className="fa-solid fa-external-link text-steel text-[10px] ml-auto"></i>
               </div>
             </div>
-          </motion.div>
+          </Motion.div>
         )}
       </AnimatePresence>
 

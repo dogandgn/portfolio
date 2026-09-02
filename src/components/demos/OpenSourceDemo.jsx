@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion as Motion, AnimatePresence } from 'framer-motion';
 
 export default function OpenSourceDemo() {
   const [activeApp, setActiveApp] = useState('birdmap');
@@ -36,7 +36,7 @@ export default function OpenSourceDemo() {
         <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'radial-gradient(#007afc 1px, transparent 1px)', backgroundSize: '24px 24px' }}></div>
 
         <AnimatePresence mode="wait">
-          <motion.div 
+          <Motion.div
             key={currentApp.id}
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -74,7 +74,7 @@ export default function OpenSourceDemo() {
               </div>
               
             </div>
-          </motion.div>
+          </Motion.div>
         </AnimatePresence>
 
       </div>

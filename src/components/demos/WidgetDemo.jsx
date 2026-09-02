@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion as Motion, AnimatePresence } from 'framer-motion';
 
 const widgets = [
   {
@@ -104,7 +104,7 @@ function LayerManagerInteractive() {
           <button key={item.id} onClick={() => toggle(item.id)} className="w-full flex items-center gap-2.5 px-3 py-2 hover:bg-void/50 transition-colors text-left">
             <i className={`fa-${item.checked ? 'solid fa-square-check text-signal' : 'regular fa-square text-steel'} text-sm`}></i>
             <span className={`text-xs ${item.checked ? 'text-silver' : 'text-pewter'}`}>{item.label}</span>
-            {item.checked && <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="w-1.5 h-1.5 rounded-full bg-signal ml-auto"></motion.div>}
+            {item.checked && <Motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="w-1.5 h-1.5 rounded-full bg-signal ml-auto"></Motion.div>}
           </button>
         ))}
       </div>
@@ -199,7 +199,7 @@ function PdfInteractive() {
       {(running || progress === 100) && (
         <div>
           <div className="w-full h-1.5 bg-void rounded-full overflow-hidden">
-            <motion.div className={`h-full rounded-full ${progress === 100 ? 'bg-signal' : 'bg-signal/80'}`} animate={{ width: `${progress}%` }}></motion.div>
+            <Motion.div className={`h-full rounded-full ${progress === 100 ? 'bg-signal' : 'bg-signal/80'}`} animate={{ width: `${progress}%` }}></Motion.div>
           </div>
           <p className={`text-[10px] mt-1 ${progress === 100 ? 'text-signal' : 'text-pewter'}`}>
             {progress === 100 ? '✓ PDF oluşturuldu' : `Ekran görüntüsü alınıyor... %${progress}`}
@@ -295,15 +295,15 @@ export default function WidgetDemo() {
                   <h4 className={`text-sm font-semibold ${isOpen ? 'text-ink' : 'text-silver'}`}>{w.title}</h4>
                   <p className="text-[10px] text-pewter truncate">{w.subtitle}</p>
                 </div>
-                <motion.i 
+                <Motion.i
                   animate={{ rotate: isOpen ? 180 : 0 }}
                   className="fa-solid fa-chevron-down text-pewter text-xs shrink-0"
-                ></motion.i>
+                ></Motion.i>
               </button>
 
               <AnimatePresence>
                 {isOpen && (
-                  <motion.div
+                  <Motion.div
                     initial={{ height: 0, opacity: 0 }}
                     animate={{ height: 'auto', opacity: 1 }}
                     exit={{ height: 0, opacity: 0 }}
@@ -333,7 +333,7 @@ export default function WidgetDemo() {
                         </div>
                       </div>
                     </div>
-                  </motion.div>
+                  </Motion.div>
                 )}
               </AnimatePresence>
             </div>

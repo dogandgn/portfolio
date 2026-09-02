@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion as Motion, AnimatePresence } from 'framer-motion';
 
 export default function AutomationDemo() {
   const [step, setStep] = useState(0);
@@ -32,28 +32,28 @@ export default function AutomationDemo() {
           <div className="hidden md:flex flex-1 items-center justify-center relative h-10">
             <div className="w-full h-1 bg-gunmetal rounded absolute"></div>
             {step >= 1 && (
-              <motion.div 
+              <Motion.div
                 className="w-full h-1 bg-signal absolute origin-left rounded"
                 initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ duration: 0.5 }}
-              ></motion.div>
+              ></Motion.div>
             )}
             {step === 1 && (
-              <motion.div 
+              <Motion.div
                 className="text-signal absolute"
                 initial={{ x: -60 }} animate={{ x: 60 }} transition={{ duration: 1, repeat: Infinity }}
               >
                 <i className="fa-solid fa-file-code"></i>
-              </motion.div>
+              </Motion.div>
             )}
           </div>
 
           <div className={`flex flex-col items-center transition-opacity duration-500 ${step >= 1 ? 'opacity-100' : 'opacity-50'}`}>
             <div className={`w-24 h-24 rounded-full flex items-center justify-center text-4xl mb-4 border-2 transition-all ${step === 1 || step === 2 ? 'bg-signal/10 border-signal text-signal scale-110' : 'bg-deep border-graphite text-ash scale-100'}`}>
-              <motion.i 
+              <Motion.i
                 animate={{ rotate: step === 1 || step === 2 ? 360 : 0 }} 
                 transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
                 className="fa-brands fa-python"
-              ></motion.i>
+              ></Motion.i>
             </div>
             <div className="text-ink font-semibold text-sm">Selenium & ArcPy</div>
             <div className="text-ash text-xs">Veri İşleme ve Dönüşüm</div>
@@ -62,18 +62,18 @@ export default function AutomationDemo() {
           <div className="hidden md:flex flex-1 items-center justify-center relative h-10">
             <div className="w-full h-1 bg-gunmetal rounded absolute"></div>
             {step >= 3 && (
-              <motion.div 
+              <Motion.div
                 className="w-full h-1 bg-signal absolute origin-left rounded"
                 initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ duration: 0.5 }}
-              ></motion.div>
+              ></Motion.div>
             )}
             {step === 3 && (
-              <motion.div 
+              <Motion.div
                 className="text-signal absolute"
                 initial={{ x: -60 }} animate={{ x: 60 }} transition={{ duration: 1, repeat: Infinity }}
               >
                 <i className="fa-solid fa-database"></i>
-              </motion.div>
+              </Motion.div>
             )}
           </div>
 
@@ -89,10 +89,10 @@ export default function AutomationDemo() {
 
         <div className="mt-16 text-center h-8">
           <AnimatePresence mode="wait">
-            {step === 0 && <motion.div key="0" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="text-fog">1. Selenium botları kaynak portaldan güncel KML verilerini tespit eder.</motion.div>}
-            {step === 1 && <motion.div key="1" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="text-signal">2. Veriler otomatik olarak indirilip çalışma dizinine aktarılır.</motion.div>}
-            {step === 2 && <motion.div key="2" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="text-signal">3. Python/ArcPy betikleri veriyi işler, sütun bütünlüğünü koruyarak dönüşüm sağlar.</motion.div>}
-            {step === 3 && <motion.div key="3" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="text-signal">4. Güncel mekansal veriler başarıyla kurumun CBS veritabanına yazılır.</motion.div>}
+            {step === 0 && <Motion.div key="0" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="text-fog">1. Selenium botları kaynak portaldan güncel KML verilerini tespit eder.</Motion.div>}
+            {step === 1 && <Motion.div key="1" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="text-signal">2. Veriler otomatik olarak indirilip çalışma dizinine aktarılır.</Motion.div>}
+            {step === 2 && <Motion.div key="2" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="text-signal">3. Python/ArcPy betikleri veriyi işler, sütun bütünlüğünü koruyarak dönüşüm sağlar.</Motion.div>}
+            {step === 3 && <Motion.div key="3" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="text-signal">4. Güncel mekansal veriler başarıyla kurumun CBS veritabanına yazılır.</Motion.div>}
           </AnimatePresence>
         </div>
 
