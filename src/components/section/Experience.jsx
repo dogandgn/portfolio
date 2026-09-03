@@ -12,7 +12,6 @@ export default function Experience() {
       
       <div className="flex flex-col lg:flex-row gap-16">
         
-        {/* Deneyim */}
         <div className="lg:w-2/3">
           <div className="mb-4">
             <span className="text-muted text-xs font-medium uppercase tracking-[0.84px]">{t('experience.badge')}</span>
@@ -55,7 +54,6 @@ export default function Experience() {
           </div>
         </div>
 
-        {/* Eğitim */}
         <div className="lg:w-1/3 mt-16 lg:mt-0">
           <div className="mb-4">
             <span className="text-muted text-xs font-medium uppercase tracking-[0.84px]">{t('experience.eduBadge')}</span>

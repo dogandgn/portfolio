@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, Polygon, Popup, useMap } from 'react-leaflet';
 import { motion as Motion, AnimatePresence } from 'framer-motion';
 import 'leaflet/dist/leaflet.css';
@@ -38,6 +38,24 @@ function FlyToParcel({ coords }) {
   return null;
 }
 
+function MapResizeHandler() {
+  const map = useMap();
+
+  useEffect(() => {
+    const container = map.getContainer();
+    const frameId = requestAnimationFrame(() => map.invalidateSize({ pan: false }));
+    const observer = new ResizeObserver(() => map.invalidateSize({ pan: false }));
+    observer.observe(container);
+
+    return () => {
+      cancelAnimationFrame(frameId);
+      observer.disconnect();
+    };
+  }, [map]);
+
+  return null;
+}
+
 export default function MapsDemo() {
   const [openCategories, setOpenCategories] = useState({ arsa: true, konut: true });
   const [selectedParcel, setSelectedParcel] = useState(null);
@@ -64,7 +82,7 @@ export default function MapsDemo() {
   );
 
   return (
-    <div className="w-full rounded-xl overflow-hidden flex flex-col lg:flex-row relative border border-gunmetal bg-void">
+    <div className="w-full h-full min-h-0 overflow-hidden flex flex-col lg:flex-row relative bg-void">
       
       <div className="w-full lg:w-72 bg-deep/95 border-b lg:border-b-0 lg:border-r border-gunmetal flex flex-col shrink-0 z-20 max-h-[300px] lg:max-h-none">
         
@@ -150,9 +168,9 @@ export default function MapsDemo() {
         </div>
       </div>
 
-      <div className="flex-grow flex flex-col lg:flex-row relative" style={{ minHeight: '400px' }}>
+      <div className="flex min-h-0 flex-1 flex-col lg:flex-row relative">
         
-        <div className={`relative transition-all duration-500 h-[400px] lg:h-auto ${split3D ? 'lg:w-1/2' : 'w-full'}`}>
+        <div className={`relative min-h-[260px] flex-1 transition-all duration-500 lg:h-full lg:min-h-0 ${split3D ? 'lg:w-1/2' : 'w-full'}`}>
           <MapContainer 
             center={[41.0125, 28.9800]} 
             zoom={15} 
@@ -160,6 +178,7 @@ export default function MapsDemo() {
             zoomControl={false}
             attributionControl={false}
           >
+            <MapResizeHandler />
             <TileLayer url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png" />
             
             {flyTarget && <FlyToParcel coords={flyTarget} />}

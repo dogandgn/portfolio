@@ -1,6 +1,7 @@
 {
   "nav": {
     "about": "Hakkımda",
+    "workAreas": "Çalışma Alanları",
     "experience": "Kariyer",
     "projects": "Projeler",
     "contact": "İletişim",
@@ -11,6 +12,9 @@
     "title1": "Şehir Plancısı",
     "title2": "CBS Geliştiricisi",
     "subtitle": "(Urban Planner and GIS Developer)",
+    "description": "Web-GIS uygulamaları geliştiriyorum. Mekânsal verilerin düzenlenmesi, harita üzerinde sunulması ve tekrarlanan işlemlerin otomasyonu üzerine çalışıyorum.",
+    "viewWork": "Çalışmalarımı İncele",
+    "contact": "İletişime Geç",
     "email": "E-Posta",
     "phone": "Telefon",
     "cv": "CV İndir",
@@ -22,6 +26,27 @@
     "title": "",
     "p1": "Şehir Plancısı altyapım ve CBS Geliştiricisi kimliğimle, mekansal verilerin gücünü modern web teknolojileriyle birleştiriyorum. Amacım, karmaşık coğrafi ve kentsel verileri anlaşılır, yönetilebilir ve etkileşimli dijital sistemlere dönüştürmek.",
     "p2": "Özellikle büyük ölçekli gayrimenkul portföylerinin yönetimi, kentsel dönüşüm fizibiliteleri ve otomasyon süreçleri üzerine kurumsal düzeyde çözümler üretiyorum. Haritaların sadece bir görsel değil, güçlü bir karar destek aracı olduğuna inanıyorum."
+  },
+  "workAreas": {
+    "badge": "Çalışma Alanları",
+    "title": "Birlikte Neler Geliştirebiliriz?",
+    "intro": "Aşağıdaki alanlarda kurumlar, ekipler ve bağımsız projelerle çalışabilirim. İşin kapsamı mevcut veri ve ihtiyaca göre belirlenir.",
+    "webGis": {
+      "title": "Web-GIS ve interaktif harita uygulamaları",
+      "description": "Mekânsal verilerin harita üzerinde görüntülendiği, sorgulandığı ve filtrelendiği web uygulamaları geliştiriyorum."
+    },
+    "data": {
+      "title": "Mekânsal veri düzenleme ve entegrasyon",
+      "description": "Excel, CSV ve coğrafi veri setlerini kontrol ediyor, düzenliyor ve kullanılacak sisteme uygun hale getiriyorum."
+    },
+    "automation": {
+      "title": "Veri işleme ve otomasyon",
+      "description": "Tekrarlanan veri hazırlama, dönüştürme ve raporlama işlemleri için Python ve ArcPy araçları geliştiriyorum."
+    },
+    "property": {
+      "title": "Mülkiyet ve portföy sistemleri",
+      "description": "Parsel, taşınmaz, imar ve proje verilerinin birlikte yönetilebildiği harita tabanlı sistemler üzerinde çalışıyorum."
+    }
   },
   "techstack": {
     "badge": "Uzmanlıklar",
@@ -79,8 +104,11 @@
   "projects": {
     "badge": "Projeler",
     "title": "Seçilmiş Çalışmalar",
+    "intro": "Bu çalışmalar, üzerinde çalıştığım sistemleri ve çözüm ürettiğim konuları gösterir. Mevcut açıklamaları ve interaktif demoları inceleyebilirsiniz.",
     "viewProject": "Projeyi İncele",
     "close": "Kapat",
+    "contactText": "Benzer bir sistem veya özel bir çözüm için proje detaylarını birlikte değerlendirebiliriz.",
+    "contactAction": "İletişime Geç",
     
     "p1_title": "Mülkiyet Yönetim Sistemleri",
     "p1_desc": "Gayrimenkul portföyünü yöneten, tüm mülkiyet verilerini mekansal olarak analiz eden ve süreçleri dijitalleştiren kurumsal Web-GIS platformu. Parsel, taşınmaz, imar durumu, plan kararları ve proje envanteri dinamik katmanlarla analiz edilebilir hale getirilmiştir. Çoklu şirket ve kamu verilerini tek veri tabanı hiyerarşisinde toplayan, rol tabanlı yetkilendirme ile yönetilen ölçeklenebilir bir mimari kurgulanmıştır. Platformun kullanıcı arayüzünde mekansal analiz, geometrik özellikler, imar uygunluk, proje geliştirme süreçleri, finansal göstergeler ve dış sistem entegrasyonu gibi modüller yer almaktadır. Harita, zaman ve öznitelik tabanlı karar destek sistemi üzerinden yönetim ekiplerinin hızlı ve doğru raporlama alabileceği interaktif paneller ve tematik analiz araçları geliştirilmiştir. Excel, PDF ve fiziksel evraklardaki karmaşık verilerin dijital ortama aktarılması süreçleri yürütülmüştür.",
@@ -93,5 +121,9 @@
     
     "p4_title": "Açık Kaynak Web-GIS ve Özel Harita Uygulamaları",
     "p4_desc": "Lisans bağımlılığı gerektirmeyen, geniş kapsamlı Excel envanter verilerinin doğrudan tarayıcı üzerinde mekansal analizinin yapılabildiği açık kaynaklı Web-GIS portalları kodlanmakta ve bağımsız projeler geliştirilmektedir. React-Leaflet ve OpenLayers altyapısıyla etkileşimli harita deneyimleri tasarlanarak portföy sistemleri ve veri analiz süreçleri için modern arayüzler üretilmektedir. Ticari CBS yazılımlarına alternatif olarak geliştirilen bu projeler, tarayıcı tabanlı mekansal analiz ve görselleştirme ihtiyaçlarına yönelik çözümler sunmaktadır."
+  },
+  "contact": {
+    "badge": "İletişim",
+    "description": "Web-GIS, mekânsal veri, otomasyon veya harita tabanlı sistem ihtiyaçlarınız için e-posta üzerinden iletişime geçebilirsiniz."
   }
 }

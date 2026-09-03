@@ -6,7 +6,6 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   
-  // Dark mode state
   const [isDarkMode, setIsDarkMode] = useState(() => {
     if (typeof window !== 'undefined') {
       return localStorage.getItem('theme') === 'dark' || 
@@ -22,7 +21,6 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Handle theme toggle
   useEffect(() => {
     const root = window.document.documentElement;
     if (isDarkMode) {
@@ -54,9 +52,9 @@ export default function Navbar() {
           Doğan <span className="text-signal">Ariç</span>
         </a>
         
-        {/* Desktop Menu */}
         <div className="hidden md:flex items-center gap-8">
           <a href="#about" className="text-fog hover:text-ink transition-colors text-[15px] font-medium">{t('nav.about')}</a>
+          <a href="#work-areas" className="text-fog hover:text-ink transition-colors text-[15px] font-medium">{t('nav.workAreas')}</a>
           <a href="#experience" className="text-fog hover:text-ink transition-colors text-[15px] font-medium">{t('nav.experience')}</a>
           <a href="#projects" className="text-fog hover:text-ink transition-colors text-[15px] font-medium">{t('nav.projects')}</a>
           <a href="#contact" className="bg-ink text-deep px-5 py-2 rounded-full text-sm font-medium hover:bg-signal transition-all">{t('nav.contact')}</a>
@@ -83,7 +81,6 @@ export default function Navbar() {
           </div>
         </div>
 
-        {/* Mobile Menu Button & Toggles */}
         <div className="md:hidden flex items-center gap-3">
           <button 
             onClick={toggleLanguage}
@@ -115,10 +112,10 @@ export default function Navbar() {
         </div>
       </nav>
 
-      {/* Mobile Menu Dropdown */}
-      <div id="mobile-navigation" aria-hidden={!isMobileMenuOpen} className={`md:hidden absolute top-[62px] left-0 w-full bg-void border-b border-gunmetal transition-all duration-300 overflow-hidden ${isMobileMenuOpen ? 'max-h-64 opacity-100' : 'max-h-0 opacity-0 pointer-events-none'}`}>
+      <div id="mobile-navigation" aria-hidden={!isMobileMenuOpen} className={`md:hidden absolute top-[62px] left-0 w-full bg-void border-b border-gunmetal transition-all duration-300 overflow-hidden ${isMobileMenuOpen ? 'max-h-80 opacity-100' : 'max-h-0 opacity-0 pointer-events-none'}`}>
         <div className="flex flex-col px-6 py-4 gap-4">
           <a href="#about" onClick={() => setIsMobileMenuOpen(false)} className="text-fog hover:text-ink transition-colors font-medium">{t('nav.about')}</a>
+          <a href="#work-areas" onClick={() => setIsMobileMenuOpen(false)} className="text-fog hover:text-ink transition-colors font-medium">{t('nav.workAreas')}</a>
           <a href="#experience" onClick={() => setIsMobileMenuOpen(false)} className="text-fog hover:text-ink transition-colors font-medium">{t('nav.experience')}</a>
           <a href="#projects" onClick={() => setIsMobileMenuOpen(false)} className="text-fog hover:text-ink transition-colors font-medium">{t('nav.projects')}</a>
           <a href="#contact" onClick={() => setIsMobileMenuOpen(false)} className="text-fog hover:text-ink transition-colors font-medium">{t('nav.contact')}</a>

@@ -2,6 +2,7 @@ import React from 'react';
 import Navbar from '../layout/Navbar';
 import Hero from '../section/Hero';
 import About from '../section/About';
+import WorkAreas from '../section/WorkAreas';
 import TechStack from '../section/TechStack';
 import Experience from '../section/Experience';
 import Projects from '../section/Projects';
@@ -16,6 +17,7 @@ export default function Index() {
         <Navbar />
         <Hero />
         <About />
+        <WorkAreas />
         <TechStack />
         <Experience />
         <Projects />

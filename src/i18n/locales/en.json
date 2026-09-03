@@ -1,6 +1,7 @@
 {
   "nav": {
     "about": "About",
+    "workAreas": "Work Areas",
     "experience": "Experience",
     "projects": "Projects",
     "contact": "Contact",
@@ -11,6 +12,9 @@
     "title1": "Urban Planner",
     "title2": "GIS Developer",
     "subtitle": "(Şehir Plancısı ve CBS Geliştiricisi)",
+    "description": "I develop Web-GIS applications. I work on organizing spatial data, presenting it on maps, and automating repetitive processes.",
+    "viewWork": "View My Work",
+    "contact": "Get in Touch",
     "email": "Email",
     "phone": "Phone",
     "cv": "Download CV",
@@ -22,6 +26,27 @@
     "title": "",
     "p1": "With a background in Urban Planning and expertise as a GIS Developer, I combine the power of spatial data with modern web technologies. My goal is to transform complex geographical and urban data into clear, manageable, and interactive digital systems.",
     "p2": "I specialize in enterprise-level solutions, particularly in large-scale real estate portfolio management, urban regeneration feasibilities, and automation processes. I believe maps are not just visuals, but powerful decision support tools."
+  },
+  "workAreas": {
+    "badge": "Work Areas",
+    "title": "What We Can Work On",
+    "intro": "I can work with organizations, teams, and independent projects in the following areas. The scope is defined according to the available data and requirements.",
+    "webGis": {
+      "title": "Web-GIS and interactive map applications",
+      "description": "I develop web applications where spatial data can be viewed, queried, and filtered on a map."
+    },
+    "data": {
+      "title": "Spatial data preparation and integration",
+      "description": "I review and organize Excel, CSV, and geographic datasets and prepare them for the target system."
+    },
+    "automation": {
+      "title": "Data processing and automation",
+      "description": "I develop Python and ArcPy tools for repetitive data preparation, conversion, and reporting tasks."
+    },
+    "property": {
+      "title": "Property and portfolio systems",
+      "description": "I work on map-based systems that manage parcel, property, zoning, and project data together."
+    }
   },
   "techstack": {
     "badge": "Expertise",
@@ -79,8 +104,11 @@
   "projects": {
     "badge": "Projects",
     "title": "Selected Works",
+    "intro": "These projects show the systems I have worked on and the types of problems I address. You can review the existing descriptions and interactive demos.",
     "viewProject": "View Project",
     "close": "Close",
+    "contactText": "We can review the details if you need a similar system or a custom solution.",
+    "contactAction": "Get in Touch",
     
     "p1_title": "Property Management Systems",
     "p1_desc": "An enterprise Web-GIS platform that manages real estate portfolios, spatially analyzes property data, and digitalizes processes. Parcels, real estate, zoning status, planning decisions, and project inventories are made analyzable via dynamic layers. A scalable architecture managed by role-based authorization consolidates multi-company and public data into a single database hierarchy. The platform's UI includes modules for spatial analysis, geometric properties, zoning compliance, project development, financial indicators, and external system integration. Interactive dashboards and thematic analysis tools were developed over a map, time, and attribute-based decision support system. Digital transformation of complex data from Excel, PDF, and physical documents was successfully executed.",
@@ -93,5 +121,9 @@
     
     "p4_title": "Open Source Web-GIS & Custom Mapping Applications",
     "p4_desc": "Open-source Web-GIS portals are coded and independent projects developed to enable browser-based spatial analysis of extensive Excel inventory data without commercial license dependencies. Interactive map experiences are designed using React-Leaflet and OpenLayers infrastructure, producing modern interfaces for portfolio systems and data analysis workflows. Developed as alternatives to commercial GIS software, these projects offer tailored solutions for browser-based spatial analysis and visualization needs."
+  },
+  "contact": {
+    "badge": "Contact",
+    "description": "You can contact me by email about Web-GIS, spatial data, automation, or map-based system requirements."
   }
 }

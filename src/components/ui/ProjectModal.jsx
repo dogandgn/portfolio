@@ -6,6 +6,7 @@ import DemoRenderer from '../demos/DemoRenderer';
 
 export default function ProjectModal({ project, onClose, t }) {
   const closeButtonRef = useRef(null);
+  const isMapProject = project.id === 1;
 
   useEffect(() => {
     const previousOverflow = document.body.style.overflow;
@@ -39,13 +40,12 @@ export default function ProjectModal({ project, onClose, t }) {
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: 20, scale: 0.98 }}
           transition={{ duration: 0.3, ease: "easeOut" }}
-          className="relative w-full max-w-6xl max-h-[90vh] bg-deep border border-gunmetal rounded-2xl shadow-2xl overflow-hidden flex flex-col md:flex-row"
+          className={`relative w-full bg-deep border border-gunmetal rounded-2xl shadow-2xl overflow-hidden flex flex-col md:flex-row ${isMapProject ? 'md:max-w-[96vw] md:h-[92vh] md:max-h-[92vh]' : 'max-w-6xl max-h-[90vh]'}`}
           role="dialog"
           aria-modal="true"
           aria-labelledby={`project-dialog-title-${project.id}`}
         >
-          {/* Sol Panel: Açıklamalar (Scrollable) */}
-          <div className="w-full md:w-[45%] h-full max-h-[50vh] md:max-h-[90vh] overflow-y-auto border-b md:border-b-0 md:border-r border-gunmetal p-8 custom-scrollbar">
+          <div className={`w-full h-full max-h-[50vh] overflow-y-auto border-b md:border-b-0 md:border-r border-gunmetal p-8 custom-scrollbar ${isMapProject ? 'md:w-[32%] md:max-h-[92vh]' : 'md:w-[45%] md:max-h-[90vh]'}`}>
             <div className="mb-8">
               <h3 id={`project-dialog-title-${project.id}`} className="text-3xl font-bold text-ink mb-4 leading-tight">{project.title}</h3>
               <div className="flex flex-wrap gap-2 mb-6">
@@ -69,12 +69,10 @@ export default function ProjectModal({ project, onClose, t }) {
             </button>
           </div>
 
-          {/* Sağ Panel: Uygulama / Demo (Sticky/Fixed) */}
-          <div className="w-full md:w-[55%] h-[50vh] md:h-[90vh] bg-void relative">
+          <div className={`w-full h-[50vh] bg-void relative min-h-0 ${isMapProject ? 'md:w-[68%] md:h-full' : 'md:w-[55%] md:h-[90vh]'}`}>
             <DemoRenderer projectId={project.id} />
           </div>
 
-          {/* Mobil İçin Sağ Üst Kapatma Butonu */}
           <button 
             type="button"
             onClick={onClose}
