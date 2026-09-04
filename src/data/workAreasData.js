@@ -6,6 +6,12 @@ export const getWorkAreas = (t) => [
     description: t('workAreas.webGis.description'),
   },
   {
+    id: 'websites',
+    icon: 'fa-laptop-code',
+    title: t('workAreas.websites.title'),
+    description: t('workAreas.websites.description'),
+  },
+  {
     id: 'data',
     icon: 'fa-database',
     title: t('workAreas.data.title'),

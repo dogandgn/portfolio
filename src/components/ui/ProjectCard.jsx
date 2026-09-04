@@ -33,6 +33,11 @@ export default function ProjectCard({ project, onClick, t }) {
           
           <div className="absolute bottom-6 left-6 right-6">
             <h4 className="text-2xl font-bold text-white mb-2 [text-shadow:0_2px_12px_rgba(0,0,0,0.9)]">{project.title}</h4>
+            {project.details?.title && (
+              <p className="mb-3 text-sm font-medium leading-snug text-white/85 [text-shadow:0_2px_10px_rgba(0,0,0,0.9)]">
+                {project.details.title}
+              </p>
+            )}
             <div className="flex flex-wrap gap-2">
               {project.tech.slice(0, 3).map((tech) => (
                 <TechBadge key={tech} text={tech} variant="overlay" />

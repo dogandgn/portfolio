@@ -5,10 +5,12 @@ const demoComponents = {
   2: lazy(() => import('./WidgetDemo')),
   3: lazy(() => import('./AutomationDemo')),
   4: lazy(() => import('./OpenSourceDemo')),
+  'coordinate-slope': lazy(() => import('./SlopeDemo')),
+  'user-profile-logout': lazy(() => import('./AuthDemo')),
 };
 
-export default function DemoRenderer({ projectId }) {
-  const Demo = demoComponents[projectId];
+export default function DemoRenderer({ projectId, demoId }) {
+  const Demo = demoComponents[demoId ?? projectId];
 
   if (!Demo) return null;
 

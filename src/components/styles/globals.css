@@ -67,6 +67,21 @@ body {
   background: var(--color-steel);
 }
 
+.property-basemap {
+  filter: grayscale(1) invert(0.9) sepia(0.16) saturate(0.7) hue-rotate(350deg) brightness(0.7) contrast(1.16);
+}
+
+.leaflet-control-attribution {
+  border-radius: 4px 0 0 0;
+  background: rgba(14, 16, 18, 0.82) !important;
+  color: #a0aaba;
+  font-size: 9px !important;
+}
+
+.leaflet-control-attribution a {
+  color: #d4af37;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

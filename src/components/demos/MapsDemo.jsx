@@ -176,10 +176,14 @@ export default function MapsDemo() {
             zoom={15} 
             style={{ height: '100%', width: '100%' }}
             zoomControl={false}
-            attributionControl={false}
           >
             <MapResizeHandler />
-            <TileLayer url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png" />
+            <TileLayer
+              className="property-basemap"
+              url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+              attribution="&copy; OpenStreetMap contributors"
+              maxZoom={19}
+            />
             
             {flyTarget && <FlyToParcel coords={flyTarget} />}
 
