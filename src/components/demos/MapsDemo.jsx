@@ -82,7 +82,7 @@ export default function MapsDemo() {
   );
 
   return (
-    <div className="w-full h-full min-h-0 overflow-hidden flex flex-col lg:flex-row relative bg-void">
+    <div className="relative flex w-full min-h-0 flex-col bg-void lg:h-full lg:overflow-hidden lg:flex-row">
       
       <div className="w-full lg:w-72 bg-deep/95 border-b lg:border-b-0 lg:border-r border-gunmetal flex flex-col shrink-0 z-20 max-h-[300px] lg:max-h-none">
         

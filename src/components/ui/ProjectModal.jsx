@@ -87,7 +87,7 @@ export default function ProjectModal({ project, onClose, t }) {
         aria-modal="true"
         aria-labelledby={`project-dialog-title-${project.id}`}
       >
-        <div ref={contentRef} className={`custom-scrollbar h-full max-h-[50vh] w-full overflow-y-auto border-b border-gunmetal p-8 md:border-r md:border-b-0 ${leftClass}`}>
+        <div ref={contentRef} className={`custom-scrollbar h-full max-h-[50vh] w-full overflow-y-auto p-8 ${leftClass}`}>
           <div className="mb-8">
             <h3 id={`project-dialog-title-${project.id}`} className="mb-4 text-3xl font-bold leading-tight text-ink">
               {project.title}
@@ -192,7 +192,7 @@ export default function ProjectModal({ project, onClose, t }) {
           </button>
         </div>
 
-        <div className={`relative h-[50vh] min-h-0 w-full bg-void ${rightClass}`}>
+        <div className={`custom-scrollbar relative h-[50vh] min-h-0 w-full overflow-y-auto overscroll-contain border-t-[3px] border-signal/40 bg-void md:border-t-0 md:border-l-[3px] lg:overflow-hidden ${rightClass}`}>
           <AnimatePresence mode="wait" initial={false}>
             <Motion.div
               key={activeWidget?.id ?? project.id}
@@ -200,7 +200,7 @@ export default function ProjectModal({ project, onClose, t }) {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -24 }}
               transition={{ duration: 0.25 }}
-              className="h-full w-full"
+              className="min-h-full w-full lg:h-full"
             >
               {activeWidget?.demoId ? (
                 <DemoRenderer projectId={project.id} demoId={activeWidget.demoId} />
