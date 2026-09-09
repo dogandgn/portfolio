@@ -106,7 +106,7 @@ export const getProjects = (t) => {
       id: 4,
       title: t('projects.p4_title'),
       description: t('projects.p4_desc'),
-      tech: ["React 19", "TypeScript", "React-Leaflet", "PostGIS", "Fastify", "Turf.js"],
+      tech: ["React 19", "TypeScript", "React-Leaflet", "Zustand", "Turf.js", "Vite"],
       details: getBirdMapDetails(t),
       externalUrl: BIRDMAP_URL,
       image: "/projects/4.jpg",
