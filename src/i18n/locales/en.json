@@ -174,7 +174,23 @@
     "p3_desc": "Data integration and management processes were executed via Python and ArcPy automation scripts, strictly preserving spatial data integrity. Digital transformation operations were carried out by converting complex data from Excel, PDFs, and physical documents without altering original content or headers. Pandas was utilized for large dataset processing, integration into the geodatabase structure, and automation of repetitive data preparation pipelines.",
     
     "p4_title": "Open Source Web-GIS & Custom Mapping Applications",
-    "p4_desc": "Open-source Web-GIS portals are coded and independent projects developed to enable browser-based spatial analysis of extensive Excel inventory data without commercial license dependencies. Interactive map experiences are designed using React-Leaflet and OpenLayers infrastructure, producing modern interfaces for portfolio systems and data analysis workflows. Developed as alternatives to commercial GIS software, these projects offer tailored solutions for browser-based spatial analysis and visualization needs."
+    "p4_desc": "I develop open-source Web-GIS applications without commercial license dependencies. BirdMap brings Türkiye's bird inventory, observation areas, natural habitats, and environmental risk layers together on an interactive map. Users can explore species, identify shared observation areas, prepare trip plans, and analyze the spatial relationship between representative migration routes and wind turbines.",
+    "p4_detail_title": "BirdMap — Türkiye Bird Inventory and Spatial Observation Platform",
+    "p4_environment": "Static open-source Web-GIS showcase",
+    "p4_summary": "BirdMap is a GIS web application that manages bird observations and environmental data on one map. Users can select an area by province, district, radius, or freehand drawing, calculate shared observation areas for selected species, and save observation plans.",
+    "p4_feature1_title": "Dynamic map and data management",
+    "p4_feature1_desc": "Türkiye's bird inventory, species distributions, administrative boundaries, natural areas, observation points, and wind energy facilities are managed as layers on the same map.",
+    "p4_feature2_title": "Spatial queries and observation planning",
+    "p4_feature2_desc": "Areas can be selected by province, district, radius, or drawn polygon. The application calculates locations where selected species can be observed together and uses the results to prepare trip and observation plans.",
+    "p4_feature3_title": "Viewport-based data loading",
+    "p4_feature3_desc": "The map requests data only for the visible area and zoom level. Points are clustered at distant views and replaced with individual records as the user zooms in, avoiding the simultaneous rendering of thousands of points.",
+    "p4_feature4_title": "Static showcase architecture",
+    "p4_feature4_desc": "The live showcase uses React 19, TypeScript, Vite, Tailwind CSS, Leaflet, Zustand, and Turf.js. Its bird catalog, distribution data, and map layers run in the browser from packaged open data, while saved observation plans remain in the user's browser.",
+    "p4_feature5_title": "Open data sources and transparency",
+    "p4_feature5_desc": "Bird and observation data use eBird; natural areas, campsites, wetlands, and turbine points use OpenStreetMap; administrative boundaries use UN OCHA COD-AB Türkiye data. Routes without a confirmed scientific source are clearly identified as representative demo layers.",
+    "p4_liveTitle": "BirdMap live application",
+    "p4_iframeTitle": "BirdMap live application preview",
+    "openNewTab": "Open in new tab"
   },
   "contact": {
     "badge": "Contact",

@@ -14,7 +14,7 @@ export default function ProjectModal({ project, onClose, t }) {
   const activeContent = activeWidget ?? project;
   const activeDetails = activeContent.details;
   const activeTech = activeContent.tech ?? project.tech;
-  const isMapProject = project.id === 1;
+  const isWideDemoProject = project.id === 1 || project.id === 4;
   const hasWidgetNavigation = widgetCount > 1;
 
   const showPreviousWidget = useCallback(() => {
@@ -47,19 +47,19 @@ export default function ProjectModal({ project, onClose, t }) {
     contentRef.current?.scrollTo({ top: 0 });
   }, [activeWidgetIndex]);
 
-  const panelClass = isMapProject
+  const panelClass = isWideDemoProject
     ? 'md:max-w-[96vw] md:h-[92vh] md:max-h-[92vh]'
     : hasWidgetNavigation
       ? 'md:max-w-[96vw] md:h-[92vh] md:max-h-[92vh]'
       : 'max-w-6xl max-h-[90vh]';
 
-  const leftClass = isMapProject
+  const leftClass = isWideDemoProject
     ? 'md:w-[32%] md:max-h-[92vh]'
     : hasWidgetNavigation
       ? 'md:w-[45%] md:max-h-[92vh]'
       : 'md:w-[45%] md:max-h-[90vh]';
 
-  const rightClass = isMapProject
+  const rightClass = isWideDemoProject
     ? 'md:w-[68%] md:h-full'
     : hasWidgetNavigation
       ? 'md:w-[55%] md:h-full'
