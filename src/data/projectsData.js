@@ -1,3 +1,5 @@
+import { BIRDMAP_URL } from './projectLinks';
+
 const getLayerManagerDetails = (t) => ({
   title: t('projects.p2_detail_title'),
   environment: t('projects.p2_environment'),
@@ -33,6 +35,16 @@ const getAuthDetails = (t) => ({
   features: [1, 2, 3, 4].map((number) => ({
     title: t(`projects.p2_widget3_feature${number}_title`),
     description: t(`projects.p2_widget3_feature${number}_desc`),
+  })),
+});
+
+const getBirdMapDetails = (t) => ({
+  title: t('projects.p4_detail_title'),
+  environment: t('projects.p4_environment'),
+  summary: t('projects.p4_summary'),
+  features: [1, 2, 3, 4, 5].map((number) => ({
+    title: t(`projects.p4_feature${number}_title`),
+    description: t(`projects.p4_feature${number}_desc`),
   })),
 });
 
@@ -94,7 +106,9 @@ export const getProjects = (t) => {
       id: 4,
       title: t('projects.p4_title'),
       description: t('projects.p4_desc'),
-      tech: ["React-Leaflet", "OpenLayers", "WebGL", "PostGIS"],
+      tech: ["React 19", "TypeScript", "React-Leaflet", "PostGIS", "Fastify", "Turf.js"],
+      details: getBirdMapDetails(t),
+      externalUrl: BIRDMAP_URL,
       image: "/projects/4.jpg",
     },
   ];

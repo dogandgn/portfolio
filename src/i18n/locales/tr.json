@@ -174,7 +174,23 @@
     "p3_desc": "Python ve ArcPy ile geliştirilen otomasyon betikleri aracılığıyla mekansal veri bütünlüğü korunarak veri entegrasyonu ve yönetimi süreçleri yürütülmüştür. Orijinal veri içeriğine ve sütun başlıklarına müdahale etmeksizin Excel, PDF ve fiziksel evraklardaki karmaşık verilerin dijital ortama aktarılması (dijital dönüşüm) operasyonları gerçekleştirilmiştir. Pandas ile büyük veri setlerinin işlenmesi, coğrafi veri tabanı yapısına entegrasyonu ve tekrarlayan veri hazırlama süreçlerinin otomatikleştirilmesi sağlanmıştır.",
     
     "p4_title": "Açık Kaynak Web-GIS ve Özel Harita Uygulamaları",
-    "p4_desc": "Lisans bağımlılığı gerektirmeyen, geniş kapsamlı Excel envanter verilerinin doğrudan tarayıcı üzerinde mekansal analizinin yapılabildiği açık kaynaklı Web-GIS portalları kodlanmakta ve bağımsız projeler geliştirilmektedir. React-Leaflet ve OpenLayers altyapısıyla etkileşimli harita deneyimleri tasarlanarak portföy sistemleri ve veri analiz süreçleri için modern arayüzler üretilmektedir. Ticari CBS yazılımlarına alternatif olarak geliştirilen bu projeler, tarayıcı tabanlı mekansal analiz ve görselleştirme ihtiyaçlarına yönelik çözümler sunmaktadır."
+    "p4_desc": "Lisans bağımlılığı gerektirmeyen açık kaynaklı Web-GIS uygulamaları geliştiriyorum. BirdMap; Türkiye kuş envanterini, gözlem alanlarını, doğal yaşam noktalarını ve çevresel risk katmanlarını etkileşimli bir haritada bir araya getirir. Kullanıcılar türleri inceleyebilir, ortak gözlem bölgelerini bulabilir, gezi planları oluşturabilir ve temsili göç rotaları ile rüzgâr türbinleri arasındaki mekânsal ilişkileri analiz edebilir.",
+    "p4_detail_title": "BirdMap — Türkiye Kuş Envanteri ve Mekânsal Gözlem Platformu",
+    "p4_environment": "Full-stack açık kaynak Web-GIS uygulaması",
+    "p4_summary": "BirdMap, kuş gözlemi ve çevresel verileri tek harita üzerinde yöneten bir CBS web uygulamasıdır. İl, ilçe, yarıçap veya serbest çizim ile alan seçilebilir; seçilen türlerin ortak gözlem bölgeleri hesaplanabilir ve gözlem planları kaydedilebilir.",
+    "p4_feature1_title": "Dinamik harita ve veri yönetimi",
+    "p4_feature1_desc": "Türkiye kuş envanteri, tür dağılımları, idarî sınırlar, doğal alanlar, gözlem noktaları ve rüzgâr enerjisi tesisleri aynı harita üzerinde katmanlar halinde yönetilir.",
+    "p4_feature2_title": "Mekânsal sorgular ve gözlem planlama",
+    "p4_feature2_desc": "İl, ilçe, yarıçap veya çizilen poligon üzerinden alan seçimi yapılır. Seçilen kuşların ortak görülebileceği bölgeler hesaplanır; kullanıcı bu sonuçlarla gezi ve gözlem planı oluşturabilir.",
+    "p4_feature3_title": "Görünür alana göre veri yükleme",
+    "p4_feature3_desc": "Harita, yalnızca ekranda görünen bölge ve yakınlaştırma düzeyi için veri getirir. Uzak görünümde noktalar kümelenir, yaklaşıldığında gerçek kayıtlar gösterilir. Böylece binlerce noktanın aynı anda çizilmesi önlenir.",
+    "p4_feature4_title": "Full-stack CBS mimarisi",
+    "p4_feature4_desc": "Arayüz React 19, TypeScript, Vite, Tailwind CSS, Leaflet ve Zustand ile geliştirilmiştir. Sunucu tarafında Fastify, PostgreSQL ve PostGIS kullanılır; ağır mekânsal sorgular GiST indeksleri ve sınırlandırılmış API cevaplarıyla veritabanında çalıştırılır.",
+    "p4_feature5_title": "Açık veri kaynakları ve şeffaflık",
+    "p4_feature5_desc": "Kuş ve gözlem verilerinde eBird; doğal alan, kamp, sulak alan ve türbin noktalarında OpenStreetMap; idarî sınırlarda UN OCHA COD-AB Türkiye verileri kullanılır. Bilimsel kaynağı kesinleşmemiş rotalar açıkça temsili demo katmanı olarak belirtilir.",
+    "p4_liveTitle": "BirdMap canlı uygulama",
+    "p4_iframeTitle": "BirdMap canlı uygulama önizlemesi",
+    "openNewTab": "Yeni sekmede aç"
   },
   "contact": {
     "badge": "İletişim",
