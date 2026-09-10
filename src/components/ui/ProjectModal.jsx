@@ -7,30 +7,33 @@ import DemoRenderer from '../demos/DemoRenderer';
 export default function ProjectModal({ project, onClose, t }) {
   const modalRef = useRef(null);
   const contentRef = useRef(null);
-  const [activeWidgetIndex, setActiveWidgetIndex] = useState(0);
+  const [activeItemIndex, setActiveItemIndex] = useState(0);
   const widgets = project.widgets ?? [];
-  const widgetCount = widgets.length;
-  const activeWidget = widgets[activeWidgetIndex];
-  const activeContent = activeWidget ?? project;
+  const showcases = project.showcases ?? [];
+  const items = widgets.length > 0 ? widgets : showcases;
+  const itemCount = items.length;
+  const activeItem = items[activeItemIndex];
+  const activeContent = activeItem ?? project;
   const activeDetails = activeContent.details;
   const activeTech = activeContent.tech ?? project.tech;
   const isWideDemoProject = project.id === 1 || project.id === 4;
-  const hasWidgetNavigation = widgetCount > 1;
+  const hasItemNavigation = itemCount > 1;
+  const isShowcaseNavigation = showcases.length > 0;
 
-  const showPreviousWidget = useCallback(() => {
-    setActiveWidgetIndex((current) => (current - 1 + widgetCount) % widgetCount);
-  }, [widgetCount]);
+  const showPreviousItem = useCallback(() => {
+    setActiveItemIndex((current) => (current - 1 + itemCount) % itemCount);
+  }, [itemCount]);
 
-  const showNextWidget = useCallback(() => {
-    setActiveWidgetIndex((current) => (current + 1) % widgetCount);
-  }, [widgetCount]);
+  const showNextItem = useCallback(() => {
+    setActiveItemIndex((current) => (current + 1) % itemCount);
+  }, [itemCount]);
 
   useEffect(() => {
     const previousOverflow = document.body.style.overflow;
     const handleKeyDown = (event) => {
       if (event.key === 'Escape') onClose();
-      if (hasWidgetNavigation && event.key === 'ArrowLeft') showPreviousWidget();
-      if (hasWidgetNavigation && event.key === 'ArrowRight') showNextWidget();
+      if (hasItemNavigation && event.key === 'ArrowLeft') showPreviousItem();
+      if (hasItemNavigation && event.key === 'ArrowRight') showNextItem();
     };
 
     document.body.style.overflow = 'hidden';
@@ -41,27 +44,27 @@ export default function ProjectModal({ project, onClose, t }) {
       document.body.style.overflow = previousOverflow;
       document.removeEventListener('keydown', handleKeyDown);
     };
-  }, [hasWidgetNavigation, onClose, showNextWidget, showPreviousWidget]);
+  }, [hasItemNavigation, onClose, showNextItem, showPreviousItem]);
 
   useEffect(() => {
     contentRef.current?.scrollTo({ top: 0 });
-  }, [activeWidgetIndex]);
+  }, [activeItemIndex]);
 
   const panelClass = isWideDemoProject
     ? 'md:max-w-[96vw] md:h-[92vh] md:max-h-[92vh]'
-    : hasWidgetNavigation
+    : hasItemNavigation
       ? 'md:max-w-[96vw] md:h-[92vh] md:max-h-[92vh]'
       : 'max-w-6xl max-h-[90vh]';
 
   const leftClass = isWideDemoProject
     ? 'md:w-[32%] md:max-h-[92vh]'
-    : hasWidgetNavigation
+    : hasItemNavigation
       ? 'md:w-[45%] md:max-h-[92vh]'
       : 'md:w-[45%] md:max-h-[90vh]';
 
   const rightClass = isWideDemoProject
     ? 'md:w-[68%] md:h-full'
-    : hasWidgetNavigation
+    : hasItemNavigation
       ? 'md:w-[55%] md:h-full'
       : 'md:w-[55%] md:h-[90vh]';
 
@@ -93,23 +96,23 @@ export default function ProjectModal({ project, onClose, t }) {
               {project.title}
             </h3>
 
-            {hasWidgetNavigation && (
+            {hasItemNavigation && (
               <div className="mb-6 flex items-center justify-between rounded-full border border-gunmetal bg-void px-2 py-2">
                 <button
                   type="button"
-                  onClick={showPreviousWidget}
-                  aria-label={t('projects.previousWidget')}
+                  onClick={showPreviousItem}
+                  aria-label={t(isShowcaseNavigation ? 'projects.previousProject' : 'projects.previousWidget')}
                   className="flex h-10 w-10 items-center justify-center rounded-full text-ink transition-colors hover:bg-signal hover:text-void"
                 >
                   <i className="fa-solid fa-arrow-left" />
                 </button>
                 <span className="text-sm font-medium text-fog">
-                  {t('projects.widgetCounter', { current: activeWidgetIndex + 1, total: widgetCount })}
+                  {t(isShowcaseNavigation ? 'projects.projectCounter' : 'projects.widgetCounter', { current: activeItemIndex + 1, total: itemCount })}
                 </span>
                 <button
                   type="button"
-                  onClick={showNextWidget}
-                  aria-label={t('projects.nextWidget')}
+                  onClick={showNextItem}
+                  aria-label={t(isShowcaseNavigation ? 'projects.nextProject' : 'projects.nextWidget')}
                   className="flex h-10 w-10 items-center justify-center rounded-full text-ink transition-colors hover:bg-signal hover:text-void"
                 >
                   <i className="fa-solid fa-arrow-right" />
@@ -119,7 +122,7 @@ export default function ProjectModal({ project, onClose, t }) {
 
             <AnimatePresence mode="wait" initial={false}>
               <Motion.div
-                key={activeWidget?.id ?? project.id}
+                key={activeItem?.id ?? project.id}
                 initial={{ opacity: 0, x: 18 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -18 }}
@@ -147,10 +150,10 @@ export default function ProjectModal({ project, onClose, t }) {
 
                 <p className="whitespace-pre-line text-[15px] leading-relaxed text-fog">{activeContent.description}</p>
 
-                {activeWidget?.image && (
+                {activeItem?.image && (
                   <img
-                    src={activeWidget.image}
-                    alt={activeWidget.imageAlt ?? activeDetails?.title ?? project.title}
+                    src={activeItem.image}
+                    alt={activeItem.imageAlt ?? activeDetails?.title ?? project.title}
                     className="mt-5 w-full max-w-[17rem] rounded-lg border border-gunmetal object-contain"
                   />
                 )}
@@ -195,25 +198,25 @@ export default function ProjectModal({ project, onClose, t }) {
         <div className={`custom-scrollbar relative h-[50vh] min-h-0 w-full overflow-y-auto overscroll-contain border-t-[3px] border-signal/40 bg-void md:border-t-0 md:border-l-[3px] lg:overflow-hidden ${rightClass}`}>
           <AnimatePresence mode="wait" initial={false}>
             <Motion.div
-              key={activeWidget?.id ?? project.id}
+              key={activeItem?.id ?? project.id}
               initial={{ opacity: 0, x: 24 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -24 }}
               transition={{ duration: 0.25 }}
               className="min-h-full w-full lg:h-full"
             >
-              {activeWidget?.demoId ? (
-                <DemoRenderer projectId={project.id} demoId={activeWidget.demoId} />
-              ) : activeWidget?.image ? (
+              {activeItem?.demoId ? (
+                <DemoRenderer projectId={project.id} demoId={activeItem.demoId} content={activeContent} />
+              ) : activeItem?.image ? (
                 <div className="flex h-full w-full items-center justify-center p-6 md:p-10">
                   <img
-                    src={activeWidget.image}
-                    alt={activeWidget.imageAlt ?? activeDetails?.title ?? project.title}
+                    src={activeItem.image}
+                    alt={activeItem.imageAlt ?? activeDetails?.title ?? project.title}
                     className="max-h-full w-full rounded-xl border border-gunmetal object-contain shadow-2xl"
                   />
                 </div>
               ) : (
-                <DemoRenderer projectId={activeContent.demoProjectId ?? project.id} />
+                <DemoRenderer projectId={activeContent.demoProjectId ?? project.id} content={activeContent} />
               )}
             </Motion.div>
           </AnimatePresence>

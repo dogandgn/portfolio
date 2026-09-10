@@ -9,7 +9,7 @@ const demoComponents = {
   'user-profile-logout': lazy(() => import('./AuthDemo')),
 };
 
-export default function DemoRenderer({ projectId, demoId }) {
+export default function DemoRenderer({ projectId, demoId, content }) {
   const Demo = demoComponents[demoId ?? projectId];
 
   if (!Demo) return null;
@@ -22,7 +22,7 @@ export default function DemoRenderer({ projectId, demoId }) {
         </div>
       )}
     >
-      <Demo />
+      <Demo content={content} />
     </Suspense>
   );
 }

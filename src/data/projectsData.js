@@ -1,4 +1,4 @@
-import { BIRDMAP_URL } from './projectLinks';
+import { BIRDMAP_URL, LUMA_DEMO_URL, LUMA_REPOSITORY_URL } from './projectLinks';
 
 const getLayerManagerDetails = (t) => ({
   title: t('projects.p2_detail_title'),
@@ -48,11 +48,24 @@ const getBirdMapDetails = (t) => ({
   })),
 });
 
+const getLumaDetails = (t) => ({
+  title: t('projects.p4_luma_title'),
+  environment: t('projects.p4_luma_environment'),
+  summary: t('projects.p4_luma_summary'),
+  features: [1, 2, 3, 4, 5, 6].map((number) => ({
+    title: t(`projects.p4_luma_feature${number}_title`),
+    description: t(`projects.p4_luma_feature${number}_desc`),
+  })),
+});
+
 export const getProjects = (t) => {
   const layerManagerTech = ["React.js", "TypeScript", "ArcGIS JS API", "Jimu UI/Core", "SheetJS", "jsPDF"];
   const slopeTech = ["React", "ArcGIS JS API", "ElevationLayer", "geometryEngine", "Spatial Reference", "Throttle/Debounce"];
   const authTech = ["React", "ArcGIS Identity Manager", "OAuth2", "OAuthInfo", "Jimu Page Routing"];
   const layerManagerDetails = getLayerManagerDetails(t);
+  const birdMapTech = ["React 19", "TypeScript", "React-Leaflet", "Zustand", "Turf.js", "Vite"];
+  const lumaTech = ["React 19", "TypeScript", "MapLibre GL JS", "Three.js", "jsPDF", "Vite"];
+  const birdMapDetails = getBirdMapDetails(t);
 
   return [
     {
@@ -106,8 +119,33 @@ export const getProjects = (t) => {
       id: 4,
       title: t('projects.p4_title'),
       description: t('projects.p4_desc'),
-      tech: ["React 19", "TypeScript", "React-Leaflet", "Zustand", "Turf.js", "Vite"],
-      details: getBirdMapDetails(t),
+      tech: birdMapTech,
+      details: birdMapDetails,
+      showcases: [
+        {
+          id: 'birdmap',
+          description: t('projects.p4_birdmap_desc'),
+          tech: birdMapTech,
+          details: birdMapDetails,
+          demoProjectId: 4,
+          externalUrl: BIRDMAP_URL,
+          liveTitle: t('projects.p4_liveTitle'),
+          iframeTitle: t('projects.p4_iframeTitle'),
+          icon: 'fa-crow',
+        },
+        {
+          id: 'luma-real-estate',
+          description: t('projects.p4_luma_desc'),
+          tech: lumaTech,
+          details: getLumaDetails(t),
+          demoProjectId: 4,
+          externalUrl: LUMA_DEMO_URL,
+          repositoryUrl: LUMA_REPOSITORY_URL,
+          liveTitle: t('projects.p4_luma_liveTitle'),
+          iframeTitle: t('projects.p4_luma_iframeTitle'),
+          icon: 'fa-building',
+        },
+      ],
       externalUrl: BIRDMAP_URL,
       image: "/projects/4.jpg",
     },
