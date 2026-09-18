@@ -67,6 +67,14 @@ body {
   background: var(--color-steel);
 }
 
+.project-screenshot {
+  filter: brightness(0.94) saturate(0.8) sepia(0.08);
+}
+
+.dark .project-screenshot {
+  filter: brightness(0.58) saturate(0.7) sepia(0.12);
+}
+
 .property-basemap {
   filter: grayscale(1) invert(0.9) sepia(0.16) saturate(0.7) hue-rotate(350deg) brightness(0.7) contrast(1.16);
 }

@@ -16,7 +16,7 @@ export default function ProjectModal({ project, onClose, t }) {
   const activeContent = activeItem ?? project;
   const activeDetails = activeContent.details;
   const activeTech = activeContent.tech ?? project.tech;
-  const isWideDemoProject = project.id === 1 || project.id === 4;
+  const isWideDemoProject = project.wideDemo === true;
   const hasItemNavigation = itemCount > 1;
   const isShowcaseNavigation = showcases.length > 0;
 
@@ -54,7 +54,7 @@ export default function ProjectModal({ project, onClose, t }) {
     ? 'md:max-w-[96vw] md:h-[92vh] md:max-h-[92vh]'
     : hasItemNavigation
       ? 'md:max-w-[96vw] md:h-[92vh] md:max-h-[92vh]'
-      : 'max-w-6xl max-h-[90vh]';
+      : 'max-w-6xl md:max-h-[90vh]';
 
   const leftClass = isWideDemoProject
     ? 'md:w-[32%] md:max-h-[92vh]'
@@ -85,14 +85,14 @@ export default function ProjectModal({ project, onClose, t }) {
         animate={{ opacity: 1, y: 0, scale: 1 }}
         exit={{ opacity: 0, y: 20, scale: 0.98 }}
         transition={{ duration: 0.3, ease: 'easeOut' }}
-        className={`relative flex w-full flex-col overflow-hidden rounded-2xl border border-gunmetal bg-deep shadow-2xl md:flex-row ${panelClass}`}
+        className={`relative flex h-[calc(100dvh-2rem)] max-h-[calc(100dvh-2rem)] w-full flex-col overflow-hidden rounded-2xl border border-gunmetal bg-deep shadow-2xl md:flex-row ${panelClass}`}
         role="dialog"
         aria-modal="true"
         aria-labelledby={`project-dialog-title-${project.id}`}
       >
-        <div ref={contentRef} className={`custom-scrollbar h-full max-h-[50vh] w-full overflow-y-auto p-8 ${leftClass}`}>
+        <div ref={contentRef} className={`custom-scrollbar h-1/2 min-h-0 w-full overflow-y-auto p-6 md:h-full md:p-8 ${leftClass}`}>
           <div className="mb-8">
-            <h3 id={`project-dialog-title-${project.id}`} className="mb-4 text-3xl font-bold leading-tight text-ink">
+            <h3 id={`project-dialog-title-${project.id}`} className="mb-4 pr-8 text-2xl font-bold leading-tight text-ink md:pr-0 md:text-3xl">
               {project.title}
             </h3>
 
@@ -195,7 +195,7 @@ export default function ProjectModal({ project, onClose, t }) {
           </button>
         </div>
 
-        <div className={`custom-scrollbar relative h-[50vh] min-h-0 w-full overflow-y-auto overscroll-contain border-t-[3px] border-signal/40 bg-void md:border-t-0 md:border-l-[3px] lg:overflow-hidden ${rightClass}`}>
+        <div className={`custom-scrollbar relative h-1/2 min-h-0 w-full overflow-y-auto overscroll-contain border-t-[3px] border-signal/40 bg-void md:border-t-0 md:border-l-[3px] lg:overflow-hidden ${rightClass}`}>
           <AnimatePresence mode="wait" initial={false}>
             <Motion.div
               key={activeItem?.id ?? project.id}

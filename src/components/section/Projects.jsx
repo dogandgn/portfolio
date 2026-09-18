@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import ProjectCard from '../ui/ProjectCard';
 import ProjectModal from '../ui/ProjectModal';
@@ -7,9 +7,11 @@ import { useTranslation } from 'react-i18next';
 
 export default function Projects() {
   const { t } = useTranslation();
-  const [activeProject, setActiveProject] = useState(null);
+  const [activeProjectId, setActiveProjectId] = useState(null);
   
   const projects = getProjects(t);
+  const activeProject = projects.find((project) => project.id === activeProjectId);
+  const closeProject = useCallback(() => setActiveProjectId(null), []);
 
   return (
     <section id="projects" className="py-24 px-6 max-w-[1344px] mx-auto">
@@ -22,14 +24,23 @@ export default function Projects() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {projects.map((project) => (
+        {projects.filter((project) => project.featured).map((project) => (
           <ProjectCard 
             key={project.id} 
             project={project} 
-            onClick={() => setActiveProject(project)}
+            onClick={() => setActiveProjectId(project.id)}
             t={t}
           />
         ))}
+      </div>
+
+      <div className="mt-16 border-t border-gunmetal pt-10">
+        <h4 className="mb-7 text-xl font-bold text-ink">{t('projects.otherWork')}</h4>
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
+          {projects.filter((project) => !project.featured).map((project) => (
+            <ProjectCard key={project.id} project={project} onClick={() => setActiveProjectId(project.id)} t={t} />
+          ))}
+        </div>
       </div>
 
       <div className="mt-10 flex flex-col gap-4 rounded-2xl border border-gunmetal bg-deep p-6 sm:flex-row sm:items-center sm:justify-between">
@@ -45,7 +56,7 @@ export default function Projects() {
           <ProjectModal
             key={activeProject.id}
             project={activeProject}
-            onClose={() => setActiveProject(null)}
+            onClose={closeProject}
             t={t}
           />
         )}
