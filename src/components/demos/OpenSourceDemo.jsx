@@ -11,7 +11,7 @@ export default function OpenSourceDemo({ content }) {
 
   return (
     <div className="flex h-full min-h-[34rem] w-full flex-col bg-void lg:min-h-0">
-      <div className="flex min-h-14 shrink-0 items-center justify-between gap-3 border-b border-gunmetal bg-deep px-4 py-2">
+      <div className="flex min-h-14 shrink-0 flex-wrap items-center justify-between gap-3 border-b border-gunmetal bg-deep py-3 pl-4 pr-16">
         <div className="flex min-w-0 items-center gap-2.5">
           <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-signal/10 text-signal">
             <i className={`fa-solid ${icon}`} aria-hidden="true" />

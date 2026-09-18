@@ -1,67 +1,55 @@
 import React from 'react';
-import Tilt from 'react-parallax-tilt';
-import TechBadge from './TechBadge';
 
 export default function ProjectCard({ project, onClick, t }) {
+  const titleId = `project-card-title-${project.id}`;
+
   return (
-    <Tilt
-      tiltMaxAngleX={4}
-      tiltMaxAngleY={4}
-      scale={1.01}
-      transitionSpeed={2500}
-      glareEnable={true}
-      glareMaxOpacity={0.15}
-      glareColor="#c9a227"
-      glarePosition="all"
-      className="h-full"
-    >
+    <article aria-labelledby={titleId} className="group flex h-full min-w-0 flex-col overflow-hidden rounded-2xl border border-gunmetal bg-deep transition-colors hover:border-signal/60">
       <button
         type="button"
         onClick={onClick}
         aria-haspopup="dialog"
-        className="group relative flex w-full flex-col h-full bg-deep rounded-2xl border border-gunmetal overflow-hidden cursor-pointer hover:border-signal/50 transition-colors text-left focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-signal"
+        aria-label={`${t('projects.viewProject')}: ${project.title}`}
+        className="relative block w-full overflow-hidden bg-void text-left focus-visible:outline-2 focus-visible:-outline-offset-4 focus-visible:outline-signal"
       >
-        <div className="relative h-64 overflow-hidden bg-void/50">
-          <div className="absolute inset-0 bg-void mix-blend-overlay opacity-20"></div>
-          <img 
-            src={project.image} 
-            alt={project.title} 
-            className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out grayscale-[20%] group-hover:grayscale-0"
-          />
-          
-          <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/30 to-transparent"></div>
-          
-          <div className="absolute bottom-6 left-6 right-6">
-            <h4 className="text-2xl font-bold text-white mb-2 [text-shadow:0_2px_12px_rgba(0,0,0,0.9)]">{project.title}</h4>
-            {project.details?.title && (
-              <p className="mb-3 text-sm font-medium leading-snug text-white/85 [text-shadow:0_2px_10px_rgba(0,0,0,0.9)]">
-                {project.details.title}
-              </p>
-            )}
-            <div className="flex flex-wrap gap-2">
-              {project.tech.slice(0, 3).map((tech) => (
-                <TechBadge key={tech} text={tech} variant="overlay" />
-              ))}
-              {project.tech.length > 3 && (
-                <span className="px-2.5 py-1 bg-black/70 border border-white/20 rounded text-[11px] text-white font-medium backdrop-blur-sm">
-                  +{project.tech.length - 3}
-                </span>
-              )}
-            </div>
-          </div>
-        </div>
-
-        <div className="p-6 flex-grow flex flex-col justify-between">
-          <p className="text-[15px] text-fog leading-relaxed line-clamp-3 mb-6">
-            {project.description}
-          </p>
-          
-          <div className="flex items-center text-sm font-medium text-signal group-hover:text-deep-signal transition-colors">
-            <span>{t('projects.viewProject')}</span>
-            <i className="fa-solid fa-arrow-right ml-2 transform group-hover:translate-x-1 transition-transform"></i>
-          </div>
-        </div>
+        <img
+          src={project.image}
+          alt={project.title}
+          loading="lazy"
+          decoding="async"
+          width="1280"
+          height="720"
+          className="aspect-video w-full object-cover object-top transition-transform duration-500 motion-safe:group-hover:scale-[1.02]"
+        />
+        <span className="absolute bottom-4 left-4 rounded-full border border-white/20 bg-black/85 px-3 py-1.5 text-xs font-medium text-white">
+          {t(project.featured ? 'projects.liveDemo' : 'projects.interactiveExample')}
+        </span>
       </button>
-    </Tilt>
+
+      <div className={`flex flex-1 flex-col ${project.featured ? 'p-6 sm:p-8' : 'p-6'}`}>
+        <h5 id={titleId} className={`font-bold leading-snug text-ink ${project.featured ? 'text-2xl' : 'text-xl'}`}>
+          {project.title}
+        </h5>
+        <p className="mt-3 text-base leading-relaxed text-fog">{project.cardDescription ?? project.description}</p>
+        <div className="mt-auto flex flex-wrap items-center gap-x-5 gap-y-3 pt-6">
+          <button
+            type="button"
+            onClick={onClick}
+            aria-haspopup="dialog"
+            aria-label={`${t(project.featured ? 'projects.viewDemo' : 'projects.viewProject')}: ${project.title}`}
+            className={`inline-flex min-h-11 items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-signal ${project.featured ? 'bg-signal text-void hover:bg-deep-signal' : 'border border-gunmetal text-ink hover:border-signal hover:text-signal'}`}
+          >
+            {t(project.featured ? 'projects.viewDemo' : 'projects.viewProject')}
+            <i className="fa-solid fa-arrow-right" aria-hidden="true" />
+          </button>
+          {project.externalUrl && (
+            <a href={project.externalUrl} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center gap-2 rounded text-sm font-medium text-fog transition-colors hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-signal">
+              {t('projects.openNewTab')}
+              <i className="fa-solid fa-arrow-up-right-from-square" aria-hidden="true" />
+            </a>
+          )}
+        </div>
+      </div>
+    </article>
   );
 }
