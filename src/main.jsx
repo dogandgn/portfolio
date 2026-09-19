@@ -3,11 +3,11 @@ import ReactDOM from 'react-dom/client'
 import { Analytics } from '@vercel/analytics/react'
 import './i18n/i18n'
 import './components/styles/globals.css'
-import Index from './components/pages/index.jsx'
+import PortfolioExperience from './components/pages/PortfolioExperience.jsx'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <Index />
+    <PortfolioExperience />
     <Analytics />
   </React.StrictMode>,
 )

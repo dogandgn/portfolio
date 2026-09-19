@@ -3,13 +3,15 @@ import { initReactI18next } from 'react-i18next';
 
 import trTranslation from './locales/tr.json';
 import enTranslation from './locales/en.json';
+import cityTr from './locales/city.tr.json';
+import cityEn from './locales/city.en.json';
 
 const resources = {
   tr: {
-    translation: trTranslation
+    translation: { ...trTranslation, city: cityTr }
   },
   en: {
-    translation: enTranslation
+    translation: { ...enTranslation, city: cityEn }
   }
 };
 

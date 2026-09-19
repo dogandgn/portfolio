@@ -30,8 +30,22 @@ export default function ProjectModal({ project, onClose, t }) {
 
   useEffect(() => {
     const previousOverflow = document.body.style.overflow;
+    const previousFocus = document.activeElement;
     const handleKeyDown = (event) => {
       if (event.key === 'Escape') onClose();
+      if (event.key === 'Tab') {
+        const focusable = [...modalRef.current.querySelectorAll('button, a[href], input, select, textarea, iframe, [tabindex="0"]')]
+          .filter((element) => !element.disabled && element.getClientRects().length > 0);
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (event.shiftKey && (document.activeElement === first || document.activeElement === modalRef.current)) {
+          event.preventDefault();
+          last?.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first?.focus();
+        }
+      }
       if (hasItemNavigation && event.key === 'ArrowLeft') showPreviousItem();
       if (hasItemNavigation && event.key === 'ArrowRight') showNextItem();
     };
@@ -43,6 +57,7 @@ export default function ProjectModal({ project, onClose, t }) {
     return () => {
       document.body.style.overflow = previousOverflow;
       document.removeEventListener('keydown', handleKeyDown);
+      previousFocus?.focus({ preventScroll: true });
     };
   }, [hasItemNavigation, onClose, showNextItem, showPreviousItem]);
 
