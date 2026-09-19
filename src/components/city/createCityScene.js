@@ -10,6 +10,7 @@ import { createLandscape } from './createLandscape';
 import { createCityRoute } from './createCityRoute';
 import { createCityDetails } from './createCityDetails';
 import { createProjectHighlight } from './createProjectHighlight';
+import { createProjectEmblems } from './createProjectEmblems';
 
 export function createCityScene(canvas, { onSelect, onFailure, onPositions }) {
   const renderer = new THREE.WebGLRenderer({
@@ -69,6 +70,7 @@ export function createCityScene(canvas, { onSelect, onFailure, onPositions }) {
   const journeyRoute = createCityRoute(scene, geometry);
   const details = createCityDetails(scene, geometry);
   const selection = createProjectHighlight(scene, geometry);
+  const emblems = createProjectEmblems(scene);
 
   const blocks = [...createBuildings(compact), ...landmarks];
   const volumes = [];
@@ -184,6 +186,7 @@ export function createCityScene(canvas, { onSelect, onFailure, onPositions }) {
     camera.lookAt(...pose.slice(3));
     journeyRoute.update(progress);
     const highlighting = selection.update(delta, motionPreference.matches);
+    const animatingEmblems = emblems.update(delta, motionPreference.matches);
     renderer.render(scene, camera);
     if (onPositions) {
       onPositions(
@@ -200,7 +203,8 @@ export function createCityScene(canvas, { onSelect, onFailure, onPositions }) {
         }),
       );
     }
-    if (progress !== targetProgress || highlighting) requestRender();
+    if (progress !== targetProgress || highlighting || animatingEmblems)
+      requestRender();
   }
   function requestRender() {
     if (!disposed && !paused && !frame && !document.hidden)
@@ -230,7 +234,7 @@ export function createCityScene(canvas, { onSelect, onFailure, onPositions }) {
     );
     raycaster.setFromCamera(pointer, camera);
     const intersection = raycaster.intersectObjects(
-      [buildings, ...roofs],
+      [buildings, ...roofs, ...emblems.hitTargets],
       false,
     )[0];
     if (!intersection) return null;
@@ -307,6 +311,7 @@ export function createCityScene(canvas, { onSelect, onFailure, onPositions }) {
     landscape.setTheme(dark);
     journeyRoute.setTheme(dark);
     details.setTheme(dark);
+    emblems.setTheme(dark);
     hemisphere.intensity = dark ? 1.5 : 2;
     sunlight.intensity = dark ? 1.8 : 2.8;
     requestRender();
@@ -318,6 +323,7 @@ export function createCityScene(canvas, { onSelect, onFailure, onPositions }) {
     setTheme,
     setActiveProject(projectId) {
       selection.setActive(projectId);
+      emblems.setActive(projectId);
       roofs.forEach((roof) => {
         roof.material.color.set(
           projectId == null || roof.userData.projectId === projectId
@@ -363,6 +369,7 @@ export function createCityScene(canvas, { onSelect, onFailure, onPositions }) {
       journeyRoute.dispose();
       details.dispose();
       selection.dispose();
+      emblems.dispose();
       Object.values(materials).forEach((material) => material.dispose());
       sunlight.shadow.dispose();
       renderer.dispose();

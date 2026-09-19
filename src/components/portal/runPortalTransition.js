@@ -17,32 +17,46 @@ const fragmentShader = `
   uniform float extent;
   uniform float progress;
   uniform float opening;
+  uniform float time;
   uniform vec3 paper;
   varying vec2 vUv;
   void main() {
-    vec2 delta = (vUv - center) * vec2(aspect, 1.0);
+    vec2 portalCenter = mix(center, vec2(0.55, 0.5), opening > 0.5 ? 1.0 : smoothstep(0.05, 0.85, progress));
+    vec2 delta = (vUv - portalCenter) * vec2(aspect, 1.0);
     float distance = length(delta);
+    float theta = atan(delta.y, delta.x);
     vec3 black = vec3(0.004, 0.006, 0.006);
     vec3 gold = vec3(0.66, 0.39, 0.035);
-    if (opening > 0.5) {
+    float orbit = theta - time * 5.5;
+    float bandRadius = 0.105 + 0.003 * sin(theta * 3.0 - time * 4.0);
+    float band = exp(-pow((distance - bandRadius) / 0.008, 2.0));
+    float halo = exp(-pow((distance - 0.112) / 0.035, 2.0)) * 0.13;
+    float arc = pow(0.5 + 0.5 * cos(orbit), 8.0);
+    float inner = exp(-pow((distance - 0.087) / 0.002, 2.0)) * (0.25 + 0.35 * sin(theta * 2.0 + time * 3.0));
+    vec3 vortex = gold * (band * (0.3 + arc * 2.0) + halo + max(0.0, inner));
+    if (opening > 1.5) {
       float radius = (extent + 0.03) * progress;
       float edge = exp(-pow((distance - radius) / 0.005, 2.0));
       float mask = smoothstep(radius - 0.012, radius + 0.004, distance);
-      gl_FragColor = vec4(mix(black, gold, edge * (1.0 - progress)), max(mask, edge * 0.7 * (1.0 - progress)));
+      vec3 color = mix(black, gold, edge * (1.0 - progress)) + vortex * (1.0 - smoothstep(0.0, 0.12, progress));
+      gl_FragColor = vec4(color, max(mask, edge * 0.7 * (1.0 - progress)));
+    } else if (opening > 0.5) {
+      gl_FragColor = vec4(black + vortex, 1.0);
     } else {
       float field = 0.25 + 0.75 * (1.0 - smoothstep(0.0, extent * 1.4, distance));
-      float pull = 1.0 + 30.0 * pow(progress, 3.0) * field;
-      float angle = progress * progress * 1.8 * field;
+      float pull = 1.0 + 90.0 * pow(progress, 3.0) * field;
+      float angle = progress * progress * 5.0 * field;
       mat2 twist = mat2(cos(angle), -sin(angle), sin(angle), cos(angle));
       vec2 source = center + twist * delta * pull / vec2(aspect, 1.0);
       float inside = step(0.0, source.x) * step(source.x, 1.0) * step(0.0, source.y) * step(source.y, 1.0);
-      vec3 background = mix(paper, black, progress);
+      vec3 background = mix(paper, black, smoothstep(0.08, 0.85, progress));
       vec3 color = mix(background, texture2D(page, clamp(source, 0.0, 1.0)).rgb, inside);
-      float radius = 0.018 + (extent + 0.03) * pow(progress, 3.0);
+      float radius = mix(0.018, 0.09, smoothstep(0.0, 0.7, progress));
       float edge = exp(-pow((distance - radius) / 0.004, 2.0));
       float hole = smoothstep(radius - 0.003, radius + 0.003, distance);
       color = mix(black, color, hole);
       color += gold * edge * (1.0 - progress);
+      color += vortex * smoothstep(0.35, 1.0, progress);
       gl_FragColor = vec4(color, 1.0);
     }
     #include <colorspace_fragment>
@@ -101,6 +115,7 @@ export async function runPortalTransition({
         extent: { value: bounds.radius },
         progress: { value: 0 },
         opening: { value: 0 },
+        time: { value: 0 },
         paper: {
           value: new THREE.Color(
             getComputedStyle(document.body).backgroundColor,
@@ -120,7 +135,7 @@ export async function runPortalTransition({
     element.style.visibility = 'hidden';
 
     function animate(duration, opening) {
-      canvas.dataset.phase = opening ? 'opening' : 'closing';
+      canvas.dataset.phase = ['closing', 'vortex', 'opening'][opening];
       material.uniforms.opening.value = opening;
       return new Promise((resolve, reject) => {
         let started;
@@ -135,6 +150,7 @@ export async function runPortalTransition({
           started ??= now;
           const progress = Math.min(1, (now - started) / duration);
           material.uniforms.progress.value = easePortal(progress);
+          material.uniforms.time.value = now / 1000;
           try {
             if (renderer.getContext().isContextLost())
               throw new Error('Portal context lost');
@@ -153,10 +169,13 @@ export async function runPortalTransition({
         frame = requestAnimationFrame(tick);
       });
     }
-    await animate(1050, 0);
-    canvas.dataset.phase = 'loading';
-    await withDeadline(onCovered(), 8000, signal);
-    await animate(850, 1);
+    await animate(1250, 0);
+    await withDeadline(
+      Promise.all([onCovered(), animate(900, 1)]),
+      8000,
+      signal,
+    );
+    await animate(1000, 2);
   } finally {
     cancelAnimationFrame(frame);
     element.style.visibility = visibility;
