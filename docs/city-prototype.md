@@ -45,11 +45,12 @@ The existing portfolio remains intact. The city is an optional desktop experienc
 
 ## Validation notes
 
-- 28 tests cover layout, translations, camera clearance, continuous velocity, trail progress, matching opening/closing views, project highlights, emblems and portal timing/cancellation.
+- 29 tests cover layout, translations, name spelling, camera clearance, continuous velocity, trail progress, matching opening/closing views, project highlights, emblems and portal timing/cancellation.
 - Browser checks: desktop and narrow viewports, city entry, all five project dialogs, widget navigation, expandable About/Services, contact links, Escape, both languages and themes.
 - The shared Three.js chunk triggers Vite's 500 kB size warning; it is loaded separately from the main page (approximately 145 kB gzip).
 - Dependency audit reports four existing tooling advisories in `@humanfs/node`, `baseline-browser-mapping`, `browserslist` and `js-yaml`. Three.js is not listed. No unrelated dependency upgrades were made.
 - Reduced-motion and WebGL-failure handling are implemented but still need device-level verification before publishing.
+- Production-preview checks confirmed city entry, name spelling, property map selection, widget navigation, demo login/logout and independent mobile modal scrolling at 390 × 844. The mobile separator is 3 px. Luma and BirdMap iframe contents appeared blank in the test browser; their external demos remain unverified.
 
 ## Portal experiment
 

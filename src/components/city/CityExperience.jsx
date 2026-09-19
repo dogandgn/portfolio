@@ -186,7 +186,7 @@ export default function CityExperience({ onReturn, onReady, onUnavailable }) {
       <header className="city-header">
         <button className="city-brand" onClick={() => onReturn()}>
           <span>DA</span>
-          <span>Doğan Arıç</span>
+          <span>Doğan Ariç</span>
         </button>
         <nav aria-label={t('city.explore')}>
           <button className="city-return" onClick={() => onReturn()}>

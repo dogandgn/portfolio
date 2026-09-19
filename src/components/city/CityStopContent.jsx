@@ -102,7 +102,7 @@ export default function CityStopContent({ stop, projects, t, onOpen }) {
     case 'overview':
       return (
         <>
-          <p className="city-person">Doğan Arıç</p>
+          <p className="city-person">Doğan Ariç</p>
           <h1 id="city-title" tabIndex={-1}>
             {t('city.title')}
           </h1>
