@@ -45,7 +45,7 @@ The existing portfolio remains intact. The city is an optional desktop experienc
 
 ## Validation notes
 
-- 27 tests cover layout, translations, camera clearance, continuous velocity, trail progress, matching opening/closing views, project highlights, emblems and portal timing/cancellation.
+- 28 tests cover layout, translations, camera clearance, continuous velocity, trail progress, matching opening/closing views, project highlights, emblems and portal timing/cancellation.
 - Browser checks: desktop and narrow viewports, city entry, all five project dialogs, widget navigation, expandable About/Services, contact links, Escape, both languages and themes.
 - The shared Three.js chunk triggers Vite's 500 kB size warning; it is loaded separately from the main page (approximately 145 kB gzip).
 - Dependency audit reports four existing tooling advisories in `@humanfs/node`, `baseline-browser-mapping`, `browserslist` and `js-yaml`. Three.js is not listed. No unrelated dependency upgrades were made.
@@ -62,4 +62,4 @@ Escape, Cancel, resizing or hiding the tab cancels the transition. The original 
 
 Browser checks include entry from the top and bottom of the portfolio, repeated entry, cancellation while closing and opening, and narrow-screen exclusion. Cross-browser screenshot/font rendering and lower-powered devices still need checking before release.
 
-BirdMap and data engineering have procedural rooftop sculptures and smaller entrance badges. Selecting a project plays a four-second wing/orbit animation, then rendering returns to idle. Reduced motion skips the animation. Emblems share geometry/materials, participate in project picking and release their resources on exit.
+All five projects have procedural rooftop sculptures and smaller entrance badges: parcel/pin, connected layers, Python, architectural model and bird. Selecting a project plays a four-second project-specific animation, then rendering returns to idle. Reduced motion skips the animation. Emblems share geometry/materials, participate in project picking and release their resources on exit. Taller buildings use offset rooftop mounts to keep the sculptures clear of navigation.

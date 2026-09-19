@@ -79,6 +79,14 @@ export function createProjectEmblems(scene) {
   const eye = new THREE.Path();
   eye.absarc(-0.04, 0.66, 0.065, 0, Math.PI * 2, true);
   snake.holes.push(eye);
+  const pin = new THREE.Shape();
+  pin.moveTo(0, -0.35);
+  pin.bezierCurveTo(-0.18, -0.08, -0.54, 0.22, -0.54, 0.59);
+  pin.bezierCurveTo(-0.54, 1.28, 0.54, 1.28, 0.54, 0.59);
+  pin.bezierCurveTo(0.54, 0.22, 0.18, -0.08, 0, -0.35);
+  const pinHole = new THREE.Path();
+  pinHole.absarc(0, 0.59, 0.21, 0, Math.PI * 2, true);
+  pin.holes.push(pinHole);
   const extrusion = {
     depth: 0.16,
     bevelEnabled: true,
@@ -95,6 +103,7 @@ export function createProjectEmblems(scene) {
     beak: new THREE.ConeGeometry(0.1, 0.34, 12),
     wing: new THREE.ExtrudeGeometry(wing, { ...extrusion, depth: 0.07 }),
     snake: new THREE.ExtrudeGeometry(snake, extrusion),
+    pin: new THREE.ExtrudeGeometry(pin, extrusion),
     orbit: new THREE.TorusGeometry(1.35, 0.014, 6, 72),
   };
   const hitTargets = [];
@@ -160,20 +169,122 @@ export function createProjectEmblems(scene) {
     return { group };
   }
 
+  function property(parent) {
+    const group = new THREE.Group();
+    group.name = 'property-sculpture';
+    parent.add(group);
+    mesh(group, 'box', 'sage', [0, -0.43, 0], [1.85, 0.12, 1.3]);
+    for (const x of [-0.85, 0, 0.85])
+      mesh(group, 'box', 'gold', [x, -0.36, 0], [0.025, 0.025, 1.2]);
+    for (const z of [-0.58, 0, 0.58])
+      mesh(group, 'box', 'gold', [0, -0.36, z], [1.72, 0.025, 0.025]);
+    const marker = mesh(group, 'pin', 'gold', [0, 0.03, 0]);
+    marker.name = 'parcel-pin';
+    return {
+      group,
+      animate(wave, flourish) {
+        marker.position.y = 0.03 + flourish * 0.2;
+      },
+    };
+  }
+
+  function widgets(parent) {
+    const group = new THREE.Group();
+    group.name = 'widgets-sculpture';
+    parent.add(group);
+    const layers = ['blue', 'sage', 'gold'].map((material, index) => {
+      const layer = mesh(
+        group,
+        'box',
+        material,
+        [0, (index - 1) * 0.4, 0],
+        [1.35, 0.11, 1.15],
+      );
+      layer.name = `widget-layer-${index}`;
+      layer.rotation.set(0.25, Math.PI / 4, 0);
+      return layer;
+    });
+    for (const side of [-1, 1]) {
+      mesh(
+        group,
+        'cylinder',
+        'gold',
+        [side * 0.95, 0, 0],
+        [0.022, 1.25, 0.022],
+      );
+      for (const y of [-0.63, 0.63]) {
+        mesh(group, 'sphere', 'blue', [side * 0.95, y, 0], [0.1, 0.1, 0.1]);
+        mesh(group, 'box', 'gold', [side * 0.68, y, 0], [0.54, 0.025, 0.025]);
+      }
+    }
+    return {
+      group,
+      animate(wave, flourish) {
+        layers.forEach((layer, index) => {
+          layer.position.y = (index - 1) * (0.4 + flourish * 0.17);
+          layer.rotation.y = Math.PI / 4 + wave * (index - 1) * 0.15;
+        });
+      },
+    };
+  }
+
+  function architecture(parent) {
+    const group = new THREE.Group();
+    group.name = 'luma-sculpture';
+    parent.add(group);
+    mesh(group, 'box', 'gold', [0, -0.67, 0], [1.85, 0.1, 1.3]);
+    const towers = [
+      { x: -0.58, z: 0.13, height: 0.95 },
+      { x: 0, z: -0.12, height: 1.7 },
+      { x: 0.58, z: 0.18, height: 1.2 },
+    ].map(({ x, z, height }, index) => {
+      const tower = new THREE.Group();
+      tower.name = `luma-tower-${index}`;
+      tower.position.set(x, -0.6, z);
+      group.add(tower);
+      mesh(tower, 'box', 'stone', [0, height / 2, 0], [0.48, height, 0.65]);
+      mesh(tower, 'box', 'gold', [0, height, 0], [0.5, 0.05, 0.67]);
+      for (let y = 0.2; y < height - 0.1; y += 0.28) {
+        mesh(tower, 'box', 'blue', [0, y, 0.332], [0.33, 0.16, 0.025]);
+        mesh(tower, 'box', 'sage', [0.248, y, 0], [0.025, 0.16, 0.46]);
+      }
+      return tower;
+    });
+    return {
+      group,
+      animate(wave, flourish) {
+        towers.forEach((tower, index) => {
+          tower.position.y = -0.6 + flourish * (index === 1 ? 0.22 : 0.08);
+        });
+      },
+    };
+  }
+
+  const makers = {
+    property,
+    widgets,
+    automation: python,
+    luma: architecture,
+    birdmap: bird,
+  };
   landmarks
-    .filter((building) => ['birdmap', 'automation'].includes(building.id))
+    .filter((building) => makers[building.id])
     .forEach((building) => {
       const root = new THREE.Group();
       root.name = `city-emblem-${building.id}`;
       root.position.set(building.x, 0, building.z);
       const rooftop = new THREE.Group();
-      rooftop.position.set(0, building.height + 0.3, 0.35);
+      rooftop.position.set(
+        building.height >= 9 ? -0.65 : 0,
+        building.height + 0.3,
+        0.35,
+      );
       root.add(rooftop);
       mesh(rooftop, 'cylinder', 'dark', [0, 0, 0], [1.3, 0.13, 1.3]);
       mesh(rooftop, 'cylinder', 'gold', [0, 0.09, 0], [1.16, 0.035, 1.16]);
       mesh(rooftop, 'cylinder', 'stone', [0, 0.15, 0], [1.11, 0.08, 1.11]);
       mesh(rooftop, 'cylinder', 'gold', [0, 0.58, 0], [0.045, 0.8, 0.045]);
-      const maker = building.id === 'birdmap' ? bird : python;
+      const maker = makers[building.id];
       const sculpture = maker(rooftop);
       sculpture.group.position.y = 1.3;
       sculpture.group.rotation.y = 0.28;
@@ -221,7 +332,9 @@ export function createProjectEmblems(scene) {
 
   return {
     get hitTargets() {
-      return hitTargets.filter((object) => object.visible && object.parent.visible);
+      return hitTargets.filter(
+        (object) => object.visible && object.parent.visible,
+      );
     },
     setActive(projectId) {
       if (projectId === activeId) return;
@@ -252,6 +365,7 @@ export function createProjectEmblems(scene) {
         entry.sculpture.wings?.forEach((wing, index) => {
           wing.rotation.z = (index ? 1 : -1) * wave * 0.3;
         });
+        entry.sculpture.animate?.(wave, flourish);
         entry.orbit.visible = entry.strength > 0.01;
         entry.satellites.forEach((node, index) => {
           const angle = phase * Math.PI * 2 + (index * Math.PI * 2) / 3;

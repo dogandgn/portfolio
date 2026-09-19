@@ -12,10 +12,10 @@ function setup(t) {
 
 test('sculptures and entrance badges belong to their project', (t) => {
   const { scene, emblems } = setup(t);
-  assert.equal(scene.children.length, 2);
+  assert.equal(scene.children.length, 5);
   assert.deepEqual(
     new Set(emblems.hitTargets.map((mesh) => mesh.userData.projectId)),
-    new Set([3, 'birdmap']),
+    new Set([1, 2, 3, 'luma', 'birdmap']),
   );
   for (const mesh of emblems.hitTargets) {
     const positions = mesh.geometry.attributes.position.array;
@@ -26,7 +26,7 @@ test('sculptures and entrance badges belong to their project', (t) => {
 
 test('selection animates once, then returns to demand rendering', (t) => {
   const { emblems, scene } = setup(t);
-  for (const id of ['birdmap', 3]) {
+  for (const id of [1, 2, 'luma', 'birdmap', 3]) {
     emblems.setActive(id);
     assert.equal(emblems.update(1 / 60, false), true);
     for (let frame = 0; frame < 300; frame += 1) emblems.update(1 / 60, false);
@@ -36,6 +36,24 @@ test('selection animates once, then returns to demand rendering', (t) => {
   }
   const bird = scene.getObjectByName('bird-sculpture');
   assert.equal(bird.position.y, 1.3);
+});
+
+test('new project details move on selection and reset when leaving', (t) => {
+  const { scene, emblems } = setup(t);
+  const cases = [
+    { id: 1, name: 'parcel-pin', axis: 'y', base: 0.03 },
+    { id: 2, name: 'widget-layer-2', axis: 'y', base: 0.4 },
+    { id: 'luma', name: 'luma-tower-1', axis: 'y', base: -0.6 },
+  ];
+  for (const item of cases) {
+    emblems.setActive(item.id);
+    emblems.update(1, false);
+    const object = scene.getObjectByName(item.name);
+    assert.ok(object.position[item.axis] > item.base);
+    emblems.setActive(null);
+    emblems.update(1, true);
+    assert.equal(object.position[item.axis], item.base);
+  }
 });
 
 test('reduced motion is static and changing projects resets moving parts', (t) => {
