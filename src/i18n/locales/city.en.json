@@ -3,6 +3,8 @@
   "enter": "Explore the 3D city",
   "dismiss": "Dismiss invitation",
   "loading": "Preparing the city…",
+  "transitionLoading": "Entering the city…",
+  "transitionCancel": "Cancel",
   "return": "Back to portfolio",
   "overview": "Overview",
   "district": "District",

@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-export default function CityInvitation({ onEnter, onPrepare }) {
+export default function CityInvitation({ onEnter, onPrepare, busy = false }) {
   const { t } = useTranslation();
   const [dismissed, setDismissed] = useState(false);
   return (
-    <aside className="city-invitation" aria-label={t('city.enter')}>
+    <aside className="city-invitation" aria-label={t('city.enter')} aria-busy={busy}>
       {!dismissed && (
         <div className="city-invitation-bubble">
           <button onClick={onEnter}>

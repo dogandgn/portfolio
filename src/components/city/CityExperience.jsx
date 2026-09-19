@@ -20,7 +20,7 @@ import './city.css';
 const ProjectModal = lazy(() => import('../ui/ProjectModal'));
 const chapters = ['overview', 'about', 'projects', 'services', 'contact'];
 
-export default function CityExperience({ onReturn }) {
+export default function CityExperience({ onReturn, onReady, onUnavailable }) {
   const { t, i18n } = useTranslation();
   const canvasRef = useRef(null);
   const sceneRef = useRef(null);
@@ -50,6 +50,15 @@ export default function CityExperience({ onReturn }) {
     url.hash = section.id;
     window.history.replaceState(window.history.state, '', url);
   }, []);
+
+  useEffect(() => {
+    if (status === 'failed') { onUnavailable?.(); return; }
+    if (status !== 'ready') return;
+    let frame = requestAnimationFrame(() => {
+      frame = requestAnimationFrame(() => onReady?.());
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [status, onReady, onUnavailable]);
 
   useEffect(() => {
     mainRef.current.querySelector('h1')?.focus({ preventScroll: true });

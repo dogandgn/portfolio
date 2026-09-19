@@ -33,7 +33,7 @@ The existing portfolio is the default entry. A desktop-only building mascot open
 - `CityStopContent`: section content backed by existing portfolio data.
 - `city.tr.json` / `city.en.json`: translated city content.
 
-Three.js loads only after entering the city. The renderer updates on demand, pauses while a project is open or the tab is hidden, and releases resources on exit.
+Three.js is lazy-loaded and prefetched when the desktop launcher is hovered or focused. The city renderer updates on demand, pauses while a project is open or the tab is hidden, and releases resources on exit.
 
 ## Checks
 
@@ -45,8 +45,19 @@ The existing portfolio remains intact. The city is an optional desktop experienc
 
 ## Validation notes
 
-- 18 tests cover layout, translations, camera clearance, continuous velocity, trail progress, matching opening/closing views and project highlight lifecycle.
+- 23 tests cover layout, translations, camera clearance, continuous velocity, trail progress, matching opening/closing views, project highlights and portal timing/cancellation.
 - Browser checks: desktop and narrow viewports, city entry, all five project dialogs, widget navigation, expandable About/Services, contact links, Escape, both languages and themes.
-- The Three.js chunk triggers Vite's 500 kB size warning; it is loaded separately after city entry (approximately 141 kB gzip).
+- The shared Three.js chunk triggers Vite's 500 kB size warning; it is loaded separately from the main page (approximately 136 kB gzip).
 - Dependency audit reports four existing tooling advisories in `@humanfs/node`, `baseline-browser-mapping`, `browserslist` and `js-yaml`. Three.js is not listed. No unrelated dependency upgrades were made.
 - Reduced-motion and WebGL-failure handling are implemented but still need device-level verification before publishing.
+
+## Portal experiment
+
+Stable baseline: `da/3d-sehir-portfolyo`, commit `cc675ce`.
+Experiment: `da/karadelik-gecis-denemesi`. Do not merge or publish without approval.
+
+The desktop launcher captures the visible portfolio locally, pulls its texture into a gold-edged portal, then reveals the city once its scene is ready. The closing/opening animation lasts 1.9 seconds, excluding capture and loading. No captured content is uploaded.
+
+Escape, Cancel, resizing or hiding the tab cancels the transition. The original scroll position and input are restored. Reduced motion uses the regular route change. Capture failures use the regular transition; city readiness failures return to the portfolio. The temporary renderer and texture are disposed after each attempt.
+
+Browser checks include entry from the top and bottom of the portfolio, repeated entry, cancellation while closing and opening, and narrow-screen exclusion. Cross-browser screenshot/font rendering and lower-powered devices still need checking before release.

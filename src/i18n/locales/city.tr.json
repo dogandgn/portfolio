@@ -3,6 +3,8 @@
   "enter": "3B şehri keşfet",
   "dismiss": "Daveti gizle",
   "loading": "Şehir hazırlanıyor…",
+  "transitionLoading": "Şehre geçiliyor…",
+  "transitionCancel": "İptal",
   "return": "Portfolyoya dön",
   "overview": "Genel görünüm",
   "district": "Mahalle",
