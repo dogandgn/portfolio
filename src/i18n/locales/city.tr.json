@@ -1,6 +1,8 @@
 {
-  "invitation": "Şehri gezmek ister misiniz?",
-  "enter": "3B şehri keşfet",
+  "invitation": "Portfolyoyu\n3 boyutta keşfet",
+  "invitationLabel": "3B PORTFOLYO",
+  "invitationHint": "Farklı bir açıdan incele",
+  "enter": "3B portfolyoyu aç",
   "dismiss": "Daveti gizle",
   "loading": "Şehir hazırlanıyor…",
   "transitionLoading": "Şehre geçiliyor…",

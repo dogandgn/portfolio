@@ -1,6 +1,8 @@
 {
-  "invitation": "Would you like to explore the city?",
-  "enter": "Explore the 3D city",
+  "invitation": "Explore the portfolio\nin 3D",
+  "invitationLabel": "3D PORTFOLIO",
+  "invitationHint": "See it from a different angle",
+  "enter": "Open the 3D portfolio",
   "dismiss": "Dismiss invitation",
   "loading": "Preparing the city…",
   "transitionLoading": "Entering the city…",
