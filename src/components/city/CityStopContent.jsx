@@ -62,9 +62,8 @@ function AboutContent({ t }) {
       </div>
       <a
         className="city-text-link"
-        href="/cv.jpg"
-        target="_blank"
-        rel="noreferrer"
+        href={t('hero.cvFile')}
+        download
       >
         {t('hero.cv')} ↗
       </a>

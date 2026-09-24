@@ -31,7 +31,7 @@ export default function Hero() {
             <i className="fa-solid fa-envelope" aria-hidden="true"></i>
             {t('hero.contact')}
           </a>
-          <a href="/cv.jpg" download className="inline-flex items-center justify-center gap-2 bg-signal text-ink px-6 py-3 rounded-full text-sm font-medium hover:bg-deep-signal transition-all">
+          <a href={t('hero.cvFile')} download className="inline-flex items-center justify-center gap-2 bg-signal text-ink px-6 py-3 rounded-full text-sm font-medium hover:bg-deep-signal transition-all">
             <i className="fa-solid fa-download" aria-hidden="true"></i>
             {t('hero.cv')}
           </a>
