@@ -16,6 +16,7 @@ import {
   getJourneyProgress,
   getRouteDistance,
   getRoutePoint,
+  finaleActions,
 } from '../src/components/city/cityLayout.js';
 
 test('layout is deterministic and preserves the selected building', () => {
@@ -59,7 +60,10 @@ test('camera remains finite and continuous along both routes', () => {
         assert.ok(Number.isFinite(value));
         assert.ok(Math.abs(value - previous[index]) < 0.15);
       });
-      assert.ok(pose[1] >= 7.5);
+      assert.ok(pose[1] >= 1.85);
+      assert.ok(
+        Math.hypot(pose[0] - pose[3], pose[1] - pose[4], pose[2] - pose[5]) > 2,
+      );
       previous = pose;
     }
     assert.deepEqual(getCameraPose(-1, compact), getCameraPose(0, compact));
@@ -80,8 +84,10 @@ test('chapter order and project identities match the portfolio journey', () => {
       'luma',
       'birdmap',
       'qgis',
+      'street',
       'services',
       'contact',
+      'finish',
     ],
   );
   assert.deepEqual(
@@ -153,20 +159,31 @@ test('both languages cover every city stop and project marker', () => {
   );
 });
 
-test('contact returns to the exact opening view', () => {
-  for (const compact of [false, true]) {
-    assert.deepEqual(getCameraPose(0, compact), getCameraPose(1, compact));
+test('the final view stays at eye level facing both choices', () => {
+  const pose = getCameraPose(1);
+  assert.equal(pose[1], 1.85);
+  assert.equal(pose[4], 1.85);
+  assert.ok(pose[5] > pose[2]);
+  for (const action of finaleActions) {
+    assert.ok(action.z > pose[2] + 4);
+    assert.ok(action.x < pose[0]);
+    assert.ok(Math.abs(action.x - pose[0]) < 6);
   }
 });
 
 test('camera azimuth stays fixed while descending to the project street', () => {
+  const end =
+    cityStops.findIndex((stop) => stop.id === 'qgis') / (cityStops.length - 1);
   for (let step = 0; step <= 1000; step += 1) {
-    const pose = getCameraPose(step / 1000);
+    const pose = getCameraPose((step / 1000) * end);
     const distance = pose[2] - pose[5];
     assert.ok(Math.abs((pose[0] - pose[3]) / distance - 0.6) < 1e-10);
     assert.ok(pose[1] > pose[4]);
   }
-  const onwardStops = cityStops.slice(1, -1);
+  const onwardStops = cityStops.slice(
+    1,
+    cityStops.findIndex((stop) => stop.id === 'qgis') + 1,
+  );
   onwardStops.slice(1).forEach((stop, index) => {
     assert.ok(stop.pose[3] >= onwardStops[index].pose[3]);
   });

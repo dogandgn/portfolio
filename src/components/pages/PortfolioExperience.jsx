@@ -113,7 +113,7 @@ export default function PortfolioExperience() {
 
   function navigate(next, section) {
     if (next === showCity || (next && !desktop)) return;
-    if (next) savedScroll.current = window.scrollY;
+    savedScroll.current = next ? window.scrollY : 0;
     returnSection.current = section;
     const url = new URL(window.location.href);
     if (next) url.searchParams.set('view', 'city');
@@ -133,7 +133,7 @@ export default function PortfolioExperience() {
     portalRef.current = controller;
     const element = viewRef.current;
     const mascot = element.querySelector('.city-mascot');
-    const rect = mascot.getBoundingClientRect();
+    const rect = mascot.querySelector('.city-guide-frame').getBoundingClientRect();
     const origin = {
       x: rect.left + rect.width / 2,
       y: rect.top + rect.height / 2,
@@ -196,19 +196,19 @@ export default function PortfolioExperience() {
           key={showCity ? 'city' : 'classic'}
           initial={{
             opacity: 0,
-            scale: reducedMotion ? 1 : 0.98,
-            filter: reducedMotion ? 'none' : 'blur(5px)',
+            scale: reducedMotion || !showCity ? 1 : 0.98,
+            filter: reducedMotion || !showCity ? 'none' : 'blur(5px)',
           }}
           animate={{
             opacity: 1,
             scale: 1,
-            filter: 'blur(0px)',
+            filter: reducedMotion || !showCity ? 'none' : 'blur(0px)',
             transitionEnd: { filter: 'none', transform: 'none' },
           }}
           exit={{
             opacity: 0,
-            scale: reducedMotion ? 1 : 1.04,
-            filter: reducedMotion ? 'none' : 'blur(7px)',
+            scale: reducedMotion || !showCity ? 1 : 1.04,
+            filter: reducedMotion || !showCity ? 'none' : 'blur(7px)',
           }}
           transition={{ duration: reducedMotion ? 0 : 0.4 }}
         >

@@ -1,9 +1,6 @@
 {
-  "invitation": "Portfolyoyu\n3 boyutta keşfet",
-  "invitationLabel": "3B PORTFOLYO",
-  "invitationHint": "Farklı bir açıdan incele",
+  "invitation": "3D keşfet",
   "enter": "3B portfolyoyu aç",
-  "dismiss": "Daveti gizle",
   "loading": "Şehir hazırlanıyor…",
   "transitionLoading": "Şehre geçiliyor…",
   "transitionCancel": "İptal",
@@ -32,6 +29,8 @@
   "projectsHint": "Mülkiyet yönetimi → ArcGIS geliştirmeleri → Veri mühendisliği → Gayrimenkul proje sunumu → Kuş gözlem → QGIS eklentileri",
   "contactIntro": "Web sitesi, harita uygulaması veya veri işleme ihtiyacınızı e-posta üzerinden paylaşabilirsiniz.",
   "backToStart": "Başa dön",
+  "restart": "Baştan başla",
+  "finaleActions": "Rota sonu seçenekleri",
   "chapters": {
     "intro": "Tanıtım",
     "about": "Hakkımda",
@@ -49,6 +48,8 @@
     "luma": "Gayrimenkul\nproje sunumu",
     "birdmap": "Kuş\ngözlem",
     "qgis": "QGIS\neklentileri",
+    "street": "Birlikte neler geliştirebiliriz?",
+    "finish": "İletişim",
     "services": "Birlikte neler geliştirebiliriz?",
     "contact": "İletişim"
   },

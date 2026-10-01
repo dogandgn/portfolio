@@ -1,9 +1,6 @@
 {
-  "invitation": "Explore the portfolio\nin 3D",
-  "invitationLabel": "3D PORTFOLIO",
-  "invitationHint": "See it from a different angle",
+  "invitation": "Explore in 3D",
   "enter": "Open the 3D portfolio",
-  "dismiss": "Dismiss invitation",
   "loading": "Preparing the city…",
   "transitionLoading": "Entering the city…",
   "transitionCancel": "Cancel",
@@ -32,6 +29,8 @@
   "projectsHint": "Property management → ArcGIS development → Data engineering → Real estate showcase → Bird observation → QGIS plugins",
   "contactIntro": "Share your website, mapping application or data processing needs by email.",
   "backToStart": "Back to the start",
+  "restart": "Start again",
+  "finaleActions": "End of route choices",
   "chapters": {
     "intro": "Introduction",
     "about": "About",
@@ -49,6 +48,8 @@
     "luma": "Real estate\nshowcase",
     "birdmap": "Bird\nobservation",
     "qgis": "QGIS\nplugins",
+    "street": "What can we build together?",
+    "finish": "Contact",
     "services": "What can we build together?",
     "contact": "Contact"
   },

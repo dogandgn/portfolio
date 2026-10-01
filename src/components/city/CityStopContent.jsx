@@ -209,7 +209,6 @@ export default function CityStopContent({
               LinkedIn ↗
             </a>
           </div>
-          <SectionLink id="overview">{t('city.backToStart')}</SectionLink>
         </>
       );
     default:

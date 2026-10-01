@@ -1,5 +1,10 @@
 import * as THREE from 'three';
-import { getRouteDistance, getRoutePoint, route } from './cityLayout';
+import {
+  getRouteDistance,
+  getRoutePoint,
+  getStreetBlend,
+  route,
+} from './cityLayout';
 
 export function createCityRoute(scene, geometry) {
   const materials = {
@@ -66,6 +71,7 @@ export function createCityRoute(scene, geometry) {
 
   return {
     update(progress) {
+      head.visible = getStreetBlend(progress) < 0.85;
       const distance = getRouteDistance(progress);
       segments.forEach(
         ({ mesh, start, length, x1, z1, x2, z2, horizontal, offset }) => {
