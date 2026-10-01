@@ -1,11 +1,11 @@
 import { easePortal } from './portalMath.js';
 
 export const transitionDurations = {
-  approach: 1600,
-  part: 1700,
-  crouch: 350,
-  jump: 1100,
-  reveal: 850,
+  approach: 600,
+  part: 750,
+  crouch: 140,
+  jump: 550,
+  reveal: 360,
 };
 
 export function getTransitionLayout(origin, width, height) {
@@ -74,5 +74,15 @@ export function getContourPoint(x, y, layout, pull) {
   return {
     x: originalX + Math.sign(dx) * influence * pull * layout.size * 0.36,
     y: originalY + dy * influence * pull * 0.15,
+  };
+}
+
+export function getHandGrips(pose) {
+  const shift = 0.065 * (1 - pose.pull);
+  return {
+    shift,
+    y: pose.y - pose.size * 0.12,
+    left: pose.x + pose.size * (-0.25 + shift),
+    right: pose.x + pose.size * (0.266 - shift),
   };
 }

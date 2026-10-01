@@ -1,7 +1,8 @@
 import { captureViewport } from './captureViewport';
-import { withDeadline } from './portalMath';
+import { easePortal, withDeadline } from './portalMath';
 import {
   getContourPoint,
+  getHandGrips,
   getTransitionLayout,
   getTransitionPose,
   transitionDurations,
@@ -51,6 +52,32 @@ export async function runPortalTransition({ element, origin, signal, onCovered }
       tile(1, 0, -size * 0.715, -size * 0.44, size);
       context.restore();
     }
+    function pulling(pose) {
+      const { size } = pose;
+      const { shift } = getHandGrips(pose);
+      const slice = (x, y, w, h, targetX, targetWidth = w) => {
+        const left = Math.round((pose.x + (targetX - 0.5) * size) * ratio) / ratio - pose.x;
+        const top = Math.round((pose.y + (y - 0.5) * size) * ratio) / ratio - pose.y;
+        const right = Math.round((pose.x + (targetX + targetWidth - 0.5) * size) * ratio) / ratio - pose.x;
+        const bottom = Math.round((pose.y + (y + h - 0.5) * size) * ratio) / ratio - pose.y;
+        context.drawImage(atlas, x * cell, (1 + y) * cell, w * cell, h * cell,
+          left, top, right - left, bottom - top);
+      };
+      slice(0, 0, 1, 0.27, 0);
+      slice(0, 0.5, 1, 0.5, 0);
+      for (let row = 0; row < 32; row++) {
+        const y = 0.27 + row * 0.23 / 32;
+        const h = 0.23 / 32;
+        const weight = easePortal((y - 0.27) / 0.06) *
+          (1 - easePortal((y - 0.43) / 0.07));
+        const offset = shift * weight;
+        slice(0, y, 0.35, h, offset);
+        slice(0.35, y, 0.10, h, 0.35 + offset, 0.10 - offset);
+        slice(0.45, y, 0.13, h, 0.45);
+        slice(0.58, y, 0.11, h, 0.58, 0.11 - offset);
+        slice(0.69, y, 0.31, h, 0.69 - offset);
+      }
+    }
     function contours(pull, opacity) {
       context.save();
       context.globalAlpha = opacity * 0.8;
@@ -72,32 +99,73 @@ export async function runPortalTransition({ element, origin, signal, onCovered }
       }
       context.restore();
     }
-    function openCurtain(opening) {
+    function openCurtain(pose) {
+      const { opening } = pose;
       if (!opening) return;
-      const gap = Math.max(layout.x, width - layout.x) * opening * 1.14;
-      const bend = layout.size * 0.13 * Math.sin(opening * Math.PI);
-      const left = layout.x - gap;
-      const right = layout.x + gap;
+      const grips = getHandGrips(opening <= 0.12 ? pose : {
+        x: layout.x, y: layout.y + 18, size: layout.size * 0.96, pull: 1,
+      });
+      const catchUp = easePortal(opening / 0.035);
+      const release = easePortal((opening - 0.12) / 0.88);
+      const left = layout.x + (grips.left - layout.x) * catchUp - width * release;
+      const right = layout.x + (grips.right - layout.x) * catchUp + width * release;
+      const bend = layout.size * 0.15 * (1 - release) * catchUp;
+      function edge(x, direction, reverse = false) {
+        const start = reverse ? height + 20 : -20;
+        const end = reverse ? -20 : height + 20;
+        context.lineTo(x + direction * bend, start);
+        context.bezierCurveTo(x + direction * bend, (start + grips.y) / 2,
+          x, grips.y - (reverse ? -35 : 35), x, grips.y);
+        context.bezierCurveTo(x, grips.y + (reverse ? -35 : 35),
+          x + direction * bend, (end + grips.y) / 2, x + direction * bend, end);
+      }
       context.save();
       context.globalCompositeOperation = 'destination-out';
       context.beginPath();
       context.moveTo(left - bend, -20);
-      context.quadraticCurveTo(left + bend, layout.y, left - bend, height + 20);
-      context.lineTo(right + bend, height + 20);
-      context.quadraticCurveTo(right - bend, layout.y, right + bend, -20);
+      edge(left, -1);
+      edge(right, 1, true);
       context.closePath();
       context.fill();
       context.restore();
       context.save();
-      context.strokeStyle = `rgba(201, 162, 39, ${0.5 * (1 - opening)})`;
-      context.lineWidth = 1.6;
-      for (const direction of [-1, 1]) {
-        const edge = layout.x + direction * gap;
+      context.strokeStyle = `rgba(201, 162, 39, ${0.9 * (1 - release)})`;
+      context.lineWidth = 2.4;
+      for (const [x, direction] of [[left, -1], [right, 1]]) {
         context.beginPath();
-        context.moveTo(edge + direction * bend, -20);
-        context.quadraticCurveTo(edge - direction * bend, layout.y,
-          edge + direction * bend, height + 20);
+        context.moveTo(x + direction * bend, -20);
+        edge(x, direction);
         context.stroke();
+      }
+      context.restore();
+    }
+    function heldContours(pose, foreground = false) {
+      const grips = getHandGrips(pose);
+      context.save();
+      context.lineCap = 'round';
+      context.strokeStyle = foreground ? '#f2cc57' : '#bd972c';
+      context.lineWidth = foreground ? 2.4 : 1.8;
+      context.globalAlpha = foreground ? 1 : 0.85;
+      for (const [x, direction] of [[grips.left, -1], [grips.right, 1]]) {
+        for (const offset of [-1, 0, 1]) {
+          context.beginPath();
+          if (foreground) {
+            const gripSize = pose.size * 0.018;
+            context.moveTo(x - gripSize, grips.y + offset * 3);
+            context.quadraticCurveTo(x, grips.y + offset * 3 + gripSize * 0.5,
+              x + gripSize, grips.y + offset * 3);
+          } else {
+            const fade = context.createLinearGradient(x + direction * 260, 0, x, 0);
+            fade.addColorStop(0, 'rgba(189, 151, 44, 0)');
+            fade.addColorStop(0.4, 'rgba(189, 151, 44, 0.45)');
+            fade.addColorStop(1, '#bd972c');
+            context.strokeStyle = fade;
+            context.moveTo(x + direction * 260, grips.y + offset * 65);
+            context.bezierCurveTo(x + direction * 150, grips.y + offset * 65,
+              x + direction * 55, grips.y + offset * 3, x, grips.y + offset * 3);
+          }
+          context.stroke();
+        }
       }
       context.restore();
     }
@@ -111,16 +179,19 @@ export async function runPortalTransition({ element, origin, signal, onCovered }
       context.drawImage(snapshot, 0, 0, width, height);
       context.restore();
       contours(pose.pull, 1);
-      openCurtain(pose.opening);
+      openCurtain(pose);
+      const holding = phase === 'part' || phase === 'crouch';
+      if (holding) heldContours(pose);
       if (!pose.opacity) return;
       context.save();
       context.globalAlpha = pose.opacity;
       context.translate(pose.x, pose.y);
       context.rotate(pose.angle);
       if (phase === 'approach' && progress < 0.85) standing(pose.size);
-      else tile(phase === 'jump' ? 1 : 0, 1,
-        -pose.size / 2, -pose.size / 2, pose.size);
+      else if (phase === 'jump') tile(1, 1, -pose.size / 2, -pose.size / 2, pose.size);
+      else pulling(pose);
       context.restore();
+      if (holding) heldContours(pose, true);
     }
     function animate(phase) {
       canvas.dataset.phase = phase;
@@ -161,9 +232,8 @@ export async function runPortalTransition({ element, origin, signal, onCovered }
     document.body.style.overflow = 'hidden';
     if (invitation) invitation.style.visibility = 'hidden';
     element.style.visibility = 'hidden';
-    await animate('approach');
-    canvas.dataset.phase = 'waiting';
-    await withDeadline(onCovered(), 8000, signal);
+    const cityReady = withDeadline(onCovered(), 8000, signal);
+    await Promise.all([animate('approach'), cityReady]);
     await animate('part');
     await animate('crouch');
     await animate('jump');

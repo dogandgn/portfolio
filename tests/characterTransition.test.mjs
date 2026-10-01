@@ -38,7 +38,7 @@ test('visible pose changes are continuous through approach, pulling and takeoff'
   }
   assert.equal(getTransitionPose('jump', 1, layout).opacity, 0);
   assert.equal(getTransitionPose('reveal', 1, layout).opening, 1);
-  assert.equal(Object.values(transitionDurations).reduce((sum, value) => sum + value), 5600);
+  assert.ok(Object.values(transitionDurations).reduce((sum, value) => sum + value) < 3000);
 });
 
 test('the contour field separates horizontally with bounded, smooth motion', () => {

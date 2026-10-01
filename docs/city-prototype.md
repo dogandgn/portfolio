@@ -91,7 +91,9 @@ Validation: 48 automated tests cover continuous camera velocity, descent, eye-le
 
 ## Character entry
 
-The guide enlarges from its launcher, moves toward the centre, parts the contour field and jumps into the opening. A temporary 2D canvas renders the character and displaced contour lines over a local viewport capture. A curved vertical opening reveals the existing city after its renderer signals readiness. The motion lasts 5.6 seconds, excluding capture and extra loading; there is no rotating ring or black-hole shader.
+The guide enlarges from its launcher, moves toward the centre, parts the contour field and jumps into the opening. A temporary 2D canvas renders the character and displaced contour lines over a local viewport capture. A curved vertical opening reveals the existing city after its renderer signals readiness. The motion lasts 2.4 seconds, excluding capture and extra loading; city preparation runs during the approach. There is no rotating ring or black-hole shader.
+
+The pulling pose moves its forearms outward. Curtain edges and gathered gold contour strands use the same hand coordinates, with short foreground strands crossing the fingers. The opening stays attached to the hands until takeoff, then expands independently. Sprite slices align to canvas pixels to prevent seams during arm movement.
 
 The invitation stays visible during capture and is excluded from the snapshot. Canvas elements are also excluded so the background contours are not stretched. Each frame uses a single character pose to avoid doubled faces. The temporary canvas, animation frame, visibility overrides and body scroll lock are released after completion or cancellation. Capture and city readiness have separate deadlines. Escape, Cancel, resize and hidden-tab cancellation remain available; reduced motion bypasses the sequence.
 
