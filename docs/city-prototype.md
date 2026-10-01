@@ -57,9 +57,9 @@ The existing portfolio remains intact. The city is an optional desktop experienc
 Stable baseline: `da/3d-sehir-portfolyo`, commit `cc675ce`.
 Experiment: `da/karadelik-gecis-denemesi`. Do not merge or publish without approval.
 
-The desktop launcher captures the visible portfolio locally, twists its texture into a gold-edged portal, holds a rotating ring for 0.9 seconds, then reveals the city once its scene is ready. The animation lasts 3.15 seconds, excluding capture and extra loading. No captured content is uploaded.
+The former rotating black-hole transition has been replaced by the character entry described below. The stable baseline remains available in Git history.
 
-Escape, Cancel, resizing or hiding the tab cancels the transition. The original scroll position and input are restored. Reduced motion uses the regular route change. Capture failures use the regular transition; city readiness failures return to the portfolio. The temporary renderer and texture are disposed after each attempt.
+Escape, Cancel, resizing or hiding the tab cancels the transition. The original scroll position and input are restored. Reduced motion uses the regular route change. Capture failures use the regular transition; city readiness failures return to the portfolio. Temporary capture and canvas resources are released after each attempt.
 
 Browser checks include entry from the top and bottom of the portfolio, repeated entry, cancellation while closing and opening, and narrow-screen exclusion. Cross-browser screenshot/font rendering and lower-powered devices still need checking before release.
 
@@ -85,6 +85,16 @@ After QGIS, scrolling lowers the camera to 1.85 scene units and widens its field
 
 Both sculptures share a centered right-side layout, sage orbital rings and gold detail beads. Entry animations run for four seconds; hovering triggers a short symbol-specific response, then rendering settles again. Labels use two balanced lines. Placement tests cover 1024, 1280 and 1910-pixel desktop widths.
 
-The return sculpture uses the same upper-left diagonal arrow as the header. The desktop invitation uses a detailed 3D-rendered guide with brown hair, a beard, glasses and a ruler. A transparent 2×2 WebP atlas provides waving poses without another WebGL context or loading Three.js on the classic page. Only “3D keşfet” / “Explore in 3D” appears below the character. Waving runs briefly every twelve seconds and on focus or hover, pausing when the tab is hidden. Reduced motion uses a static pose. A local SVG fallback keeps entry available if the image cannot load.
+The return sculpture uses the same upper-left diagonal arrow as the header. The desktop invitation uses a detailed 3D-rendered guide with brown hair, a beard, glasses and a ruler. A transparent 2×2 WebP atlas supplies the body, separate forearm, pulling pose and jumping pose without another WebGL context or loading Three.js on the classic page. Only “3D keşfet” / “Explore in 3D” appears below the character. The arm rotates continuously with easing during a sixteen-second wave/rest cycle; hover and focus trigger a slower 4.8-second greeting. Hidden tabs pause the motion. Reduced motion uses a static pose, including hover and focus. A local SVG fallback keeps entry available if the image cannot load.
 
 Validation: 48 automated tests cover continuous camera velocity, descent, eye-level path clearance, centered right-side placement, action raycasting, translated glyphs, entry/hover settling, guide features, diagonal return orientation and resource disposal. Lint and production build pass. Browser checks cover the launcher, portal entry, both languages and themes, mobile exclusion and returning from the final action before any separate publishing approval.
+
+## Character entry
+
+The guide enlarges from its launcher, moves toward the centre, parts the contour field and jumps into the opening. A temporary 2D canvas renders the character and displaced contour lines over a local viewport capture. A curved vertical opening reveals the existing city after its renderer signals readiness. The motion lasts 5.6 seconds, excluding capture and extra loading; there is no rotating ring or black-hole shader.
+
+The invitation stays visible during capture and is excluded from the snapshot. Canvas elements are also excluded so the background contours are not stretched. Each frame uses a single character pose to avoid doubled faces. The temporary canvas, animation frame, visibility overrides and body scroll lock are released after completion or cancellation. Capture and city readiness have separate deadlines. Escape, Cancel, resize and hidden-tab cancellation remain available; reduced motion bypasses the sequence.
+
+Validation: 53 automated tests cover viewport-safe enlargement, continuous position/scale, monotonic opening, bounded contour displacement, arm timing, reduced motion and cleanup, in addition to the existing city tests.
+
+Lint and production build pass, with the existing lazy city chunk size warning. Browser checks confirmed repeated entry, pulling/jumping poses, cancellation before and after city mounting, scroll restoration, and launcher exclusion without horizontal overflow at 390 × 844. No production deployment was made.

@@ -4,8 +4,11 @@ export async function captureViewport(element, signal) {
   const width = document.documentElement.clientWidth;
   const height = window.innerHeight;
   const scrollY = window.scrollY;
+  const filter = (node) =>
+    !['IFRAME', 'VIDEO', 'SCRIPT', 'CANVAS'].includes(node.tagName) &&
+    !node.closest?.('.city-invitation');
   const fixed = [...element.querySelectorAll('*')]
-    .filter((node) => getComputedStyle(node).position === 'fixed')
+    .filter((node) => filter(node) && getComputedStyle(node).position === 'fixed')
     .map((node) => node.getBoundingClientRect());
   const svgUrl = await toSvg(element, {
     width,
@@ -13,7 +16,7 @@ export async function captureViewport(element, signal) {
     style: { opacity: '1', transform: 'none', filter: 'none' },
     preferredFontFormat: 'woff2',
     fetchRequestInit: { signal },
-    filter: (node) => !['IFRAME', 'VIDEO', 'SCRIPT'].includes(node.tagName),
+    filter,
   });
   signal.throwIfAborted();
   const xml = new DOMParser().parseFromString(

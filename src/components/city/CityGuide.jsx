@@ -33,7 +33,7 @@ export default function CityGuide() {
       <span className="city-guide-frame">
         <img
           className="city-guide-image"
-          src="/mascot/guide-wave-v2.webp"
+          src="/mascot/guide-motion-v3.webp"
           alt=""
           width="1254"
           height="1254"
@@ -43,6 +43,15 @@ export default function CityGuide() {
           onLoad={() => { containerRef.current.dataset.ready = 'true'; }}
           onError={() => { containerRef.current.dataset.ready = 'false'; }}
         />
+        <span className="city-guide-arm">
+          <img
+            src="/mascot/guide-motion-v3.webp"
+            alt=""
+            width="1254"
+            height="1254"
+            draggable="false"
+          />
+        </span>
       </span>
     </span>
   );
