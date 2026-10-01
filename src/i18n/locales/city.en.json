@@ -26,10 +26,10 @@
   "prototype": "3D EXPERIENCE / FIRST ROUTE",
   "fallback": "The 3D view could not load on this device. You can still view the project below or return to the portfolio.",
   "skip": "Skip to project content",
-  "canvas": "A three-dimensional coastal city with green spaces and five selectable project buildings",
+  "canvas": "A three-dimensional coastal city with green spaces and selectable project buildings",
   "sections": "Page sections",
   "projectsIntro": "This district brings my projects together. Each building represents one project. See them all first, then scroll to explore them in order.",
-  "projectsHint": "Property management → ArcGIS development → Data engineering → Real estate showcase → Bird observation",
+  "projectsHint": "Property management → ArcGIS development → Data engineering → Real estate showcase → Bird observation → QGIS plugins",
   "contactIntro": "Share your website, mapping application or data processing needs by email.",
   "backToStart": "Back to the start",
   "chapters": {
@@ -48,6 +48,7 @@
     "automation": "Data\nengineering",
     "luma": "Real estate\nshowcase",
     "birdmap": "Bird\nobservation",
+    "qgis": "QGIS\nplugins",
     "services": "What can we build together?",
     "contact": "Contact"
   },
@@ -56,7 +57,8 @@
     "widgets": "ArcGIS",
     "automation": "Data",
     "luma": "Real Estate Showcase",
-    "birdmap": "Bird Observation"
+    "birdmap": "Bird Observation",
+    "qgis": "QGIS Plugins"
   },
   "light": "Light appearance",
   "dark": "Dark appearance"

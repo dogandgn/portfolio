@@ -1,0 +1,51 @@
+{
+  "title": "QGIS Plugins",
+  "description": "Desktop plugins I develop to simplify data review, conversion and repetitive workflows within QGIS.",
+  "cardLabel": "QGIS Desktop · Plugin development",
+  "previous": "Previous plugin",
+  "next": "Next plugin",
+  "counter": "Plugin {{current}} / {{total}}",
+  "floor": "Floor {{number}}",
+  "floors": "Plugin floors",
+  "floorHint": "Each floor represents a plugin. Select a floor to open its details.",
+  "screens": "Plugin interface",
+  "screenHint": "Actual QGIS Desktop screenshots with synthetic sample data. This plugin does not run in the browser; it runs within QGIS on your computer.",
+  "repository": "GitHub repository",
+  "workflow": "Workflow",
+  "attributes": "Attributes",
+  "coordinates": "Coordinates",
+  "results": "Results",
+  "openImage": "Open full-size image",
+  "plugins": {
+    "vector-converter": {
+      "description": "Vector Converter (Parsel Dönüştürücü) brings vector and parcel files into a single review and conversion workflow within QGIS. I developed it to compare sources, select records, map output fields and prepare data in a target coordinate reference system.",
+      "details": {
+        "title": "Vector Converter — Parcel Converter",
+        "environment": "QGIS Desktop · Version 0.9.0 · Python / PyQGIS",
+        "summary": "The plugin scans SHP/ZIP, KML/KMZ and GeoJSON sources in a folder. Parcel mode compares administrative parcel identity and geometry; general vector mode compares geometry and populated attributes. Selected records are exported to GeoPackage, FileGDB, GeoJSON or KML, with provenance and reports kept separate from the main data.",
+        "features": [
+          {
+            "title": "Two workflows and controlled duplicate handling",
+            "description": "Parcel mode handles 2D polygons. General vector mode supports points, lines, polygons and Multi geometries. Records can remain separate, exact duplicates can be merged, or a preferred format can supply one source. Layer similarity is not an automatic merge decision."
+          },
+          {
+            "title": "Attribute mapping and clean output",
+            "description": "Review source columns, types and sample values together. Select, rename and map output fields. Original types and provenance are stored in a .veri.json sidecar; checks are documented in HTML/JSON reports. The main layer is not filled with processing columns."
+          },
+          {
+            "title": "Coordinate conversion and geometry measurements",
+            "description": "Includes 25 coordinate presets for Türkiye. KML and GeoJSON output uses WGS84. Missing area and length measurements use appropriate planar or ellipsoidal methods; existing source measurements are preserved. Selecting a target system does not resolve an unknown source system."
+          },
+          {
+            "title": "Background tasks and read-back validation",
+            "description": "Built with Qt, Python/PyQGIS and QgsTask. Readers, comparison, attribute mapping and the output engine have separate responsibilities. Files are reopened before delivery to check record counts, attributes, geometry and coordinates, with cancellation and error handling."
+          },
+          {
+            "title": "Installation and scope",
+            "description": "Install the plugin package through QGIS Install from ZIP. No separate Python installation or online account is required. Tested on Windows with QGIS 3.44.13/Qt5 and 4.2.1/Qt6. FileGDB writing requires Windows and OpenFileGDB support. Raster, actual Z/M, automatic geometry repair, GPKG/GDB input and SHP output are outside its scope."
+          }
+        ]
+      }
+    }
+  }
+}

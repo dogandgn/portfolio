@@ -1,0 +1,51 @@
+{
+  "title": "QGIS Eklentileri",
+  "description": "QGIS içinde veri inceleme, dönüştürme ve tekrarlanan işlemleri kolaylaştırmak için geliştirdiğim masaüstü eklentileri.",
+  "cardLabel": "QGIS Desktop · Eklenti geliştirme",
+  "previous": "Önceki eklenti",
+  "next": "Sonraki eklenti",
+  "counter": "Eklenti {{current}} / {{total}}",
+  "floor": "Kat {{number}}",
+  "floors": "Eklenti katları",
+  "floorHint": "Her kat bir eklentiyi temsil eder. Kata tıklayarak ilgili eklentiyi açabilirsiniz.",
+  "screens": "Eklenti arayüzü",
+  "screenHint": "QGIS Desktop’tan alınan gerçek ekranlar, sentetik örnek veriler içerir. Eklenti tarayıcıda çalışmaz; bilgisayarda QGIS içinde kullanılır.",
+  "repository": "GitHub deposu",
+  "workflow": "İş akışı",
+  "attributes": "Öznitelikler",
+  "coordinates": "Koordinatlar",
+  "results": "Sonuçlar",
+  "openImage": "Görseli tam boy aç",
+  "plugins": {
+    "vector-converter": {
+      "description": "Vector Converter (Parsel Dönüştürücü), farklı dosyalardaki vektör ve parsel verilerini QGIS içinde tek bir inceleme ve dönüşüm akışında bir araya getirir. Kaynakları karşılaştırmak, aktarılacak kayıtları seçmek, çıktı sütunlarını düzenlemek ve hedef koordinat sisteminde çıktı hazırlamak için geliştirdim.",
+      "details": {
+        "title": "Vector Converter — Parsel Dönüştürücü",
+        "environment": "QGIS Desktop · Sürüm 0.9.0 · Python / PyQGIS",
+        "summary": "Klasördeki SHP/ZIP, KML/KMZ ve GeoJSON kaynakları taranır. Parsel dönüşümü modunda idari kimlik ve geometri, genel vektör modunda ise geometri ve dolu öznitelikler karşılaştırılır. Seçilen kayıtlar GeoPackage, FileGDB, GeoJSON veya KML olarak hazırlanır; kaynak ilişkileri ve işlem raporları ana veriden ayrı tutulur.",
+        "features": [
+          {
+            "title": "İki çalışma modu, kontrollü tekrar yönetimi",
+            "description": "Parsel modu 2B poligonlar için; genel vektör modu nokta, çizgi, poligon ve Multi türleri için çalışır. Kayıtlar ayrı tutulabilir, kesin tekrarlar birleştirilebilir veya biçim önceliğiyle tek kaynak seçilebilir. Katman benzerliği otomatik birleştirme kararı değildir."
+          },
+          {
+            "title": "Öznitelik eşleme ve temiz çıktı",
+            "description": "Kaynak sütunları, türleri ve örnek değerler birlikte incelenir. Çıktı alanları seçilir, adlandırılır ve eşlenir. Özgün türler ve kaynak ilişkileri .veri.json yan dosyasında; kontrol bilgileri HTML/JSON raporlarında tutulur. Ana katman gereksiz işlem sütunlarıyla genişletilmez."
+          },
+          {
+            "title": "Koordinat dönüşümü ve geometri ölçümleri",
+            "description": "Türkiye için 25 hazır koordinat şablonu bulunur. KML ve GeoJSON çıktısı WGS84 kullanır. Eksik alan ve uzunluk ölçümleri uygun düzlemsel veya elipsoidal yöntemle üretilir; mevcut kaynak ölçümleri korunur. Bilinmeyen kaynak sistemi hedef sistem seçilerek varsayılmaz."
+          },
+          {
+            "title": "Arka plan işleri ve yeniden okuma kontrolü",
+            "description": "Arayüz Qt, iş akışı Python/PyQGIS ve QgsTask ile kuruldu. Veri okuma, karşılaştırma, alan eşleme ve çıktı motoru ayrı modüllerde tutulur. Çıktılar teslimden önce yeniden açılarak kayıt sayısı, öznitelik, geometri ve koordinat yönünden denetlenir; iptal ve hata durumları yönetilir."
+          },
+          {
+            "title": "Kurulum ve kullanım kapsamı",
+            "description": "Kurulum paketi QGIS’in ZIP’ten Yükle ekranıyla eklenir. Ayrı Python kurulumu veya çevrimiçi hesap gerekmez. Windows QGIS 3.44.13/Qt5 ve 4.2.1/Qt6 ortamlarında test edilmiştir. FileGDB yazımı Windows ve OpenFileGDB desteğine bağlıdır. Raster, gerçek Z/M, otomatik geometri onarma, GPKG/GDB girdisi ve SHP çıktısı kapsam dışındadır."
+          }
+        ]
+      }
+    }
+  }
+}

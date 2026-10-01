@@ -3,14 +3,26 @@ import { createPortal } from 'react-dom';
 import { AnimatePresence, motion as Motion } from 'framer-motion';
 import TechBadge from './TechBadge';
 import DemoRenderer from '../demos/DemoRenderer';
+import {
+  getProjectItems,
+  getActiveItemIndex,
+  getAdjacentItemId,
+} from '../../data/projectItems';
 
-export default function ProjectModal({ project, onClose, t }) {
+export default function ProjectModal({
+  project,
+  onClose,
+  t,
+  activeItemId,
+  onItemChange,
+}) {
   const modalRef = useRef(null);
   const contentRef = useRef(null);
-  const [activeItemIndex, setActiveItemIndex] = useState(0);
-  const widgets = project.widgets ?? [];
+  const [localItemId, setLocalItemId] = useState(null);
   const showcases = project.showcases ?? [];
-  const items = widgets.length > 0 ? widgets : showcases;
+  const items = getProjectItems(project);
+  const selectedId = activeItemId === undefined ? localItemId : activeItemId;
+  const activeItemIndex = getActiveItemIndex(items, selectedId);
   const itemCount = items.length;
   const activeItem = items[activeItemIndex];
   const activeContent = activeItem ?? project;
@@ -18,15 +30,21 @@ export default function ProjectModal({ project, onClose, t }) {
   const activeTech = activeContent.tech ?? project.tech;
   const isWideDemoProject = project.wideDemo === true;
   const hasItemNavigation = itemCount > 1;
+  const isPluginNavigation = Boolean(project.plugins?.length);
+  const showItemNavigation = hasItemNavigation || isPluginNavigation;
   const isShowcaseNavigation = showcases.length > 0;
 
   const showPreviousItem = useCallback(() => {
-    setActiveItemIndex((current) => (current - 1 + itemCount) % itemCount);
-  }, [itemCount]);
+    const id = getAdjacentItemId(items, selectedId, -1);
+    setLocalItemId(id);
+    onItemChange?.(id);
+  }, [items, selectedId, onItemChange]);
 
   const showNextItem = useCallback(() => {
-    setActiveItemIndex((current) => (current + 1) % itemCount);
-  }, [itemCount]);
+    const id = getAdjacentItemId(items, selectedId, 1);
+    setLocalItemId(id);
+    onItemChange?.(id);
+  }, [items, selectedId, onItemChange]);
 
   useEffect(() => {
     const previousOverflow = document.body.style.overflow;
@@ -34,11 +52,20 @@ export default function ProjectModal({ project, onClose, t }) {
     const handleKeyDown = (event) => {
       if (event.key === 'Escape') onClose();
       if (event.key === 'Tab') {
-        const focusable = [...modalRef.current.querySelectorAll('button, a[href], input, select, textarea, iframe, [tabindex="0"]')]
-          .filter((element) => !element.disabled && element.getClientRects().length > 0);
+        const focusable = [
+          ...modalRef.current.querySelectorAll(
+            'button, a[href], input, select, textarea, iframe, [tabindex="0"]',
+          ),
+        ].filter(
+          (element) => !element.disabled && element.getClientRects().length > 0,
+        );
         const first = focusable[0];
         const last = focusable[focusable.length - 1];
-        if (event.shiftKey && (document.activeElement === first || document.activeElement === modalRef.current)) {
+        if (
+          event.shiftKey &&
+          (document.activeElement === first ||
+            document.activeElement === modalRef.current)
+        ) {
           event.preventDefault();
           last?.focus();
         } else if (!event.shiftKey && document.activeElement === last) {
@@ -46,8 +73,6 @@ export default function ProjectModal({ project, onClose, t }) {
           first?.focus();
         }
       }
-      if (hasItemNavigation && event.key === 'ArrowLeft') showPreviousItem();
-      if (hasItemNavigation && event.key === 'ArrowRight') showNextItem();
     };
 
     document.body.style.overflow = 'hidden';
@@ -59,7 +84,29 @@ export default function ProjectModal({ project, onClose, t }) {
       document.removeEventListener('keydown', handleKeyDown);
       previousFocus?.focus({ preventScroll: true });
     };
-  }, [hasItemNavigation, onClose, showNextItem, showPreviousItem]);
+  }, [onClose]);
+
+  useEffect(() => {
+    if (!hasItemNavigation) return;
+    const navigate = (event) => {
+      const editing =
+        event.target instanceof Element &&
+        event.target.closest(
+          'input, select, textarea, [contenteditable="true"]',
+        );
+      if (editing || event.altKey || event.ctrlKey || event.metaKey) return;
+      if (event.key === 'ArrowLeft') {
+        event.preventDefault();
+        showPreviousItem();
+      }
+      if (event.key === 'ArrowRight') {
+        event.preventDefault();
+        showNextItem();
+      }
+    };
+    document.addEventListener('keydown', navigate);
+    return () => document.removeEventListener('keydown', navigate);
+  }, [hasItemNavigation, showPreviousItem, showNextItem]);
 
   useEffect(() => {
     contentRef.current?.scrollTo({ top: 0 });
@@ -84,7 +131,10 @@ export default function ProjectModal({ project, onClose, t }) {
       : 'md:w-[55%] md:h-[90vh]';
 
   return createPortal(
-    <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 md:p-6" role="presentation">
+    <div
+      className="fixed inset-0 z-[9999] flex items-center justify-center p-4 md:p-6"
+      role="presentation"
+    >
       <Motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -105,30 +155,65 @@ export default function ProjectModal({ project, onClose, t }) {
         aria-modal="true"
         aria-labelledby={`project-dialog-title-${project.id}`}
       >
-        <div ref={contentRef} className={`custom-scrollbar h-1/2 min-h-0 w-full overflow-y-auto p-6 md:h-full md:p-8 ${leftClass}`}>
+        <div
+          ref={contentRef}
+          className={`custom-scrollbar h-1/2 min-h-0 w-full overflow-y-auto p-6 md:h-full md:p-8 ${leftClass}`}
+        >
           <div className="mb-8">
-            <h3 id={`project-dialog-title-${project.id}`} className="mb-4 pr-8 text-2xl font-bold leading-tight text-ink md:pr-0 md:text-3xl">
+            <h3
+              id={`project-dialog-title-${project.id}`}
+              className="mb-4 pr-8 text-2xl font-bold leading-tight text-ink md:pr-0 md:text-3xl"
+            >
               {project.title}
             </h3>
 
-            {hasItemNavigation && (
+            {showItemNavigation && (
               <div className="mb-6 flex items-center justify-between rounded-full border border-gunmetal bg-void px-2 py-2">
                 <button
                   type="button"
                   onClick={showPreviousItem}
-                  aria-label={t(isShowcaseNavigation ? 'projects.previousProject' : 'projects.previousWidget')}
-                  className="flex h-10 w-10 items-center justify-center rounded-full text-ink transition-colors hover:bg-signal hover:text-void"
+                  disabled={!hasItemNavigation}
+                  aria-label={t(
+                    isPluginNavigation
+                      ? 'qgis.previous'
+                      : isShowcaseNavigation
+                        ? 'projects.previousProject'
+                        : 'projects.previousWidget',
+                  )}
+                  className="flex h-10 w-10 items-center justify-center rounded-full text-ink transition-colors hover:bg-signal hover:text-void disabled:opacity-30 disabled:cursor-default"
                 >
                   <i className="fa-solid fa-arrow-left" />
                 </button>
-                <span className="text-sm font-medium text-fog">
-                  {t(isShowcaseNavigation ? 'projects.projectCounter' : 'projects.widgetCounter', { current: activeItemIndex + 1, total: itemCount })}
+                <span
+                  className="text-sm font-medium text-fog"
+                  aria-live="polite"
+                >
+                  {t(
+                    isPluginNavigation
+                      ? 'qgis.counter'
+                      : isShowcaseNavigation
+                        ? 'projects.projectCounter'
+                        : 'projects.widgetCounter',
+                    { current: activeItemIndex + 1, total: itemCount },
+                  )}
+                  {isPluginNavigation && (
+                    <span className="ml-2 text-xs">
+                      · {t('qgis.floor', { number: activeItemIndex + 1 })}
+                    </span>
+                  )}
                 </span>
                 <button
                   type="button"
                   onClick={showNextItem}
-                  aria-label={t(isShowcaseNavigation ? 'projects.nextProject' : 'projects.nextWidget')}
-                  className="flex h-10 w-10 items-center justify-center rounded-full text-ink transition-colors hover:bg-signal hover:text-void"
+                  disabled={!hasItemNavigation}
+                  aria-label={t(
+                    isPluginNavigation
+                      ? 'qgis.next'
+                      : isShowcaseNavigation
+                        ? 'projects.nextProject'
+                        : 'projects.nextWidget',
+                  )}
+                  className="flex h-10 w-10 items-center justify-center rounded-full text-ink transition-colors hover:bg-signal hover:text-void disabled:opacity-30 disabled:cursor-default"
                 >
                   <i className="fa-solid fa-arrow-right" />
                 </button>
@@ -144,50 +229,80 @@ export default function ProjectModal({ project, onClose, t }) {
                 transition={{ duration: 0.2 }}
               >
                 <div className="mb-6 flex flex-wrap gap-2">
-                  {activeTech.map((tech) => <TechBadge key={tech} text={tech} />)}
+                  {activeTech.map((tech) => (
+                    <TechBadge key={tech} text={tech} />
+                  ))}
                 </div>
 
                 {activeDetails && (
                   <div className="mb-7 rounded-xl border border-gunmetal bg-void p-5">
-                    <h4 className="text-xl font-bold leading-snug text-ink">{activeDetails.title}</h4>
+                    <h4 className="text-xl font-bold leading-snug text-ink">
+                      {activeDetails.title}
+                    </h4>
                     <dl className="mt-4 space-y-3 text-sm">
                       <div>
-                        <dt className="font-medium text-muted">{t('projects.environmentLabel')}</dt>
-                        <dd className="mt-1 text-fog">{activeDetails.environment}</dd>
+                        <dt className="font-medium text-muted">
+                          {t('projects.environmentLabel')}
+                        </dt>
+                        <dd className="mt-1 text-fog">
+                          {activeDetails.environment}
+                        </dd>
                       </div>
                       <div>
-                        <dt className="font-medium text-muted">{t('projects.technologiesLabel')}</dt>
-                        <dd className="mt-1 text-fog">{activeTech.join(', ')}</dd>
+                        <dt className="font-medium text-muted">
+                          {t('projects.technologiesLabel')}
+                        </dt>
+                        <dd className="mt-1 text-fog">
+                          {activeTech.join(', ')}
+                        </dd>
                       </div>
                     </dl>
                   </div>
                 )}
 
-                <p className="whitespace-pre-line text-[15px] leading-relaxed text-fog">{activeContent.description}</p>
+                <p className="whitespace-pre-line text-[15px] leading-relaxed text-fog">
+                  {activeContent.description}
+                </p>
 
                 {activeItem?.image && (
                   <img
                     src={activeItem.image}
-                    alt={activeItem.imageAlt ?? activeDetails?.title ?? project.title}
+                    alt={
+                      activeItem.imageAlt ??
+                      activeDetails?.title ??
+                      project.title
+                    }
                     className="mt-5 w-full max-w-[17rem] rounded-lg border border-gunmetal object-contain"
                   />
                 )}
 
                 {activeDetails && (
                   <div className="mt-8 border-t border-gunmetal pt-8">
-                    <h5 className="text-base font-bold text-ink">{t('projects.summaryLabel')}</h5>
-                    <p className="mt-2 text-[15px] leading-relaxed text-fog">{activeDetails.summary}</p>
+                    <h5 className="text-base font-bold text-ink">
+                      {t('projects.summaryLabel')}
+                    </h5>
+                    <p className="mt-2 text-[15px] leading-relaxed text-fog">
+                      {activeDetails.summary}
+                    </p>
 
                     <div className="mt-7">
-                      <h5 className="text-base font-bold text-ink">{t('projects.featuresLabel')}</h5>
+                      <h5 className="text-base font-bold text-ink">
+                        {t('projects.featuresLabel')}
+                      </h5>
                       <div className="mt-4 space-y-5">
                         {activeDetails.features.map((feature) => (
                           <section key={feature.title}>
-                            <h6 className="text-[15px] font-bold text-ink">{feature.title}</h6>
-                            <p className="mt-1.5 text-[15px] leading-relaxed text-fog">{feature.description}</p>
+                            <h6 className="text-[15px] font-bold text-ink">
+                              {feature.title}
+                            </h6>
+                            <p className="mt-1.5 text-[15px] leading-relaxed text-fog">
+                              {feature.description}
+                            </p>
                             {feature.items && (
                               <ul className="mt-2 list-disc space-y-1.5 pl-5 text-[15px] leading-relaxed text-fog marker:text-signal">
-                                {feature.items.map((item) => <li key={item}>{item}</li>)}
+                                {feature.items.map((item) => (
+                                  <li key={item}>{item}</li>
+                                ))}
                               </ul>
                             )}
                           </section>
@@ -210,7 +325,9 @@ export default function ProjectModal({ project, onClose, t }) {
           </button>
         </div>
 
-        <div className={`custom-scrollbar relative h-1/2 min-h-0 w-full overflow-y-auto overscroll-contain border-t-[3px] border-signal/40 bg-void md:border-t-0 md:border-l-[3px] lg:overflow-hidden ${rightClass}`}>
+        <div
+          className={`custom-scrollbar relative h-1/2 min-h-0 w-full overflow-y-auto overscroll-contain border-t-[3px] border-signal/40 bg-void md:border-t-0 md:border-l-[3px] lg:overflow-hidden ${rightClass}`}
+        >
           <AnimatePresence mode="wait" initial={false}>
             <Motion.div
               key={activeItem?.id ?? project.id}
@@ -221,17 +338,28 @@ export default function ProjectModal({ project, onClose, t }) {
               className="min-h-full w-full lg:h-full"
             >
               {activeItem?.demoId ? (
-                <DemoRenderer projectId={project.id} demoId={activeItem.demoId} content={activeContent} />
+                <DemoRenderer
+                  projectId={project.id}
+                  demoId={activeItem.demoId}
+                  content={activeContent}
+                />
               ) : activeItem?.image ? (
                 <div className="flex h-full w-full items-center justify-center p-6 md:p-10">
                   <img
                     src={activeItem.image}
-                    alt={activeItem.imageAlt ?? activeDetails?.title ?? project.title}
+                    alt={
+                      activeItem.imageAlt ??
+                      activeDetails?.title ??
+                      project.title
+                    }
                     className="max-h-full w-full rounded-xl border border-gunmetal object-contain shadow-2xl"
                   />
                 </div>
               ) : (
-                <DemoRenderer projectId={activeContent.demoProjectId ?? project.id} content={activeContent} />
+                <DemoRenderer
+                  projectId={activeContent.demoProjectId ?? project.id}
+                  content={activeContent}
+                />
               )}
             </Motion.div>
           </AnimatePresence>

@@ -22,6 +22,7 @@ export function createCityDetails(scene, geometry) {
   }
 
   landmarks.forEach(({ id, x, z, width, depth, height }) => {
+    if (id === 'qgis') return;
     const front = z + depth / 2;
     const side = x + width / 2;
     box('glass', x, 0.85, front + 0.035, width * 0.76, 1.45, 0.06);

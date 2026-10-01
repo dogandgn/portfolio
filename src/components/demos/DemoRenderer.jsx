@@ -7,6 +7,7 @@ const demoComponents = {
   4: lazy(() => import('./OpenSourceDemo')),
   'coordinate-slope': lazy(() => import('./SlopeDemo')),
   'user-profile-logout': lazy(() => import('./AuthDemo')),
+  'qgis-plugin': lazy(() => import('./QgisPluginDemo')),
 };
 
 export default function DemoRenderer({ projectId, demoId, content }) {

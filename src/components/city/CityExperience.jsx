@@ -16,6 +16,7 @@ import {
 } from './cityLayout';
 import CityStopContent from './CityStopContent';
 import './city.css';
+import { qgisPlugins } from '../../data/qgisPlugins';
 
 const ProjectModal = lazy(() => import('../ui/ProjectModal'));
 const chapters = ['overview', 'about', 'projects', 'services', 'contact'];
@@ -29,12 +30,16 @@ export default function CityExperience({ onReturn, onReady, onUnavailable }) {
   const [status, setStatus] = useState('loading');
   const [activeStop, setActiveStop] = useState(0);
   const [projectId, setProjectId] = useState(null);
+  const [pluginId, setPluginId] = useState(qgisPlugins[0]?.id);
   const [dark, setDark] = useState(() =>
     document.documentElement.classList.contains('dark'),
   );
-  const openProject = useCallback((id) => setProjectId(id), []);
+  const openProject = useCallback((id, itemId) => {
+    if (id === 'qgis' && itemId) setPluginId(itemId);
+    setProjectId(id);
+  }, []);
   const closeProject = useCallback(() => setProjectId(null), []);
-  const goToProject = useCallback((id) => {
+  const goToProject = useCallback((id, itemId) => {
     const stop = cityStops.find((item) => item.projectId === id);
     if (!stop) return;
     const section = document.getElementById(`city-${stop.id}`);
@@ -49,7 +54,8 @@ export default function CityExperience({ onReturn, onReady, onUnavailable }) {
     const url = new URL(window.location.href);
     url.hash = section.id;
     window.history.replaceState(window.history.state, '', url);
-  }, []);
+    if (id === 'qgis') openProject(id, itemId);
+  }, [openProject]);
 
   useEffect(() => {
     if (status === 'failed') { onUnavailable?.(); return; }
@@ -146,11 +152,14 @@ export default function CityExperience({ onReturn, onReady, onUnavailable }) {
     sceneRef.current?.setTheme(dark);
   }, [dark]);
   useEffect(() => {
-    sceneRef.current?.setPaused(projectId !== null);
+    sceneRef.current?.setPaused(projectId !== null && projectId !== 'qgis');
   }, [projectId, status]);
   useEffect(() => {
-    sceneRef.current?.setActiveProject(cityStops[activeStop].projectId);
-  }, [activeStop, status]);
+    sceneRef.current?.setActiveProject(projectId ?? cityStops[activeStop].projectId);
+  }, [activeStop, projectId, status]);
+  useEffect(() => {
+    sceneRef.current?.setActivePlugin(pluginId);
+  }, [pluginId, status]);
   useEffect(() => {
     document.documentElement.lang = i18n.resolvedLanguage;
   }, [i18n.resolvedLanguage]);
@@ -268,6 +277,7 @@ export default function CityExperience({ onReturn, onReady, onUnavailable }) {
                 projects={projects}
                 t={t}
                 onOpen={openProject}
+                activePluginId={pluginId}
               />
             </div>
           </section>
@@ -337,6 +347,8 @@ export default function CityExperience({ onReturn, onReady, onUnavailable }) {
             project={selectedProject}
             onClose={closeProject}
             t={t}
+            activeItemId={selectedProject.id === 'qgis' ? pluginId : undefined}
+            onItemChange={selectedProject.id === 'qgis' ? setPluginId : undefined}
           />
         </Suspense>
       )}
