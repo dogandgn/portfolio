@@ -391,12 +391,58 @@
   height: 174px;
   pointer-events: none;
 }
-.city-guide canvas,
+.city-guide-frame,
 .city-guide-fallback {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
+}
+.city-guide-frame {
+  overflow: hidden;
+  width: 174px;
+  left: -11px;
+  opacity: 0;
+  filter: drop-shadow(0 5px 3px #17261b22);
+}
+.city-guide-image {
+  width: 200%;
+  height: 200%;
+  max-width: none;
+  animation: city-guide-wave 12s steps(1, end) infinite;
+}
+.city-guide[data-ready='true'] .city-guide-frame {
+  opacity: 1;
+}
+.city-guide[data-paused='true'] .city-guide-image {
+  animation-play-state: paused;
+}
+.city-mascot:is(:hover, :focus-visible) .city-guide-image {
+  animation-name: city-guide-greeting;
+  animation-duration: 2.4s;
+  animation-iteration-count: 1;
+}
+@keyframes city-guide-wave {
+  0%, 3%, 6%, 9%, 12%, 15%, 18%, 21%, 24%, 100% {
+    transform: translate(0, 0);
+  }
+  1.5%, 7.5%, 13.5%, 19.5% {
+    transform: translate(-50%, 0);
+  }
+  4.5%, 10.5%, 16.5%, 22.5% {
+    transform: translate(-50%, -50%);
+  }
+}
+@keyframes city-guide-greeting {
+  0%, 15%, 30%, 45%, 60%, 75%, 90%, 100% {
+    transform: translate(0, 0);
+  }
+  7.5%, 37.5%, 67.5% {
+    transform: translate(-50%, 0);
+  }
+  22.5%, 52.5%, 82.5% {
+    transform: translate(-50%, -50%);
+  }
 }
 .city-guide-fallback {
   opacity: 1;
@@ -681,6 +727,8 @@
   }
   .city-invitation,
   .city-mascot,
+  .city-guide-image,
+  .city-mascot:is(:hover, :focus-visible) .city-guide-image,
   .city-guide-fallback,
   .city-button {
     animation: none;

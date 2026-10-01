@@ -2,38 +2,14 @@ import { useEffect, useRef } from 'react';
 
 export default function CityGuide() {
   const containerRef = useRef(null);
-  const canvasRef = useRef(null);
   useEffect(() => {
     const container = containerRef.current;
-    const canvas = canvasRef.current;
-    const button = container.closest('button');
-    let cancelled = false;
-    let scene;
-    const wave = () => scene?.wave();
-    const onContextLost = (event) => {
-      event.preventDefault();
-      container.dataset.ready = 'false';
-      scene?.dispose();
+    const onVisibility = () => {
+      container.dataset.paused = String(document.hidden);
     };
-    button.addEventListener('pointerenter', wave);
-    button.addEventListener('focus', wave);
-    canvas.addEventListener('webglcontextlost', onContextLost);
-    import('./createGuideRenderer')
-      .then(({ createGuideRenderer }) => {
-        if (cancelled) return;
-        scene = createGuideRenderer(canvas);
-        container.dataset.ready = 'true';
-      })
-      .catch(() => {
-        if (!cancelled) container.dataset.ready = 'false';
-      });
-    return () => {
-      cancelled = true;
-      button.removeEventListener('pointerenter', wave);
-      button.removeEventListener('focus', wave);
-      canvas.removeEventListener('webglcontextlost', onContextLost);
-      scene?.dispose();
-    };
+    document.addEventListener('visibilitychange', onVisibility);
+    onVisibility();
+    return () => document.removeEventListener('visibilitychange', onVisibility);
   }, []);
   return (
     <span className="city-guide" ref={containerRef} aria-hidden="true">
@@ -54,7 +30,20 @@ export default function CityGuide() {
         </g>
         <path d="M68 68q7 6 14 0" fill="none" stroke="#f5e6d1" strokeWidth="3" />
       </svg>
-      <canvas ref={canvasRef} />
+      <span className="city-guide-frame">
+        <img
+          className="city-guide-image"
+          src="/mascot/guide-wave-v2.webp"
+          alt=""
+          width="1254"
+          height="1254"
+          decoding="async"
+          fetchPriority="low"
+          draggable="false"
+          onLoad={() => { containerRef.current.dataset.ready = 'true'; }}
+          onError={() => { containerRef.current.dataset.ready = 'false'; }}
+        />
+      </span>
     </span>
   );
 }
