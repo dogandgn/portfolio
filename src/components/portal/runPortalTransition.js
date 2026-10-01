@@ -9,6 +9,7 @@ import {
 } from './characterTransitionMath';
 
 const atlasUrl = '/mascot/guide-motion-v3.webp';
+const actionAtlasUrl = '/mascot/guide-action-v4.webp';
 
 export async function runPortalTransition({ element, origin, signal, onCovered }) {
   const canvas = document.createElement('canvas');
@@ -24,8 +25,10 @@ export async function runPortalTransition({ element, origin, signal, onCovered }
   try {
     const atlas = new Image();
     atlas.src = atlasUrl;
+    const actionAtlas = new Image();
+    actionAtlas.src = actionAtlasUrl;
     const [snapshot] = await withDeadline(
-      Promise.all([captureViewport(element, signal), atlas.decode()]),
+      Promise.all([captureViewport(element, signal), atlas.decode(), actionAtlas.decode()]),
       3500,
       signal,
     );
@@ -39,6 +42,7 @@ export async function runPortalTransition({ element, origin, signal, onCovered }
     const layout = getTransitionLayout(origin, width, height);
     const paper = getComputedStyle(document.body).backgroundColor;
     const cell = atlas.naturalWidth / 2;
+    const actionCell = actionAtlas.naturalWidth / 2;
 
     function tile(column, row, x, y, size) {
       context.drawImage(atlas, column * cell, row * cell, cell, cell,
@@ -60,7 +64,8 @@ export async function runPortalTransition({ element, origin, signal, onCovered }
         const top = Math.round((pose.y + (y - 0.5) * size) * ratio) / ratio - pose.y;
         const right = Math.round((pose.x + (targetX + targetWidth - 0.5) * size) * ratio) / ratio - pose.x;
         const bottom = Math.round((pose.y + (y + h - 0.5) * size) * ratio) / ratio - pose.y;
-        context.drawImage(atlas, x * cell, (1 + y) * cell, w * cell, h * cell,
+        context.drawImage(actionAtlas, x * actionCell, y * actionCell,
+          w * actionCell, h * actionCell,
           left, top, right - left, bottom - top);
       };
       slice(0, 0, 1, 0.27, 0);
@@ -188,7 +193,9 @@ export async function runPortalTransition({ element, origin, signal, onCovered }
       context.translate(pose.x, pose.y);
       context.rotate(pose.angle);
       if (phase === 'approach' && progress < 0.85) standing(pose.size);
-      else if (phase === 'jump') tile(1, 1, -pose.size / 2, -pose.size / 2, pose.size);
+      else if (phase === 'jump') context.drawImage(actionAtlas,
+        actionCell, 0, actionCell, actionCell,
+        -pose.size / 2, -pose.size / 2, pose.size, pose.size);
       else pulling(pose);
       context.restore();
       if (holding) heldContours(pose, true);

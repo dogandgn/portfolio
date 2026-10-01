@@ -81,8 +81,8 @@ export function getHandGrips(pose) {
   const shift = 0.065 * (1 - pose.pull);
   return {
     shift,
-    y: pose.y - pose.size * 0.12,
-    left: pose.x + pose.size * (-0.25 + shift),
-    right: pose.x + pose.size * (0.266 - shift),
+    y: pose.y - pose.size * 0.091,
+    left: pose.x + pose.size * (-0.246 + shift),
+    right: pose.x + pose.size * (0.292 - shift),
   };
 }
