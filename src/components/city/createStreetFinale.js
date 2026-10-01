@@ -27,16 +27,14 @@ export function createStreetFinale(scene) {
   const arrowGeometry = new THREE.ConeGeometry(0.17, 0.32, 8);
   const orbitGeometry = new THREE.TorusGeometry(0.71, 0.018, 8, 72);
   const beadGeometry = new THREE.SphereGeometry(0.052, 16, 12);
-  const returnPath = new THREE.CatmullRomCurve3([
-    new THREE.Vector3(0.4, 0.35, 0),
-    new THREE.Vector3(0.4, -0.2, 0),
-    new THREE.Vector3(0.25, -0.35, 0),
-    new THREE.Vector3(-0.35, -0.35, 0),
-  ]);
+  const returnPath = new THREE.LineCurve3(
+    new THREE.Vector3(0.34, -0.34, 0),
+    new THREE.Vector3(-0.3, 0.3, 0),
+  );
   const returnGeometry = new THREE.TubeGeometry(
     returnPath,
-    32,
-    0.085,
+    1,
+    0.045,
     10,
     false,
   );
@@ -82,8 +80,9 @@ export function createStreetFinale(scene) {
       arrow.rotation.z = -2.5;
       symbol.add(ring, arrow);
     } else {
-      arrow.position.set(-0.44, -0.35, 0);
-      arrow.rotation.z = Math.PI / 2;
+      arrow.position.set(-0.32, 0.32, 0);
+      arrow.rotation.z = Math.PI / 4;
+      arrow.scale.setScalar(0.8);
       symbol.add(new THREE.Mesh(returnGeometry, material), arrow);
     }
     const text = new THREE.Group();

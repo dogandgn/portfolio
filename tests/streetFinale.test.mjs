@@ -212,3 +212,16 @@ test('sculpture entry and hover animations settle and reduced motion skips movem
   assert.equal(restart.position.y, 0);
   finale.dispose();
 });
+
+test('the portfolio return symbol points diagonally up and left', () => {
+  const scene = new THREE.Scene();
+  const finale = createStreetFinale(scene);
+  const arrow = finale.hitTargets.find((mesh) => mesh.userData.action === 'return' && mesh.geometry.type === 'ConeGeometry');
+  assert.ok(arrow.position.x < 0 && arrow.position.y > 0);
+  assert.equal(arrow.rotation.z, Math.PI / 4);
+  const shaft = finale.hitTargets.find((mesh) => mesh.userData.action === 'return' && mesh.geometry.type === 'TubeGeometry');
+  const path = shaft.geometry.parameters.path;
+  assert.equal(path.type, 'LineCurve3');
+  assert.ok(path.v1.x > path.v2.x && path.v1.y < path.v2.y);
+  finale.dispose();
+});

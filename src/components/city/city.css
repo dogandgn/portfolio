@@ -353,191 +353,78 @@
 .city-invitation {
   position: fixed;
   right: 28px;
-  bottom: 28px;
+  bottom: 26px;
   z-index: 60;
-  display: flex;
-  align-items: center;
-  gap: 0;
-  padding: 8px;
-  border-radius: 22px;
-  border: 1px solid #b291425c;
-  background: linear-gradient(125deg, #28332d, #171e1b);
-  color: #f3f0e5;
-  box-shadow:
-    0 14px 38px #10181330,
-    inset 0 1px 0 #f2dc9a12;
+  width: 152px;
   animation: city-invitation-reveal 500ms ease both;
-}
-.city-invitation-bubble {
-  display: flex;
-  align-items: center;
-}
-.city-invitation-bubble > button:first-child {
-  text-align: left;
-  padding: 10px 12px 10px 14px;
-  width: 226px;
-  display: grid;
-  gap: 6px;
-}
-.city-invitation-kicker {
-  font:
-    9px/1.4 ui-monospace,
-    monospace;
-  letter-spacing: 1.5px;
-  color: #dbb858;
-}
-.city-invitation-title {
-  font-size: 17px;
-  line-height: 1.35;
-  font-weight: 500;
-  text-wrap: balance;
-  white-space: pre-line;
-}
-.city-invitation-caption {
-  color: #b7c1b7;
-  font-size: 11px;
-  line-height: 1.6;
-}
-.city-invitation-caption > span {
-  display: inline-block;
-  margin-left: 8px;
-  color: #dbb858;
-  transition: transform 250ms ease;
-}
-.city-invitation:focus-within .city-invitation-caption > span,
-.city-invitation:hover .city-invitation-caption > span {
-  transform: translate(2px, -2px);
 }
 .city-dismiss {
   position: absolute;
-  right: -7px;
-  top: -11px;
-  width: 32px;
-  height: 32px;
+  right: 0;
+  top: 2px;
+  width: 26px;
+  height: 26px;
   border-radius: 50%;
-  background: #202923;
-  border: 1px solid #b291425c;
-  font-size: 18px;
-  color: #c7cdbf;
+  background: var(--color-void, #eeede7);
+  color: var(--color-ink, #202624);
+  border: 1px solid #ad98574d;
+  font-size: 16px;
   z-index: 1;
 }
 .city-mascot {
-  position: relative;
-  flex-shrink: 0;
-  width: 104px;
-  height: 108px;
-  border: 1px solid #dec47720;
-  border-radius: 50%;
-  background: radial-gradient(ellipse at 50% 44%, #76845b36, #14201a00 70%);
-  color: #efe9d6;
-  transition:
-    transform 200ms,
-    border-color 200ms;
+  display: grid;
+  justify-items: center;
+  width: 100%;
+  padding: 0 0 8px;
+  background: transparent;
+  border: 0;
+  border-radius: 22px;
+  transition: transform 200ms ease;
 }
 .city-mascot:hover {
-  transform: translateY(-2px);
-  border-color: #b99a4e;
+  transform: translateY(-3px);
 }
-.city-portal-ring {
-  position: absolute;
-  inset: 6px 8px 10px;
-  border: 1px solid #d5ae2b88;
-  border-right-color: #d5ae2b18;
-  border-radius: 50%;
-  transform: rotate(-25deg);
-  transition: transform 900ms cubic-bezier(0.2, 0.7, 0.2, 1);
-  box-shadow: 0 0 15px #dab44210;
-}
-.city-portal-ring::before {
-  content: '';
-  position: absolute;
-  top: -2px;
-  left: calc(50% - 2px);
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background: #f0ce68;
-  box-shadow: 0 0 8px #efc44e;
-}
-.city-invitation:hover .city-portal-ring,
-.city-invitation:focus-within .city-portal-ring {
-  transform: rotate(155deg);
-}
-.city-invitation.is-collapsed {
-  border-radius: 50%;
-  padding: 5px;
-}
-.city-miniature {
+.city-guide {
+  position: relative;
   display: block;
+  width: 152px;
+  height: 174px;
+  pointer-events: none;
+}
+.city-guide canvas,
+.city-guide-fallback {
   position: absolute;
-  inset: 21px 9px 28px;
-  perspective: 220px;
+  inset: 0;
+  width: 100%;
+  height: 100%;
 }
-.city-mini-building {
-  position: absolute;
-  bottom: 7px;
-  display: block;
-  width: 17px;
-  background: repeating-linear-gradient(
-    to bottom,
-    #d8dbd1 0px,
-    #d8dbd1 8px,
-    #b9bfb2 9px
-  );
-  transform: skewY(-20deg);
-  border-right: 7px solid #b2baaa;
-  box-sizing: content-box;
+.city-guide-fallback {
+  opacity: 1;
+  transition: opacity 150ms;
 }
-.city-mini-building::before {
-  content: '';
-  position: absolute;
-  top: -6px;
-  left: 3px;
-  width: 17px;
-  height: 6px;
-  background: #f0f0e8;
-  transform: skewX(-45deg);
-}
-.building-one {
-  left: 14px;
-  height: 27px;
-  bottom: 9px;
-}
-.building-two {
-  left: 33px;
-  height: 42px;
-}
-.building-two::before {
-  background: #dcb42e;
-}
-.building-three {
-  left: 47px;
-  height: 21px;
-  bottom: 1px;
-}
-.city-mini-route {
-  position: absolute;
-  width: 54px;
-  height: 28px;
-  border: 2px solid #d5ae2b;
-  transform: rotate(-24deg) skewX(25deg);
-  left: 13px;
-  bottom: -1px;
+.city-guide[data-ready='true'] .city-guide-fallback {
+  opacity: 0;
 }
 .city-mascot-label {
-  position: absolute;
-  left: 30px;
-  right: 27px;
-  bottom: 10px;
-  display: flex;
-  justify-content: space-between;
-  font:
-    9px ui-monospace,
-    monospace;
-  letter-spacing: 1px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+  padding: 7px 16px;
+  border-radius: 20px;
+  color: #eeeadd;
+  background: #26382f;
+  border: 1px solid #b79b5040;
+  box-shadow: 0 4px 14px #14251b12;
 }
-.city-mascot-label > span {
-  color: #dbb858;
+.city-return {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+.city-return-icon {
+  color: var(--city-gold);
+  font-size: 18px;
 }
 @keyframes city-invitation-reveal {
   from {
@@ -793,17 +680,14 @@
     transition: none;
   }
   .city-invitation,
-  .city-portal-ring,
-  .city-invitation-caption > span,
   .city-mascot,
-  .city-invitation-bubble,
+  .city-guide-fallback,
   .city-button {
     animation: none;
     transition: none;
     transform: none;
   }
-  .city-invitation:is(:hover, :focus-within) .city-portal-ring,
-  .city-invitation:is(:hover, :focus-within) .city-invitation-caption > span {
+  .city-mascot:hover {
     transform: none;
   }
 }

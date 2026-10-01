@@ -275,7 +275,8 @@ export default function CityExperience({ onReturn, onReady, onUnavailable }) {
         </button>
         <nav aria-label={t('city.explore')}>
           <button className="city-return" onClick={() => onReturn()}>
-            ↖ <span>{t('city.return')}</span>
+            <span className="city-return-icon" aria-hidden="true">↖</span>
+            <span>{t('city.return')}</span>
           </button>
           <button
             aria-label={
