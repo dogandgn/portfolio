@@ -113,7 +113,7 @@ export default function PortfolioExperience() {
 
   function navigate(next, section) {
     if (next === showCity || (next && !desktop)) return;
-    if (next) savedScroll.current = window.scrollY;
+    savedScroll.current = next ? window.scrollY : 0;
     returnSection.current = section;
     const url = new URL(window.location.href);
     if (next) url.searchParams.set('view', 'city');

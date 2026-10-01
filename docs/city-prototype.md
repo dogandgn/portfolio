@@ -43,6 +43,8 @@ Manually check the launcher at desktop and mobile widths, city entry/return, all
 
 The existing portfolio remains intact. The city is an optional desktop experience; production publishing requires separate approval.
 
+Explicit portfolio-return actions open the classic page at the top. Cancelling an unfinished city entry still restores the position where that entry started.
+
 ## Validation notes
 
 - 29 tests cover layout, translations, name spelling, camera clearance, continuous velocity, trail progress, matching opening/closing views, project highlights, emblems and portal timing/cancellation.
