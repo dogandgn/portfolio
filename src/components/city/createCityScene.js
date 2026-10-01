@@ -5,7 +5,7 @@ import {
   districts,
   getCameraPose,
   getStreetBlend,
-  finaleBuildings,
+  finaleActions,
   landmarks,
 } from './cityLayout';
 import { createLandscape } from './createLandscape';
@@ -79,7 +79,7 @@ export function createCityScene(
   const details = createCityDetails(scene, geometry);
   const selection = createProjectHighlight(scene, geometry);
   const emblems = createProjectEmblems(scene);
-  const finale = createStreetFinale(scene, geometry);
+  const finale = createStreetFinale(scene);
   const pluginFloors = createPluginFloors(
     scene,
     geometry,
@@ -175,11 +175,10 @@ export function createCityScene(
       id: `district-${district.id}`,
       markerHeight: 4.5,
     })),
-    ...finaleBuildings.map((building) => ({
+    ...finaleActions.map((building) => ({
       ...building,
       id: `action-${building.id}`,
-      z: building.z - building.depth / 2 - 0.25,
-      markerHeight: 2.4,
+      markerHeight: 2.2,
       action: true,
     })),
   ];
@@ -395,6 +394,10 @@ export function createCityScene(
 
   return {
     setTheme,
+    setActionLabels(labels) {
+      finale.setLabels(labels);
+      requestRender();
+    },
     setActionHover(id) {
       hoveredAction = id;
       finale.setHovered(id);

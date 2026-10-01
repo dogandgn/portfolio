@@ -33,12 +33,7 @@
   "contactIntro": "Web sitesi, harita uygulaması veya veri işleme ihtiyacınızı e-posta üzerinden paylaşabilirsiniz.",
   "backToStart": "Başa dön",
   "restart": "Baştan başla",
-  "streetEyebrow": "YAKINDAN / SOKAK ÖLÇEĞİ",
-  "finishEyebrow": "ROTANIN SONU",
-  "streetDescription": "Aynı mahalleyi bu kez sokak seviyesinden inceleyin. Kaydırarak yolu takip edin.",
-  "finishDescription": "Rotayı yeniden gezebilir veya portfolyoya dönebilirsiniz.",
   "finaleActions": "Rota sonu seçenekleri",
-  "toFinish": "Yolun sonuna ilerle",
   "chapters": {
     "intro": "Tanıtım",
     "about": "Hakkımda",
@@ -56,8 +51,8 @@
     "luma": "Gayrimenkul\nproje sunumu",
     "birdmap": "Kuş\ngözlem",
     "qgis": "QGIS\neklentileri",
-    "street": "Sokak ölçeği",
-    "finish": "Yolun sonu.",
+    "street": "Birlikte neler geliştirebiliriz?",
+    "finish": "İletişim",
     "services": "Birlikte neler geliştirebiliriz?",
     "contact": "İletişim"
   },

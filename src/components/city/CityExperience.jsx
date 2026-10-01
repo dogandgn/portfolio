@@ -13,7 +13,7 @@ import {
   districts,
   getJourneyProgress,
   landmarks,
-  finaleBuildings,
+  finaleActions,
 } from './cityLayout';
 import CityStopContent from './CityStopContent';
 import './city.css';
@@ -230,6 +230,12 @@ export default function CityExperience({ onReturn, onReady, onUnavailable }) {
   useEffect(() => {
     document.documentElement.lang = i18n.resolvedLanguage;
   }, [i18n.resolvedLanguage]);
+  useEffect(() => {
+    sceneRef.current?.setActionLabels({
+      restart: t('city.restart'),
+      return: t('city.return'),
+    });
+  }, [i18n.resolvedLanguage, status, t]);
 
   const projects = getProjects(t);
   const selectedProject = projects.find((project) => project.id === projectId);
@@ -245,12 +251,13 @@ export default function CityExperience({ onReturn, onReady, onUnavailable }) {
   const projectIndex = landmarks.findIndex(
     (building) => building.id === active.id,
   );
-  const immersive = active.id === 'street' || active.id === 'finish';
+  const continuous = ['services', 'contact'].includes(active.chapter);
+  const contentStop = cityStops.find((stop) => stop.id === active.chapter);
   const finishing = active.id === 'finish';
 
   return (
     <div
-      className={`city-experience ${dark ? 'city-night' : ''} ${immersive ? 'city-immersive' : ''} ${restarting ? 'city-restarting' : ''}`}
+      className={`city-experience ${dark ? 'city-night' : ''} ${restarting ? 'city-restarting' : ''}`}
     >
       <a className="city-skip" href="#city-projects">
         {t('city.skip')}
@@ -332,37 +339,62 @@ export default function CityExperience({ onReturn, onReady, onUnavailable }) {
             id={`city-${stop.id}`}
             data-stop={index}
             aria-labelledby={
-              index === 0 ? 'city-title' : `city-heading-${stop.id}`
+              ['services', 'contact'].includes(stop.chapter)
+                ? undefined
+                : index === 0
+                  ? 'city-title'
+                  : `city-heading-${stop.id}`
+            }
+            aria-label={
+              ['services', 'contact'].includes(stop.chapter)
+                ? t(`city.chapters.${stop.chapter}`)
+                : undefined
             }
           >
-            <div className="city-copy">
-              <p className="city-eyebrow">
-                {stop.id === 'street'
-                  ? t('city.streetEyebrow')
-                  : stop.id === 'finish'
-                    ? t('city.finishEyebrow')
-                    : index === 0
-                      ? t('city.eyebrow')
-                      : `${String(chapters.indexOf(stop.chapter) + 1).padStart(2, '0')} / ${t(`city.chapters.${stop.chapter}`)}${stop.projectId != null ? ` · ${landmarks.findIndex((building) => building.id === stop.id) + 1} / ${landmarks.length}` : ''}`}
-              </p>
-              <CityStopContent
-                stop={stop}
-                projects={projects}
-                t={t}
-                onOpen={openProject}
-                activePluginId={pluginId}
-              />
-            </div>
+            {!['services', 'contact'].includes(stop.chapter) && (
+              <div className="city-copy">
+                <p className="city-eyebrow">
+                  {index === 0
+                    ? t('city.eyebrow')
+                    : `${String(chapters.indexOf(stop.chapter) + 1).padStart(2, '0')} / ${t(`city.chapters.${stop.chapter}`)}${stop.projectId != null ? ` · ${landmarks.findIndex((building) => building.id === stop.id) + 1} / ${landmarks.length}` : ''}`}
+                </p>
+                <CityStopContent
+                  stop={stop}
+                  projects={projects}
+                  t={t}
+                  onOpen={openProject}
+                  activePluginId={pluginId}
+                />
+              </div>
+            )}
           </section>
         ))}
       </main>
+      {continuous && !selectedProject && (
+        <aside
+          className="city-copy city-continuous-copy"
+          aria-labelledby={`city-heading-${active.chapter}`}
+        >
+          <p className="city-eyebrow">
+            {active.chapter === 'services' ? '04' : '05'} /{' '}
+            {t(`city.chapters.${active.chapter}`)}
+          </p>
+          <CityStopContent
+            stop={contentStop}
+            projects={projects}
+            t={t}
+            onOpen={openProject}
+            activePluginId={pluginId}
+          />
+        </aside>
+      )}
       <div
         className="city-finale-actions"
         role="group"
         aria-label={t('city.finaleActions')}
         hidden={!finishing || selectedProject || status !== 'ready'}
       >
-        {finaleBuildings.map((building) => (
+        {finaleActions.map((building) => (
           <button
             key={building.id}
             type="button"
@@ -378,11 +410,8 @@ export default function CityExperience({ onReturn, onReady, onUnavailable }) {
             onFocus={() => sceneRef.current?.setActionHover(building.id)}
             onBlur={() => sceneRef.current?.setActionHover(null)}
           >
-            <span>
+            <span className="city-action-accessible-label">
               {t(building.id === 'restart' ? 'city.restart' : 'city.return')}
-            </span>
-            <span aria-hidden="true">
-              {building.id === 'restart' ? '↻' : '↗'}
             </span>
           </button>
         ))}

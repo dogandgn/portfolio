@@ -16,7 +16,7 @@ import {
   getJourneyProgress,
   getRouteDistance,
   getRoutePoint,
-  finaleBuildings,
+  finaleActions,
 } from '../src/components/city/cityLayout.js';
 
 test('layout is deterministic and preserves the selected building', () => {
@@ -164,9 +164,10 @@ test('the final view stays at eye level facing both choices', () => {
   assert.equal(pose[1], 1.85);
   assert.equal(pose[4], 1.85);
   assert.ok(pose[5] > pose[2]);
-  for (const building of finaleBuildings) {
-    assert.ok(building.z - building.depth / 2 > pose[2] + 4);
-    assert.ok(Math.abs(building.x - pose[0]) < 4);
+  for (const action of finaleActions) {
+    assert.ok(action.z > pose[2] + 4);
+    assert.ok(action.x < pose[0]);
+    assert.ok(Math.abs(action.x - pose[0]) < 6);
   }
 });
 

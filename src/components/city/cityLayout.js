@@ -71,9 +71,9 @@ export const parks = [
 export const shoreX = 48;
 export const forecourt = { x: 4, z: 25, width: 46, depth: 25 };
 export const finalePlaza = { x: 33, z: 24, width: 12, depth: 9 };
-export const finaleBuildings = [
-  { id: 'restart', x: 30.4, z: 25, width: 2.8, depth: 2.5, height: 3.2 },
-  { id: 'return', x: 35.6, z: 25, width: 2.8, depth: 2.5, height: 3.2 },
+export const finaleActions = [
+  { id: 'restart', x: 31, z: 25 },
+  { id: 'return', x: 28.1, z: 25 },
 ];
 export const landmark = landmarks.find((building) => building.id === 'luma');
 

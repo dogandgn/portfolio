@@ -179,21 +179,6 @@ export default function CityStopContent({
           <SectionLink id="contact">{t('hero.contact')}</SectionLink>
         </>
       );
-    case 'street':
-      return (
-        <>
-          <h2 id="city-heading-street">{t('city.stops.street')}</h2>
-          <p className="city-description">{t('city.streetDescription')}</p>
-          <p className="city-meta">{t('city.scroll')} ↓</p>
-        </>
-      );
-    case 'finish':
-      return (
-        <>
-          <h2 id="city-heading-finish">{t('city.stops.finish')}</h2>
-          <p className="city-description">{t('city.finishDescription')}</p>
-        </>
-      );
     case 'contact':
       return (
         <>
@@ -224,7 +209,6 @@ export default function CityStopContent({
               LinkedIn ↗
             </a>
           </div>
-          <SectionLink id="finish">{t('city.toFinish')}</SectionLink>
         </>
       );
     default:
