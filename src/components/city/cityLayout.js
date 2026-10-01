@@ -72,8 +72,8 @@ export const shoreX = 48;
 export const forecourt = { x: 4, z: 25, width: 46, depth: 25 };
 export const finalePlaza = { x: 33, z: 24, width: 12, depth: 9 };
 export const finaleActions = [
-  { id: 'restart', x: 31, z: 25 },
-  { id: 'return', x: 28.1, z: 25 },
+  { id: 'restart', x: 32.1, z: 25 },
+  { id: 'return', x: 29.7, z: 25 },
 ];
 export const landmark = landmarks.find((building) => building.id === 'luma');
 

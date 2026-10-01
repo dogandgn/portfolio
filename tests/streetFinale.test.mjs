@@ -152,7 +152,63 @@ test('the ending presents services and contact continuously without separate int
   camera.lookAt(...pose.slice(3));
   camera.updateMatrixWorld(true);
   finaleActions.forEach((action) => {
-    const point = new THREE.Vector3(action.x, 2.2, action.z).project(camera);
+    const point = new THREE.Vector3(action.x, 1.85, action.z).project(camera);
     assert.ok(point.x > 0.1 && point.x < 0.95);
   });
+});
+
+test('both choices stay centered in the right content area at desktop widths', () => {
+  for (const [width, height] of [
+    [1910, 912],
+    [1280, 800],
+    [1024, 768],
+  ]) {
+    const aspect = width / height;
+    const fov = THREE.MathUtils.radToDeg(
+      2 *
+        Math.atan(
+          Math.tan(THREE.MathUtils.degToRad(26)) * Math.max(1, 2.1 / aspect),
+        ),
+    );
+    const camera = new THREE.PerspectiveCamera(fov, aspect, 0.12, 250);
+    const pose = getCameraPose(1);
+    camera.position.set(...pose.slice(0, 3));
+    camera.lookAt(...pose.slice(3));
+    camera.updateMatrixWorld(true);
+    const positions = finaleActions.map((action) =>
+      new THREE.Vector3(action.x, 1.85, action.z).project(camera),
+    );
+    const center =
+      positions.reduce((sum, point) => sum + (point.x + 1) / 2, 0) /
+      positions.length;
+    assert.ok(center > 0.64 && center < 0.68);
+    positions.forEach((point) => {
+      assert.ok((point.x + 1) / 2 > 0.54 && (point.x + 1) / 2 < 0.8);
+      assert.ok(Math.abs(point.y) < 1e-10);
+    });
+  }
+});
+
+test('sculpture entry and hover animations settle and reduced motion skips movement', () => {
+  const scene = new THREE.Scene();
+  const finale = createStreetFinale(scene);
+  const restart = scene.getObjectByName('city-finale-restart');
+  const icon = restart.children[0];
+  const symbol = icon.children[1];
+  finale.update(1, 0.05, false);
+  assert.ok(symbol.rotation.z > 1);
+  assert.ok(icon.children[0].children[0].children.length === 3);
+  for (let frame = 0; frame < 100; frame++) finale.update(1, 0.05, false);
+  assert.equal(finale.update(1, 0.05, false), false);
+  assert.equal(symbol.rotation.z, 0);
+  finale.setHovered('restart');
+  finale.update(1, 0.2, false);
+  assert.ok(symbol.rotation.z > 0.1);
+  for (let frame = 0; frame < 100; frame++) finale.update(1, 0.05, false);
+  assert.equal(finale.update(1, 0.05, false), false);
+  finale.setHovered('return');
+  assert.equal(finale.update(1, 0.05, true), false);
+  assert.equal(symbol.rotation.z, 0);
+  assert.equal(restart.position.y, 0);
+  finale.dispose();
 });

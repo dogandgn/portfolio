@@ -178,7 +178,7 @@ export function createCityScene(
     ...finaleActions.map((building) => ({
       ...building,
       id: `action-${building.id}`,
-      markerHeight: 2.2,
+      markerHeight: 1.85,
       action: true,
     })),
   ];
