@@ -4,6 +4,8 @@ import {
   createBuildings,
   districts,
   getCameraPose,
+  getStreetBlend,
+  finaleBuildings,
   landmarks,
 } from './cityLayout';
 import { createLandscape } from './createLandscape';
@@ -13,8 +15,12 @@ import { createProjectHighlight } from './createProjectHighlight';
 import { createProjectEmblems } from './createProjectEmblems';
 import { createPluginFloors } from './createPluginFloors';
 import { qgisPlugins } from '../../data/qgisPlugins';
+import { createStreetFinale } from './createStreetFinale';
 
-export function createCityScene(canvas, { onSelect, onFailure, onPositions }) {
+export function createCityScene(
+  canvas,
+  { onSelect, onAction, onFailure, onPositions },
+) {
   const renderer = new THREE.WebGLRenderer({
     canvas,
     antialias: true,
@@ -29,7 +35,7 @@ export function createCityScene(canvas, { onSelect, onFailure, onPositions }) {
   renderer.toneMappingExposure = 1.08;
 
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(36, 1, 0.5, 250);
+  const camera = new THREE.PerspectiveCamera(36, 1, 0.12, 250);
   const compact = window.matchMedia('(max-width: 700px)').matches;
   const motionPreference = window.matchMedia(
     '(prefers-reduced-motion: reduce)',
@@ -73,7 +79,12 @@ export function createCityScene(canvas, { onSelect, onFailure, onPositions }) {
   const details = createCityDetails(scene, geometry);
   const selection = createProjectHighlight(scene, geometry);
   const emblems = createProjectEmblems(scene);
-  const pluginFloors = createPluginFloors(scene, geometry, landmarks.find((building) => building.id === 'qgis'));
+  const finale = createStreetFinale(scene, geometry);
+  const pluginFloors = createPluginFloors(
+    scene,
+    geometry,
+    landmarks.find((building) => building.id === 'qgis'),
+  );
   let activePluginId = qgisPlugins[0]?.id;
   let activeProjectId = null;
 
@@ -164,6 +175,13 @@ export function createCityScene(canvas, { onSelect, onFailure, onPositions }) {
       id: `district-${district.id}`,
       markerHeight: 4.5,
     })),
+    ...finaleBuildings.map((building) => ({
+      ...building,
+      id: `action-${building.id}`,
+      z: building.z - building.depth / 2 - 0.25,
+      markerHeight: 2.4,
+      action: true,
+    })),
   ];
   const raycaster = new THREE.Raycaster();
   const pointer = new THREE.Vector2();
@@ -175,6 +193,23 @@ export function createCityScene(canvas, { onSelect, onFailure, onPositions }) {
   let lastTime = 0;
   let currentCompact = compact;
   let hoveredProject = null;
+  let hoveredAction = null;
+
+  function updateLens() {
+    const streetBlend = getStreetBlend(progress);
+    const angle = (36 + streetBlend * 16) / 2;
+    const fov = THREE.MathUtils.radToDeg(
+      2 *
+        Math.atan(
+          Math.tan(THREE.MathUtils.degToRad(angle)) *
+            Math.max(1, (1.6 + streetBlend * 0.5) / camera.aspect),
+        ),
+    );
+    if (Math.abs(camera.fov - fov) > 0.001) {
+      camera.fov = fov;
+      camera.updateProjectionMatrix();
+    }
+  }
 
   function render(time) {
     frame = 0;
@@ -189,10 +224,19 @@ export function createCityScene(canvas, { onSelect, onFailure, onPositions }) {
     const pose = getCameraPose(progress, currentCompact);
     camera.position.set(...pose.slice(0, 3));
     camera.lookAt(...pose.slice(3));
+    updateLens();
     journeyRoute.update(progress);
     const highlighting = selection.update(delta, motionPreference.matches);
     const animatingEmblems = emblems.update(delta, motionPreference.matches);
-    const animatingFloors = pluginFloors.update(delta, motionPreference.matches);
+    const animatingFloors = pluginFloors.update(
+      delta,
+      motionPreference.matches,
+    );
+    const animatingFinale = finale.update(
+      progress,
+      delta,
+      motionPreference.matches,
+    );
     renderer.render(scene, camera);
     if (onPositions) {
       onPositions(
@@ -204,12 +248,21 @@ export function createCityScene(canvas, { onSelect, onFailure, onPositions }) {
             id: building.id,
             x: ((projected.x + 1) / 2) * canvas.clientWidth,
             y: ((1 - projected.y) / 2) * canvas.clientHeight,
-            visible: projected.z > -1 && projected.z < 1,
+            visible:
+              projected.z > -1 &&
+              projected.z < 1 &&
+              (!building.action || finale.isEnabled()),
           };
         }),
       );
     }
-    if (progress !== targetProgress || highlighting || animatingEmblems || animatingFloors)
+    if (
+      progress !== targetProgress ||
+      highlighting ||
+      animatingEmblems ||
+      animatingFloors ||
+      animatingFinale
+    )
       requestRender();
   }
   function requestRender() {
@@ -221,13 +274,7 @@ export function createCityScene(canvas, { onSelect, onFailure, onPositions }) {
     if (!width || !height) return;
     currentCompact = width < 700;
     camera.aspect = width / height;
-    camera.fov = THREE.MathUtils.radToDeg(
-      2 *
-        Math.atan(
-          Math.tan(THREE.MathUtils.degToRad(18)) *
-            Math.max(1, 1.6 / camera.aspect),
-        ),
-    );
+    updateLens();
     camera.updateProjectionMatrix();
     renderer.setSize(width, height, false);
     requestRender();
@@ -240,19 +287,33 @@ export function createCityScene(canvas, { onSelect, onFailure, onPositions }) {
     );
     raycaster.setFromCamera(pointer, camera);
     const intersection = raycaster.intersectObjects(
-      [buildings, ...roofs, ...emblems.hitTargets, ...pluginFloors.hitTargets],
+      [
+        buildings,
+        ...roofs,
+        ...emblems.hitTargets,
+        ...pluginFloors.hitTargets,
+        ...(finale.isEnabled() ? finale.hitTargets : []),
+      ],
       false,
     )[0];
     if (!intersection) return null;
-    const data = intersection.object === buildings
-      ? volumes[intersection.instanceId]
-      : intersection.object.userData;
-    return data?.projectId == null ? null : { projectId: data.projectId, pluginId: data.pluginId };
+    const data =
+      intersection.object === buildings
+        ? volumes[intersection.instanceId]
+        : intersection.object.userData;
+    if (data?.action) return { action: data.action };
+    return data?.projectId == null
+      ? null
+      : { projectId: data.projectId, pluginId: data.pluginId };
   }
   function move(event) {
-    const projectId = pick(event)?.projectId ?? null;
-    canvas.style.cursor = projectId != null ? 'pointer' : '';
-    if (projectId === hoveredProject) return;
+    const picked = pick(event);
+    const projectId = picked?.projectId ?? null;
+    const action = picked?.action ?? null;
+    canvas.style.cursor = projectId != null || action ? 'pointer' : '';
+    if (projectId === hoveredProject && action === hoveredAction) return;
+    hoveredAction = action;
+    finale.setHovered(action);
     hoveredProject = projectId;
     roofs.forEach((roof) => {
       roof.material.emissive.set(
@@ -264,6 +325,8 @@ export function createCityScene(canvas, { onSelect, onFailure, onPositions }) {
   }
   function leave() {
     hoveredProject = null;
+    hoveredAction = null;
+    finale.setHovered(null);
     pointerStart = null;
     canvas.style.cursor = '';
     roofs.forEach((roof) => roof.material.emissive.set('#000000'));
@@ -282,8 +345,10 @@ export function createCityScene(canvas, { onSelect, onFailure, onPositions }) {
         event.clientY - pointerStart[1],
       ) < 8 &&
       picked !== null
-    )
-      onSelect(picked.projectId, picked.pluginId);
+    ) {
+      if (picked.action) onAction?.(picked.action);
+      else onSelect(picked.projectId, picked.pluginId);
+    }
     pointerStart = null;
   }
   function contextLost(event) {
@@ -320,6 +385,7 @@ export function createCityScene(canvas, { onSelect, onFailure, onPositions }) {
     details.setTheme(dark);
     emblems.setTheme(dark);
     pluginFloors.setTheme(dark);
+    finale.setTheme(dark);
     hemisphere.intensity = dark ? 1.5 : 2;
     sunlight.intensity = dark ? 1.8 : 2.8;
     requestRender();
@@ -329,6 +395,11 @@ export function createCityScene(canvas, { onSelect, onFailure, onPositions }) {
 
   return {
     setTheme,
+    setActionHover(id) {
+      hoveredAction = id;
+      finale.setHovered(id);
+      requestRender();
+    },
     setActivePlugin(id) {
       activePluginId = id;
       pluginFloors.setActive(id, activeProjectId === 'qgis');
@@ -348,8 +419,9 @@ export function createCityScene(canvas, { onSelect, onFailure, onPositions }) {
       });
       requestRender();
     },
-    setProgress(value) {
+    setProgress(value, immediate = false) {
       targetProgress = clampProgress(value);
+      if (immediate) progress = targetProgress;
       requestRender();
     },
     setPaused(value) {
@@ -386,6 +458,7 @@ export function createCityScene(canvas, { onSelect, onFailure, onPositions }) {
       selection.dispose();
       emblems.dispose();
       pluginFloors.dispose();
+      finale.dispose();
       Object.values(materials).forEach((material) => material.dispose());
       sunlight.shadow.dispose();
       renderer.dispose();

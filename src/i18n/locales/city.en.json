@@ -32,6 +32,13 @@
   "projectsHint": "Property management → ArcGIS development → Data engineering → Real estate showcase → Bird observation → QGIS plugins",
   "contactIntro": "Share your website, mapping application or data processing needs by email.",
   "backToStart": "Back to the start",
+  "restart": "Start again",
+  "streetEyebrow": "UP CLOSE / STREET LEVEL",
+  "finishEyebrow": "END OF THE ROUTE",
+  "streetDescription": "See the same neighbourhood from street level. Scroll to follow the path.",
+  "finishDescription": "Explore the route again or return to the portfolio.",
+  "finaleActions": "End of route choices",
+  "toFinish": "Continue to the end",
   "chapters": {
     "intro": "Introduction",
     "about": "About",
@@ -49,6 +56,8 @@
     "luma": "Real estate\nshowcase",
     "birdmap": "Bird\nobservation",
     "qgis": "QGIS\nplugins",
+    "street": "Street level",
+    "finish": "End of the route.",
     "services": "What can we build together?",
     "contact": "Contact"
   },

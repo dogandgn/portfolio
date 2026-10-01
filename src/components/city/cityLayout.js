@@ -47,8 +47,13 @@ export const landmarks = [
     height: 4,
   },
   {
-    id: 'qgis', projectId: 'qgis', x: 25, z: 2,
-    width: 4.8, depth: 4.8, height: 1.1 + qgisPlugins.length * 2.4,
+    id: 'qgis',
+    projectId: 'qgis',
+    x: 25,
+    z: 2,
+    width: 4.8,
+    depth: 4.8,
+    height: 1.1 + qgisPlugins.length * 2.4,
   },
 ];
 export const districts = [
@@ -65,6 +70,11 @@ export const parks = [
 ];
 export const shoreX = 48;
 export const forecourt = { x: 4, z: 25, width: 46, depth: 25 };
+export const finalePlaza = { x: 33, z: 24, width: 12, depth: 9 };
+export const finaleBuildings = [
+  { id: 'restart', x: 30.4, z: 25, width: 2.8, depth: 2.5, height: 3.2 },
+  { id: 'return', x: 35.6, z: 25, width: 2.8, depth: 2.5, height: 3.2 },
+];
 export const landmark = landmarks.find((building) => building.id === 'luma');
 
 export const route = [
@@ -103,23 +113,41 @@ export const cityStops = [
     pose: cameraPose(building.x + 10, building.z, 32, 7.5, 2.5),
   })),
   {
+    id: 'street',
+    chapter: 'services',
+    routeDistance: 79,
+    pose: [26, 1.85, 9, 31, 1.85, 9],
+  },
+  {
     id: 'services',
     chapter: 'services',
-    routeDistance: 97,
-    pose: cameraPose(36, 12, 46, 18, 1.5),
+    routeDistance: 84.5,
+    pose: [31.5, 1.85, 9.3, 34.5, 1.85, 12],
   },
   {
     id: 'contact',
     chapter: 'contact',
+    routeDistance: 90.6,
+    pose: [33, 1.85, 13.6, 33, 1.85, 20],
+  },
+  {
+    id: 'finish',
+    chapter: 'contact',
     routeDistance: 97,
-    pose: [...overviewPose],
+    pose: [33, 1.85, 18.7, 33, 1.85, 25.3],
   },
 ];
 
+const streetStart = cityStops.findIndex((stop) => stop.id === 'qgis');
+const aerialStops = cityStops.slice(0, streetStart + 1);
+aerialStops.push(aerialStops.at(-1));
 const cameraTracks = [3, 4, 5, 1].map((axis) =>
-  cityStops.map((stop) => stop.pose[axis]),
+  aerialStops.map((stop) => stop.pose[axis]),
 );
-const depthTrack = cityStops.map((stop) => stop.pose[2] - stop.pose[5]);
+const depthTrack = aerialStops.map((stop) => stop.pose[2] - stop.pose[5]);
+const streetTracks = [0, 1, 2, 3, 4, 5].map((axis) =>
+  cityStops.slice(streetStart).map((stop) => stop.pose[axis]),
+);
 const routeTrack = cityStops.map((stop) => stop.routeDistance);
 
 function sampleTrack(values, progress) {
@@ -213,6 +241,7 @@ export function createBuildings(compact = false) {
       !landmarks.some((target) => overlaps(building, target, 3)) &&
       !districts.some((district) => overlaps(building, district, 1)) &&
       !overlaps(building, forecourt, 1) &&
+      !overlaps(building, finalePlaza, 2) &&
       !parks.some((park) => overlaps(building, park, 1)),
   );
 }
@@ -223,15 +252,38 @@ export function clampProgress(value) {
 
 export function getCameraPose(progress, compact = false) {
   const scaled = clampProgress(progress) * (cityStops.length - 1);
+  if (scaled > streetStart) {
+    const streetProgress =
+      (scaled - streetStart) / (cityStops.length - 1 - streetStart);
+    const pose = streetTracks.map((track) =>
+      sampleTrack(track, streetProgress),
+    );
+    if (compact) pose[1] += 10;
+    return pose;
+  }
+  const aerialProgress = scaled / (aerialStops.length - 1);
   const [x, y, z, height] = cameraTracks.map((track) =>
-    sampleTrack(track, progress),
+    sampleTrack(track, aerialProgress),
   );
-  const depth = sampleTrack(depthTrack, progress);
+  const depth = sampleTrack(depthTrack, aerialProgress);
   const pose = Number.isInteger(scaled)
     ? [...cityStops[scaled].pose]
     : [x + depth * 0.6, height, z + depth, x, y, z];
   if (compact) pose[1] += 10;
   return pose;
+}
+
+export function getStreetBlend(progress) {
+  const t = clampProgress(
+    clampProgress(progress) * (cityStops.length - 1) - streetStart,
+  );
+  return t * t * (3 - 2 * t);
+}
+
+export function isFinaleReady(progress) {
+  return (
+    clampProgress(progress) * (cityStops.length - 1) >= cityStops.length - 1.65
+  );
 }
 
 export function getJourneyProgress(scrollY, offsets) {

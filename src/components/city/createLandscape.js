@@ -1,5 +1,12 @@
 import * as THREE from 'three';
-import { districts, landmarks, overlaps, parks, shoreX } from './cityLayout';
+import {
+  districts,
+  finalePlaza,
+  landmarks,
+  overlaps,
+  parks,
+  shoreX,
+} from './cityLayout';
 
 export function createLandscape(scene, boxGeometry) {
   const materials = {
@@ -61,6 +68,7 @@ export function createLandscape(scene, boxGeometry) {
         park.z + park.depth / 2 - 1.5,
       ]) {
         if (
+          !overlaps({ x, z, width: 2, depth: 2 }, finalePlaza, 0.5) &&
           !landmarks.some((building) =>
             overlaps({ x, z, width: 2, depth: 2 }, building, 1),
           )

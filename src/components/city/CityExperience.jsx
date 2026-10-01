@@ -13,6 +13,7 @@ import {
   districts,
   getJourneyProgress,
   landmarks,
+  finaleBuildings,
 } from './cityLayout';
 import CityStopContent from './CityStopContent';
 import './city.css';
@@ -27,6 +28,10 @@ export default function CityExperience({ onReturn, onReady, onUnavailable }) {
   const sceneRef = useRef(null);
   const mainRef = useRef(null);
   const markersRef = useRef(new Map());
+  const returnRef = useRef(onReturn);
+  const restartTimer = useRef(null);
+  const restartFrame = useRef(null);
+  const [restarting, setRestarting] = useState(false);
   const [status, setStatus] = useState('loading');
   const [activeStop, setActiveStop] = useState(0);
   const [projectId, setProjectId] = useState(null);
@@ -39,26 +44,73 @@ export default function CityExperience({ onReturn, onReady, onUnavailable }) {
     setProjectId(id);
   }, []);
   const closeProject = useCallback(() => setProjectId(null), []);
-  const goToProject = useCallback((id, itemId) => {
-    const stop = cityStops.find((item) => item.projectId === id);
-    if (!stop) return;
-    const section = document.getElementById(`city-${stop.id}`);
-    if (!section) return;
-    const reducedMotion = window.matchMedia(
-      '(prefers-reduced-motion: reduce)',
-    ).matches;
-    section.scrollIntoView({
-      behavior: reducedMotion ? 'instant' : 'smooth',
-      block: 'start',
-    });
-    const url = new URL(window.location.href);
-    url.hash = section.id;
-    window.history.replaceState(window.history.state, '', url);
-    if (id === 'qgis') openProject(id, itemId);
-  }, [openProject]);
+  const restart = useCallback(() => {
+    if (restartTimer.current !== null) return;
+    const reset = () => {
+      restartTimer.current = null;
+      const url = new URL(window.location.href);
+      url.hash = 'city-overview';
+      window.history.replaceState(window.history.state, '', url);
+      window.scrollTo({ top: 0, behavior: 'instant' });
+      sceneRef.current?.setProgress(0, true);
+      setActiveStop(0);
+      setProjectId(null);
+      mainRef.current?.querySelector('h1')?.focus({ preventScroll: true });
+      restartFrame.current = requestAnimationFrame(() => {
+        setRestarting(false);
+        restartFrame.current = null;
+      });
+    };
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) reset();
+    else {
+      setRestarting(true);
+      restartTimer.current = window.setTimeout(reset, 260);
+    }
+  }, []);
+  const runAction = useCallback(
+    (id) => {
+      if (id === 'restart') restart();
+      else if (id === 'return') returnRef.current();
+    },
+    [restart],
+  );
+  const goToProject = useCallback(
+    (id, itemId) => {
+      const stop = cityStops.find((item) => item.projectId === id);
+      if (!stop) return;
+      const section = document.getElementById(`city-${stop.id}`);
+      if (!section) return;
+      const reducedMotion = window.matchMedia(
+        '(prefers-reduced-motion: reduce)',
+      ).matches;
+      section.scrollIntoView({
+        behavior: reducedMotion ? 'instant' : 'smooth',
+        block: 'start',
+      });
+      const url = new URL(window.location.href);
+      url.hash = section.id;
+      window.history.replaceState(window.history.state, '', url);
+      if (id === 'qgis') openProject(id, itemId);
+    },
+    [openProject],
+  );
 
   useEffect(() => {
-    if (status === 'failed') { onUnavailable?.(); return; }
+    returnRef.current = onReturn;
+  }, [onReturn]);
+  useEffect(
+    () => () => {
+      window.clearTimeout(restartTimer.current);
+      cancelAnimationFrame(restartFrame.current);
+    },
+    [],
+  );
+
+  useEffect(() => {
+    if (status === 'failed') {
+      onUnavailable?.();
+      return;
+    }
     if (status !== 'ready') return;
     let frame = requestAnimationFrame(() => {
       frame = requestAnimationFrame(() => onReady?.());
@@ -88,6 +140,7 @@ export default function CityExperience({ onReturn, onReady, onUnavailable }) {
         try {
           engine = createCityScene(canvasRef.current, {
             onSelect: goToProject,
+            onAction: runAction,
             onFailure: () => {
               engine?.dispose();
               sceneRef.current = null;
@@ -97,6 +150,18 @@ export default function CityExperience({ onReturn, onReady, onUnavailable }) {
               positions.forEach(({ id, x, y, visible }) => {
                 const marker = markersRef.current.get(id);
                 if (!marker) return;
+                if (id.startsWith('action-')) {
+                  marker.style.transform = `translate(${x}px, ${y}px) translate(-50%, -50%)`;
+                  marker.style.visibility =
+                    visible &&
+                    x > 110 &&
+                    x < window.innerWidth - 110 &&
+                    y > 140 &&
+                    y < window.innerHeight - 95
+                      ? 'visible'
+                      : 'hidden';
+                  return;
+                }
                 const labelX = Math.max(x, window.innerWidth * 0.39 + 70);
                 marker.style.transform = `translate(${labelX}px, ${y}px) translate(-50%, -100%)`;
                 marker.style.setProperty(
@@ -145,7 +210,7 @@ export default function CityExperience({ onReturn, onReady, onUnavailable }) {
       window.removeEventListener('scroll', updateProgress);
       window.removeEventListener('resize', measure);
     };
-  }, [goToProject]);
+  }, [goToProject, runAction]);
 
   useEffect(() => {
     document.documentElement.classList.toggle('dark', dark);
@@ -155,7 +220,9 @@ export default function CityExperience({ onReturn, onReady, onUnavailable }) {
     sceneRef.current?.setPaused(projectId !== null && projectId !== 'qgis');
   }, [projectId, status]);
   useEffect(() => {
-    sceneRef.current?.setActiveProject(projectId ?? cityStops[activeStop].projectId);
+    sceneRef.current?.setActiveProject(
+      projectId ?? cityStops[activeStop].projectId,
+    );
   }, [activeStop, projectId, status]);
   useEffect(() => {
     sceneRef.current?.setActivePlugin(pluginId);
@@ -171,18 +238,20 @@ export default function CityExperience({ onReturn, onReady, onUnavailable }) {
   const showMarkers =
     active.id === 'projects' && status === 'ready' && !selectedProject;
   const showDistricts =
-    ['overview', 'contact'].includes(active.id) &&
-    status === 'ready' &&
-    !selectedProject;
+    active.id === 'overview' && status === 'ready' && !selectedProject;
   const chapterIndex = chapters.indexOf(
     active.chapter === 'intro' ? 'overview' : active.chapter,
   );
   const projectIndex = landmarks.findIndex(
     (building) => building.id === active.id,
   );
+  const immersive = active.id === 'street' || active.id === 'finish';
+  const finishing = active.id === 'finish';
 
   return (
-    <div className={`city-experience ${dark ? 'city-night' : ''}`}>
+    <div
+      className={`city-experience ${dark ? 'city-night' : ''} ${immersive ? 'city-immersive' : ''} ${restarting ? 'city-restarting' : ''}`}
+    >
       <a className="city-skip" href="#city-projects">
         {t('city.skip')}
       </a>
@@ -268,9 +337,13 @@ export default function CityExperience({ onReturn, onReady, onUnavailable }) {
           >
             <div className="city-copy">
               <p className="city-eyebrow">
-                {index === 0
-                  ? t('city.eyebrow')
-                  : `${String(chapters.indexOf(stop.chapter) + 1).padStart(2, '0')} / ${t(`city.chapters.${stop.chapter}`)}${stop.projectId != null ? ` · ${landmarks.findIndex((building) => building.id === stop.id) + 1} / ${landmarks.length}` : ''}`}
+                {stop.id === 'street'
+                  ? t('city.streetEyebrow')
+                  : stop.id === 'finish'
+                    ? t('city.finishEyebrow')
+                    : index === 0
+                      ? t('city.eyebrow')
+                      : `${String(chapters.indexOf(stop.chapter) + 1).padStart(2, '0')} / ${t(`city.chapters.${stop.chapter}`)}${stop.projectId != null ? ` · ${landmarks.findIndex((building) => building.id === stop.id) + 1} / ${landmarks.length}` : ''}`}
               </p>
               <CityStopContent
                 stop={stop}
@@ -283,6 +356,37 @@ export default function CityExperience({ onReturn, onReady, onUnavailable }) {
           </section>
         ))}
       </main>
+      <div
+        className="city-finale-actions"
+        role="group"
+        aria-label={t('city.finaleActions')}
+        hidden={!finishing || selectedProject || status !== 'ready'}
+      >
+        {finaleBuildings.map((building) => (
+          <button
+            key={building.id}
+            type="button"
+            className="city-finale-action"
+            ref={(node) => {
+              const id = `action-${building.id}`;
+              if (node) markersRef.current.set(id, node);
+              else markersRef.current.delete(id);
+            }}
+            onClick={() => runAction(building.id)}
+            onMouseEnter={() => sceneRef.current?.setActionHover(building.id)}
+            onMouseLeave={() => sceneRef.current?.setActionHover(null)}
+            onFocus={() => sceneRef.current?.setActionHover(building.id)}
+            onBlur={() => sceneRef.current?.setActionHover(null)}
+          >
+            <span>
+              {t(building.id === 'restart' ? 'city.restart' : 'city.return')}
+            </span>
+            <span aria-hidden="true">
+              {building.id === 'restart' ? '↻' : '↗'}
+            </span>
+          </button>
+        ))}
+      </div>
       {active.chapter === 'projects' && (
         <nav
           className="city-project-nav"
@@ -348,7 +452,9 @@ export default function CityExperience({ onReturn, onReady, onUnavailable }) {
             onClose={closeProject}
             t={t}
             activeItemId={selectedProject.id === 'qgis' ? pluginId : undefined}
-            onItemChange={selectedProject.id === 'qgis' ? setPluginId : undefined}
+            onItemChange={
+              selectedProject.id === 'qgis' ? setPluginId : undefined
+            }
           />
         </Suspense>
       )}

@@ -36,6 +36,7 @@
 .city-vignette {
   z-index: -1;
   pointer-events: none;
+  transition: opacity 600ms ease;
   background: linear-gradient(
     90deg,
     var(--city-paper) 0%,
@@ -43,6 +44,94 @@
     color-mix(in srgb, var(--city-paper) 35%, transparent) 42%,
     transparent 58%
   );
+}
+.city-experience {
+  transition: opacity 260ms ease;
+}
+.city-experience.city-restarting {
+  opacity: 0;
+  pointer-events: none;
+}
+.city-immersive .city-vignette {
+  opacity: 0;
+}
+.city-stop.city-stop-street {
+  min-height: 150svh;
+  align-items: flex-end;
+}
+.city-stop-street .city-copy {
+  width: min(380px, 32vw);
+  padding: 20px 24px;
+  background: color-mix(in srgb, var(--city-paper) 92%, transparent);
+  border-left: 2px solid var(--city-gold);
+}
+.city-stop-street .city-copy > .city-eyebrow {
+  margin-bottom: 14px;
+}
+.city-stop-street .city-meta {
+  margin-top: 15px;
+}
+.city-stop.city-stop-finish {
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 130px;
+}
+.city-stop-finish .city-copy {
+  width: auto;
+  max-width: 520px;
+  text-align: center;
+}
+.city-stop-finish .city-description {
+  max-width: none;
+}
+.city-stop-finish .city-copy > .city-eyebrow {
+  margin-bottom: 10px;
+}
+.city-stop.city-stop-finish .city-copy h2 {
+  font-size: clamp(28px, 2.8vw, 42px);
+  margin-bottom: 12px;
+}
+.city-finale-actions {
+  position: fixed;
+  inset: 0;
+  z-index: 6;
+  pointer-events: none;
+}
+.city-finale-actions[hidden] {
+  display: none;
+}
+.city-finale-action {
+  position: absolute;
+  top: 0;
+  left: 0;
+  visibility: hidden;
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  min-width: 210px;
+  min-height: 52px;
+  padding: 15px 18px;
+  font-size: 14px;
+  border: 1px solid var(--city-gold);
+  border-radius: 2px;
+  background: var(--city-paper);
+  box-shadow: 0 5px 16px #00000015;
+  transition:
+    background 180ms ease,
+    color 180ms ease;
+}
+.city-finale-action span:last-child {
+  color: var(--city-gold);
+  font-size: 20px;
+}
+.city-finale-action:hover {
+  background: var(--city-gold);
+  color: #202624;
+}
+.city-finale-action:hover span:last-child {
+  color: inherit;
 }
 
 .city-header {
@@ -727,6 +816,11 @@
   }
 }
 @media (prefers-reduced-motion: reduce) {
+  .city-experience,
+  .city-vignette,
+  .city-finale-action {
+    transition: none;
+  }
   .city-invitation,
   .city-portal-ring,
   .city-invitation-caption > span,

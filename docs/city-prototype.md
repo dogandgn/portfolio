@@ -74,3 +74,13 @@ The QGIS stop follows BirdMap. Each plugin has its own raycastable floor; floor 
 The first entry is Vector Converter 0.9.0. Content and screenshots come from the local `qgis/parsel-donusturucu/publication/vector-converter` README and assets, which include newer coordinate validation than the original PDF guide. The right panel is a gallery of real QGIS Desktop screens, not an in-browser conversion engine. The public GitHub URL returned 404 during development; verify public access before publishing.
 
 Validation: 36 automated tests, lint and build; classic/city project entry, direct 3D floor picking, both languages, light/dark views and independent mobile panel scrolling. Three-plugin fixtures cover floor IDs, wraparound, selection reset, animation settling and resource disposal. Only one real plugin is currently published in the registry.
+
+## Street-scale ending
+
+Branch: `da/sokak-olcegi-finali`. This replaces the former contact pullback with an eye-level ending; the opening and project views stay intact.
+
+After QGIS, scrolling lowers the camera to 1.85 scene units and widens its field of view. The camera follows the gold path, turns into the park and stops before two small pavilions. Services and contact remain part of the journey. There are thirteen stops, including the descent and finale.
+
+`createStreetFinale` owns the two action buildings and their finite entrance animation. Mesh picking and projected, keyboard-accessible labels share the restart/return actions. Restart fades the city briefly and resets scroll, camera and heading focus; return uses the existing portfolio route. Reduced motion skips the entrance animation and reset fade. Settled buildings return to demand rendering.
+
+Validation: 39 automated tests cover continuous camera velocity, descent, eye-level path clearance, action raycasting, animation settling and resource disposal. Lint and production build pass. Browser checks cover the route and both actions before any separate publishing approval.
