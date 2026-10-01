@@ -60,18 +60,20 @@ function AboutContent({ t }) {
           </ul>
         </details>
       </div>
-      <a
-        className="city-text-link"
-        href={t('hero.cvFile')}
-        download
-      >
+      <a className="city-text-link" href={t('hero.cvFile')} download>
         {t('hero.cv')} ↗
       </a>
     </>
   );
 }
 
-export default function CityStopContent({ stop, projects, t, onOpen }) {
+export default function CityStopContent({
+  stop,
+  projects,
+  t,
+  onOpen,
+  activePluginId,
+}) {
   const project = projects.find((item) => item.id === stop.projectId);
   if (project)
     return (
@@ -84,16 +86,38 @@ export default function CityStopContent({ stop, projects, t, onOpen }) {
           <p className="city-subtitle">{project.title}</p>
         )}
         <p className="city-description">{project.cardDescription}</p>
+        {project.plugins && (
+          <div
+            className="city-plugin-list"
+            role="group"
+            aria-label={t('qgis.floors')}
+          >
+            <p className="city-hint">{t('qgis.floorHint')}</p>
+            {project.plugins.map((plugin, index) => (
+              <button
+                key={plugin.id}
+                type="button"
+                aria-pressed={activePluginId === plugin.id}
+                onClick={() => onOpen(project.id, plugin.id)}
+              >
+                <span>{t('qgis.floor', { number: index + 1 })}</span>
+                {plugin.details.title}
+              </button>
+            ))}
+          </div>
+        )}
         <div className="city-tags">
           {project.tech.slice(0, 4).map((tech) => (
             <span key={tech}>{tech}</span>
           ))}
         </div>
-        <button className="city-button" onClick={() => onOpen(project.id)}>
-          {t('city.open')} <span>↗</span>
-        </button>
+        {!project.plugins && (
+          <button className="city-button" onClick={() => onOpen(project.id)}>
+            {t('city.open')} <span>↗</span>
+          </button>
+        )}
         <SectionLink id="projects">{t('city.allProjects')}</SectionLink>
-        <p className="city-hint">{t('city.select')}</p>
+        {!project.plugins && <p className="city-hint">{t('city.select')}</p>}
       </>
     );
 

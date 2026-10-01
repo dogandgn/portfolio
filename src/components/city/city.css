@@ -644,6 +644,30 @@
   flex: 1;
   min-width: 0;
 }
+.city-plugin-list {
+  display: grid;
+  gap: 10px;
+  margin: 18px 0;
+}
+.city-plugin-list .city-hint {
+  margin-top: 0;
+}
+.city-plugin-list button {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border: 1px solid var(--city-line);
+  text-align: left;
+  font-size: 13px;
+}
+.city-plugin-list button[aria-pressed='true'] {
+  border-color: var(--city-gold);
+}
+.city-plugin-list button span {
+  flex-shrink: 0;
+  color: var(--city-secondary);
+}
 .city-district-marker {
   border-top: 2px solid var(--city-gold);
 }

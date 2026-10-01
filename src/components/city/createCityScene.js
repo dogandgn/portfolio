@@ -11,6 +11,8 @@ import { createCityRoute } from './createCityRoute';
 import { createCityDetails } from './createCityDetails';
 import { createProjectHighlight } from './createProjectHighlight';
 import { createProjectEmblems } from './createProjectEmblems';
+import { createPluginFloors } from './createPluginFloors';
+import { qgisPlugins } from '../../data/qgisPlugins';
 
 export function createCityScene(canvas, { onSelect, onFailure, onPositions }) {
   const renderer = new THREE.WebGLRenderer({
@@ -71,6 +73,9 @@ export function createCityScene(canvas, { onSelect, onFailure, onPositions }) {
   const details = createCityDetails(scene, geometry);
   const selection = createProjectHighlight(scene, geometry);
   const emblems = createProjectEmblems(scene);
+  const pluginFloors = createPluginFloors(scene, geometry, landmarks.find((building) => building.id === 'qgis'));
+  let activePluginId = qgisPlugins[0]?.id;
+  let activeProjectId = null;
 
   const blocks = [...createBuildings(compact), ...landmarks];
   const volumes = [];
@@ -79,10 +84,10 @@ export function createCityScene(canvas, { onSelect, onFailure, onPositions }) {
     const { x, z, width, depth, height, stepped } = building;
     volumes.push({
       x,
-      y: height / 2,
+      y: building.id === 'qgis' ? 0.55 : height / 2,
       z,
       width,
-      height,
+      height: building.id === 'qgis' ? 1.1 : height,
       depth,
       projectId: building.projectId,
     });
@@ -95,7 +100,7 @@ export function createCityScene(canvas, { onSelect, onFailure, onPositions }) {
         height: 1.3,
         depth: depth * 0.8,
       });
-    for (let y = 1; y < height; y += 1.15) {
+    for (let y = 1; y < height && building.id !== 'qgis'; y += 1.15) {
       const corners = [
         [x - width / 2 - 0.01, y, z - depth / 2 - 0.01],
         [x + width / 2 + 0.01, y, z - depth / 2 - 0.01],
@@ -187,6 +192,7 @@ export function createCityScene(canvas, { onSelect, onFailure, onPositions }) {
     journeyRoute.update(progress);
     const highlighting = selection.update(delta, motionPreference.matches);
     const animatingEmblems = emblems.update(delta, motionPreference.matches);
+    const animatingFloors = pluginFloors.update(delta, motionPreference.matches);
     renderer.render(scene, camera);
     if (onPositions) {
       onPositions(
@@ -203,7 +209,7 @@ export function createCityScene(canvas, { onSelect, onFailure, onPositions }) {
         }),
       );
     }
-    if (progress !== targetProgress || highlighting || animatingEmblems)
+    if (progress !== targetProgress || highlighting || animatingEmblems || animatingFloors)
       requestRender();
   }
   function requestRender() {
@@ -234,16 +240,17 @@ export function createCityScene(canvas, { onSelect, onFailure, onPositions }) {
     );
     raycaster.setFromCamera(pointer, camera);
     const intersection = raycaster.intersectObjects(
-      [buildings, ...roofs, ...emblems.hitTargets],
+      [buildings, ...roofs, ...emblems.hitTargets, ...pluginFloors.hitTargets],
       false,
     )[0];
     if (!intersection) return null;
-    return intersection.object === buildings
-      ? (volumes[intersection.instanceId]?.projectId ?? null)
-      : intersection.object.userData.projectId;
+    const data = intersection.object === buildings
+      ? volumes[intersection.instanceId]
+      : intersection.object.userData;
+    return data?.projectId == null ? null : { projectId: data.projectId, pluginId: data.pluginId };
   }
   function move(event) {
-    const projectId = pick(event);
+    const projectId = pick(event)?.projectId ?? null;
     canvas.style.cursor = projectId != null ? 'pointer' : '';
     if (projectId === hoveredProject) return;
     hoveredProject = projectId;
@@ -267,16 +274,16 @@ export function createCityScene(canvas, { onSelect, onFailure, onPositions }) {
     pointerStart = [event.clientX, event.clientY];
   }
   function up(event) {
-    const projectId = pick(event);
+    const picked = pick(event);
     if (
       pointerStart &&
       Math.hypot(
         event.clientX - pointerStart[0],
         event.clientY - pointerStart[1],
       ) < 8 &&
-      projectId !== null
+      picked !== null
     )
-      onSelect(projectId);
+      onSelect(picked.projectId, picked.pluginId);
     pointerStart = null;
   }
   function contextLost(event) {
@@ -312,6 +319,7 @@ export function createCityScene(canvas, { onSelect, onFailure, onPositions }) {
     journeyRoute.setTheme(dark);
     details.setTheme(dark);
     emblems.setTheme(dark);
+    pluginFloors.setTheme(dark);
     hemisphere.intensity = dark ? 1.5 : 2;
     sunlight.intensity = dark ? 1.8 : 2.8;
     requestRender();
@@ -321,7 +329,14 @@ export function createCityScene(canvas, { onSelect, onFailure, onPositions }) {
 
   return {
     setTheme,
+    setActivePlugin(id) {
+      activePluginId = id;
+      pluginFloors.setActive(id, activeProjectId === 'qgis');
+      requestRender();
+    },
     setActiveProject(projectId) {
+      activeProjectId = projectId;
+      pluginFloors.setActive(activePluginId, projectId === 'qgis');
       selection.setActive(projectId);
       emblems.setActive(projectId);
       roofs.forEach((roof) => {
@@ -370,6 +385,7 @@ export function createCityScene(canvas, { onSelect, onFailure, onPositions }) {
       details.dispose();
       selection.dispose();
       emblems.dispose();
+      pluginFloors.dispose();
       Object.values(materials).forEach((material) => material.dispose());
       sunlight.shadow.dispose();
       renderer.dispose();

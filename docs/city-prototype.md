@@ -64,3 +64,13 @@ Escape, Cancel, resizing or hiding the tab cancels the transition. The original 
 Browser checks include entry from the top and bottom of the portfolio, repeated entry, cancellation while closing and opening, and narrow-screen exclusion. Cross-browser screenshot/font rendering and lower-powered devices still need checking before release.
 
 All five projects have procedural rooftop sculptures and smaller entrance badges: parcel/pin, connected layers, Python, architectural model and bird. Selecting a project plays a four-second project-specific animation, then rendering returns to idle. Reduced motion skips the animation. Emblems share geometry/materials, participate in project picking and release their resources on exit. Taller buildings use offset rooftop mounts to keep the sculptures clear of navigation.
+
+## QGIS plugins
+
+`qgisPlugins.js` is the shared plugin registry. Its order determines modal navigation and building floors. Add a stable ID, metadata, screenshots and matching `qgis.tr.json` / `qgis.en.json` content for each new plugin. Do not add placeholder plugins to the published registry.
+
+The QGIS stop follows BirdMap. Each plugin has its own raycastable floor; floor selection opens that plugin directly. The city owns the selected plugin ID, so modal arrows update the same floor. Selected floors move forward and glow, with static reduced-motion handling and demand rendering. Single-plugin navigation shows 1/1 with disabled arrows.
+
+The first entry is Vector Converter 0.9.0. Content and screenshots come from the local `qgis/parsel-donusturucu/publication/vector-converter` README and assets, which include newer coordinate validation than the original PDF guide. The right panel is a gallery of real QGIS Desktop screens, not an in-browser conversion engine. The public GitHub URL returned 404 during development; verify public access before publishing.
+
+Validation: 36 automated tests, lint and build; classic/city project entry, direct 3D floor picking, both languages, light/dark views and independent mobile panel scrolling. Three-plugin fixtures cover floor IDs, wraparound, selection reset, animation settling and resource disposal. Only one real plugin is currently published in the registry.

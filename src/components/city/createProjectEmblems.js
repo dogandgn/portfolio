@@ -105,6 +105,7 @@ export function createProjectEmblems(scene) {
     snake: new THREE.ExtrudeGeometry(snake, extrusion),
     pin: new THREE.ExtrudeGeometry(pin, extrusion),
     orbit: new THREE.TorusGeometry(1.35, 0.014, 6, 72),
+    qgis: new THREE.TorusGeometry(0.58, 0.16, 12, 40),
   };
   const hitTargets = [];
   const entries = [];
@@ -260,12 +261,23 @@ export function createProjectEmblems(scene) {
     };
   }
 
+  function qgis(parent) {
+    const group = new THREE.Group();
+    group.name = 'qgis-sculpture';
+    parent.add(group);
+    mesh(group, 'qgis', 'sage', [0, 0.1, 0]);
+    const tail = mesh(group, 'box', 'gold', [0.45, -0.35, 0.1], [0.24, 0.85, 0.3]);
+    tail.rotation.z = Math.PI / 4;
+    return { group };
+  }
+
   const makers = {
     property,
     widgets,
     automation: python,
     luma: architecture,
     birdmap: bird,
+    qgis,
   };
   landmarks
     .filter((building) => makers[building.id])

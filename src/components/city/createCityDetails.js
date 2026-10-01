@@ -28,6 +28,23 @@ export function createCityDetails(scene, geometry) {
     box('stone', x, 1.65, front + 0.28, width * 0.86, 0.16, 0.9);
     box('stone', x, 0.17, front + 0.55, width * 0.9, 0.18, 1.2);
     box('metal', x, 0.85, front + 0.09, 0.065, 1.45, 0.05);
+    if (id === 'qgis') {
+      for (const sign of [-1, 1]) {
+        box(
+          'stone',
+          x + sign * width * 0.39,
+          0.87,
+          front + 0.1,
+          0.16,
+          1.5,
+          0.2,
+        );
+        box('metal', x + sign * 0.17, 0.9, front + 0.14, 0.04, 0.28, 0.05);
+      }
+      box('metal', x, 1.56, front + 0.1, width * 0.76, 0.06, 0.08);
+      box('light', x, 1.54, front + 0.47, width * 0.52, 0.045, 0.1);
+      return;
+    }
     for (let y = 2.4; y < height - 0.4; y += 1.6) {
       for (let dx = -width / 2 + 0.75; dx < width / 2 - 0.4; dx += 1.1)
         box('glass', x + dx, y, front + 0.035, 0.65, 0.88, 0.06);

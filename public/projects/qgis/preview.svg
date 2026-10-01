@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720">
+  <rect width="1280" height="720" fill="#24342f"/>
+  <g fill="none" stroke="#769987" stroke-width="2" opacity=".4"><path d="M0 170H1280M0 330H1280M0 490H1280M170 0V720M390 0V720M610 0V720M830 0V720M1050 0V720"/></g>
+  <g transform="translate(715 135)" stroke="#b9c8ac" stroke-width="4"><path d="m0 180 200-105 205 105-205 105Z" fill="#527465"/><path d="m0 240 200-105 205 105-205 105Z" fill="#6c8975"/><path d="m0 300 200-105 205 105-205 105Z" fill="#9ba78c"/><path d="m200 195 0 210M0 300l405 0" fill="none" stroke="#d9ad25"/></g>
+  <text x="80" y="222" font-family="Arial,sans-serif" font-size="30" letter-spacing="7" fill="#d9ad25">DESKTOP GIS</text>
+  <text x="76" y="332" font-family="Arial,sans-serif" font-weight="700" font-size="102" fill="#eeede7">QGIS</text>
+  <text x="80" y="403" font-family="Arial,sans-serif" font-size="46" fill="#bbcbbd">PLUGIN DEVELOPMENT</text>
+  <path d="M80 457H500" stroke="#d9ad25" stroke-width="4"/>
+  <text x="80" y="512" font-family="Arial,sans-serif" font-size="26" fill="#bbcbbd">Python / PyQGIS / Qt</text>
+</svg>

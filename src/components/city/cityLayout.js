@@ -1,3 +1,5 @@
+import { qgisPlugins } from '../../data/qgisPlugins.js';
+
 export const landmarks = [
   {
     id: 'property',
@@ -44,11 +46,15 @@ export const landmarks = [
     depth: 4,
     height: 4,
   },
+  {
+    id: 'qgis', projectId: 'qgis', x: 25, z: 2,
+    width: 4.8, depth: 4.8, height: 1.1 + qgisPlugins.length * 2.4,
+  },
 ];
 export const districts = [
   { id: 'overview', chapter: 'intro', x: -25, z: -19, width: 18, depth: 17 },
   { id: 'about', chapter: 'about', x: -25, z: 13, width: 18, depth: 15 },
-  { id: 'projects', chapter: 'projects', x: 4, z: 2, width: 38, depth: 17 },
+  { id: 'projects', chapter: 'projects', x: 7.5, z: 2, width: 45, depth: 17 },
   { id: 'services', chapter: 'services', x: 33, z: 15, width: 16, depth: 20 },
 ];
 export const parks = [
@@ -100,7 +106,7 @@ export const cityStops = [
     id: 'services',
     chapter: 'services',
     routeDistance: 97,
-    pose: cameraPose(33, 12, 46, 18, 1.5),
+    pose: cameraPose(36, 12, 46, 18, 1.5),
   },
   {
     id: 'contact',

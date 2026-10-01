@@ -12,10 +12,10 @@ function setup(t) {
 
 test('sculptures and entrance badges belong to their project', (t) => {
   const { scene, emblems } = setup(t);
-  assert.equal(scene.children.length, 5);
+  assert.equal(scene.children.length, 6);
   assert.deepEqual(
     new Set(emblems.hitTargets.map((mesh) => mesh.userData.projectId)),
-    new Set([1, 2, 3, 'luma', 'birdmap']),
+    new Set([1, 2, 3, 'luma', 'birdmap', 'qgis']),
   );
   for (const mesh of emblems.hitTargets) {
     const positions = mesh.geometry.attributes.position.array;

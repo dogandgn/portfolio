@@ -1,4 +1,5 @@
 import { BIRDMAP_URL, LUMA_DEMO_URL, LUMA_REPOSITORY_URL } from './projectLinks';
+import { getQgisProject } from './qgisPlugins';
 
 const getLayerManagerDetails = (t) => ({
   title: t('projects.p2_detail_title'),
@@ -101,6 +102,7 @@ export const getProjects = (t) => {
       icon: 'fa-crow',
       image: '/projects/birdmap-preview.jpg',
     },
+    getQgisProject(t),
     {
       id: 1,
       wideDemo: true,

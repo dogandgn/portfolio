@@ -22,7 +22,7 @@ export default function ProjectCard({ project, onClick, t }) {
           className={`aspect-video w-full object-cover object-top transition-[transform,filter] duration-500 motion-safe:group-hover:scale-[1.02] ${project.featured ? 'project-screenshot' : ''}`}
         />
         <span className="absolute bottom-4 left-4 rounded-full border border-white/20 bg-black/85 px-3 py-1.5 text-xs font-medium text-white">
-          {t(project.featured ? 'projects.liveDemo' : 'projects.interactiveExample')}
+          {project.cardLabel ?? t(project.featured ? 'projects.liveDemo' : 'projects.interactiveExample')}
         </span>
       </button>
 
