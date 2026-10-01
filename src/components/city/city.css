@@ -358,19 +358,6 @@
   width: 152px;
   animation: city-invitation-reveal 500ms ease both;
 }
-.city-dismiss {
-  position: absolute;
-  right: 0;
-  top: 2px;
-  width: 26px;
-  height: 26px;
-  border-radius: 50%;
-  background: var(--color-void, #eeede7);
-  color: var(--color-ink, #202624);
-  border: 1px solid #ad98574d;
-  font-size: 16px;
-  z-index: 1;
-}
 .city-mascot {
   display: grid;
   justify-items: center;

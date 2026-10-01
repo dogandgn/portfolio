@@ -2,7 +2,7 @@
 
 Branch: `da/3d-sehir-portfolyo`. Production remains unchanged.
 
-The existing portfolio is the default entry. A desktop-only building mascot opens the city with a short transition. The desktop gate requires a viewport of at least 1024px, hover support and a fine pointer. Mobile visitors keep the existing site, including when opening `?view=city` directly.
+The existing portfolio is the default entry. A persistent desktop-only guide opens the city with a short transition. There is no dismiss button or hidden state. The desktop gate requires a viewport of at least 1024px, hover support and a fine pointer. Mobile visitors keep the existing site, including when opening `?view=city` directly.
 
 ## Scope
 
@@ -100,3 +100,7 @@ The invitation stays visible during capture and is excluded from the snapshot. C
 Validation: 53 automated tests cover viewport-safe enlargement, continuous position/scale, monotonic opening, bounded contour displacement, arm timing, reduced motion and cleanup, in addition to the existing city tests.
 
 Lint and production build pass, with the existing lazy city chunk size warning. Browser checks confirmed repeated entry, pulling/jumping poses, cancellation before and after city mounting, scroll restoration, and launcher exclusion without horizontal overflow at 390 × 844. No production deployment was made.
+
+Final production-preview checks on 2026-10-02: 53 tests, lint and build pass. The guide remains available after scrolling, Escape cancellation and the final return action. The QGIS stop aligns with its active navigation item; restart restores the opening camera and scroll position. Turkish/English and both themes were checked. At 1024px the city and guide fit; at 390px and 768px the desktop guide is absent without horizontal overflow. Browser console errors were absent during these checks.
+
+The entry sequence is configured for 2.4 seconds plus capture and any remaining city preparation. A first-entry run with continuous screenshot sampling completed in approximately 4.4 seconds; this includes inspection overhead and is not an FPS benchmark. The lazy city bundle remains about 163 kB gzip and retains the existing Vite size warning.
