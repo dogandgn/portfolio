@@ -6,7 +6,28 @@ import {
   getTransitionLayout,
   getTransitionPose,
   transitionDurations,
+  getTransitionFrame,
+  getPoseBlend,
 } from '../src/components/portal/characterTransitionMath.js';
+
+test('a single timeline preserves phase overflow and blends between character poses', () => {
+  let elapsed = 0;
+  for (const [phase, duration] of Object.entries(transitionDurations)) {
+    assert.equal(getTransitionFrame(elapsed + 1).phase, phase);
+    assert.ok(Math.abs(getTransitionFrame(elapsed + 1).progress - 1 / duration) < 1e-10);
+    elapsed += duration;
+  }
+  assert.deepEqual(getTransitionFrame(elapsed + 100), { phase: 'reveal', progress: 1 });
+  for (const phase of Object.keys(transitionDurations)) {
+    for (let step = 0; step <= 100; step++) {
+      const weights = Object.values(getPoseBlend(phase, step / 100));
+      assert.ok(Math.abs(weights.reduce((sum, value) => sum + value, 0) - 1) < 1e-10);
+      assert.ok(weights.every((value) => value >= 0 && value <= 1));
+    }
+  }
+  assert.deepEqual(getPoseBlend('approach', 1), getPoseBlend('part', 0));
+  assert.deepEqual(getPoseBlend('crouch', 1), getPoseBlend('jump', 0));
+});
 
 test('the guide grows from its launcher and approaches a viewport-safe destination', () => {
   for (const [width, height] of [[1024, 768], [1280, 800], [1910, 912]]) {
