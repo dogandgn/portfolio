@@ -1,12 +1,33 @@
 import { easePortal } from './portalMath.js';
 
 export const transitionDurations = {
-  approach: 600,
-  part: 750,
-  crouch: 140,
-  jump: 550,
-  reveal: 360,
+  approach: 620,
+  part: 680,
+  crouch: 170,
+  jump: 600,
+  reveal: 400,
 };
+
+export function getTransitionFrame(elapsed) {
+  let remaining = Math.max(0, elapsed);
+  for (const [phase, duration] of Object.entries(transitionDurations)) {
+    if (remaining < duration) return { phase, progress: remaining / duration };
+    remaining -= duration;
+  }
+  return { phase: 'reveal', progress: 1 };
+}
+
+export function getPoseBlend(phase, progress) {
+  if (phase === 'approach') {
+    const pulling = easePortal((progress - 0.62) / 0.38);
+    return { standing: 1 - pulling, pulling, jumping: 0 };
+  }
+  if (phase === 'jump') {
+    const jumping = easePortal(progress / 0.24);
+    return { standing: 0, pulling: 1 - jumping, jumping };
+  }
+  return { standing: 0, pulling: 1, jumping: 0 };
+}
 
 export function getTransitionLayout(origin, width, height) {
   const size = Math.min(360, height * 0.47);

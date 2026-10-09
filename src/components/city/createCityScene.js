@@ -3,7 +3,6 @@ import {
   clampProgress,
   createBuildings,
   districts,
-  getCameraPose,
   getStreetBlend,
   finaleActions,
   landmarks,
@@ -16,6 +15,8 @@ import { createProjectEmblems } from './createProjectEmblems';
 import { createPluginFloors } from './createPluginFloors';
 import { qgisPlugins } from '../../data/qgisPlugins';
 import { createStreetFinale } from './createStreetFinale';
+import { createJourneyGuide } from './createJourneyGuide';
+import { getJourneyCameraPose } from './guideJourney';
 
 export function createCityScene(
   canvas,
@@ -76,6 +77,7 @@ export function createCityScene(
   scene.add(grid);
   const landscape = createLandscape(scene, geometry);
   const journeyRoute = createCityRoute(scene, geometry);
+  const guide = createJourneyGuide(scene);
   const details = createCityDetails(scene, geometry);
   const selection = createProjectHighlight(scene, geometry);
   const emblems = createProjectEmblems(scene);
@@ -193,6 +195,7 @@ export function createCityScene(
   let currentCompact = compact;
   let hoveredProject = null;
   let hoveredAction = null;
+  let resetGuide = true;
 
   function updateLens() {
     const streetBlend = getStreetBlend(progress);
@@ -220,11 +223,13 @@ export function createCityScene(
       : THREE.MathUtils.damp(progress, targetProgress, 7, delta);
     if (Math.abs(progress - targetProgress) < 0.00001)
       progress = targetProgress;
-    const pose = getCameraPose(progress, currentCompact);
+    const pose = getJourneyCameraPose(progress, currentCompact);
     camera.position.set(...pose.slice(0, 3));
     camera.lookAt(...pose.slice(3));
     updateLens();
     journeyRoute.update(progress);
+    const animatingGuide = guide.update(progress, delta, motionPreference.matches, resetGuide);
+    resetGuide = false;
     const highlighting = selection.update(delta, motionPreference.matches);
     const animatingEmblems = emblems.update(delta, motionPreference.matches);
     const animatingFloors = pluginFloors.update(
@@ -260,6 +265,7 @@ export function createCityScene(
       highlighting ||
       animatingEmblems ||
       animatingFloors ||
+      animatingGuide ||
       animatingFinale
     )
       requestRender();
@@ -425,6 +431,7 @@ export function createCityScene(
     setProgress(value, immediate = false) {
       targetProgress = clampProgress(value);
       if (immediate) progress = targetProgress;
+      if (immediate) resetGuide = true;
       requestRender();
     },
     setPaused(value) {
@@ -457,6 +464,7 @@ export function createCityScene(
       roofs.forEach((roof) => roof.material.dispose());
       landscape.dispose();
       journeyRoute.dispose();
+      guide.dispose();
       details.dispose();
       selection.dispose();
       emblems.dispose();

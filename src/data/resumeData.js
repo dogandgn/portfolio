@@ -62,6 +62,14 @@ export const getExperiences = (t) => [
 
 export const getEducation = (t) => [
   {
+    id: 2,
+    school: t('experience.edu2_school'),
+    faculty: t('experience.edu2_faculty'),
+    department: t('experience.edu2_dept'),
+    date: t('experience.edu2_date'),
+    description: t('experience.edu2_desc')
+  },
+  {
     id: 1,
     school: t('experience.edu1_school'),
     faculty: t('experience.edu1_faculty'),

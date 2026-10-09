@@ -1,8 +1,6 @@
 import * as THREE from 'three';
 import {
   getRouteDistance,
-  getRoutePoint,
-  getStreetBlend,
   route,
 } from './cityLayout';
 
@@ -62,16 +60,8 @@ export function createCityRoute(scene, geometry) {
     }
     travelled += length;
   });
-  const headGeometry = new THREE.SphereGeometry(0.28, 12, 8);
-  const head = new THREE.Mesh(headGeometry, materials.active);
-  const ringGeometry = new THREE.RingGeometry(0.48, 0.58, 32);
-  const ring = new THREE.Mesh(ringGeometry, materials.active);
-  ring.rotation.x = -Math.PI / 2;
-  scene.add(head, ring);
-
   return {
     update(progress) {
-      head.visible = getStreetBlend(progress) < 0.85;
       const distance = getRouteDistance(progress);
       segments.forEach(
         ({ mesh, start, length, x1, z1, x2, z2, horizontal, offset }) => {
@@ -90,9 +80,6 @@ export function createCityRoute(scene, geometry) {
           );
         },
       );
-      const point = getRoutePoint(distance);
-      head.position.set(point.x, 0.5, point.z);
-      ring.position.set(point.x, 0.27, point.z);
     },
     setTheme(dark) {
       materials.paving.color.set(dark ? '#424943' : '#d9d8cc');
@@ -100,8 +87,6 @@ export function createCityRoute(scene, geometry) {
       materials.active.emissiveIntensity = dark ? 0.7 : 0.25;
     },
     dispose() {
-      headGeometry.dispose();
-      ringGeometry.dispose();
       Object.values(materials).forEach((material) => material.dispose());
     },
   };

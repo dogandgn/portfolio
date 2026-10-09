@@ -3,6 +3,8 @@ import { easePortal, withDeadline } from './portalMath';
 import {
   getContourPoint,
   getHandGrips,
+  getPoseBlend,
+  getTransitionFrame,
   getTransitionLayout,
   getTransitionPose,
   transitionDurations,
@@ -60,13 +62,11 @@ export async function runPortalTransition({ element, origin, signal, onCovered }
       const { size } = pose;
       const { shift } = getHandGrips(pose);
       const slice = (x, y, w, h, targetX, targetWidth = w) => {
-        const left = Math.round((pose.x + (targetX - 0.5) * size) * ratio) / ratio - pose.x;
-        const top = Math.round((pose.y + (y - 0.5) * size) * ratio) / ratio - pose.y;
-        const right = Math.round((pose.x + (targetX + targetWidth - 0.5) * size) * ratio) / ratio - pose.x;
-        const bottom = Math.round((pose.y + (y + h - 0.5) * size) * ratio) / ratio - pose.y;
+        const left = (targetX - 0.5) * size;
+        const top = (y - 0.5) * size;
         context.drawImage(actionAtlas, x * actionCell, y * actionCell,
           w * actionCell, h * actionCell,
-          left, top, right - left, bottom - top);
+          left, top, targetWidth * size, h * size + 0.2 / ratio);
       };
       slice(0, 0, 1, 0.27, 0);
       slice(0, 0.5, 1, 0.5, 0);
@@ -192,19 +192,28 @@ export async function runPortalTransition({ element, origin, signal, onCovered }
       context.globalAlpha = pose.opacity;
       context.translate(pose.x, pose.y);
       context.rotate(pose.angle);
-      if (phase === 'approach' && progress < 0.85) standing(pose.size);
-      else if (phase === 'jump') context.drawImage(actionAtlas,
-        actionCell, 0, actionCell, actionCell,
-        -pose.size / 2, -pose.size / 2, pose.size, pose.size);
-      else pulling(pose);
+      const blend = getPoseBlend(phase, progress);
+      if (blend.standing) {
+        context.globalAlpha = pose.opacity * blend.standing;
+        standing(pose.size);
+      }
+      if (blend.pulling) {
+        context.globalAlpha = pose.opacity * blend.pulling;
+        pulling(pose);
+      }
+      if (blend.jumping) {
+        context.globalAlpha = pose.opacity * blend.jumping;
+        context.drawImage(actionAtlas, actionCell, 0, actionCell, actionCell,
+          -pose.size / 2, -pose.size / 2, pose.size, pose.size);
+      }
       context.restore();
       if (holding) heldContours(pose, true);
     }
-    function animate(phase) {
-      canvas.dataset.phase = phase;
+    function animate() {
       return new Promise((resolve, reject) => {
         let started;
-        let lastDraw = -Infinity;
+        let elapsed = 0;
+        const duration = Object.values(transitionDurations).reduce((sum, value) => sum + value, 0);
         const abort = () => {
           cancelAnimationFrame(frame);
           signal.removeEventListener('abort', abort);
@@ -214,18 +223,17 @@ export async function runPortalTransition({ element, origin, signal, onCovered }
         signal.addEventListener('abort', abort, { once: true });
         function tick(now) {
           started ??= now;
-          const progress = Math.min(1, (now - started) / transitionDurations[phase]);
+          elapsed = Math.min(duration, now - started);
+          const { phase, progress } = getTransitionFrame(elapsed);
+          canvas.dataset.phase = phase;
           try {
-            if (progress === 1 || now - lastDraw >= 1000 / 60) {
-              draw(phase, progress);
-              lastDraw = now;
-            }
+            draw(phase, progress);
           } catch (error) {
             signal.removeEventListener('abort', abort);
             reject(error);
             return;
           }
-          if (progress < 1) frame = requestAnimationFrame(tick);
+          if (elapsed < duration) frame = requestAnimationFrame(tick);
           else {
             signal.removeEventListener('abort', abort);
             resolve();
@@ -239,12 +247,11 @@ export async function runPortalTransition({ element, origin, signal, onCovered }
     document.body.style.overflow = 'hidden';
     if (invitation) invitation.style.visibility = 'hidden';
     element.style.visibility = 'hidden';
+    canvas.dataset.phase = 'prepare';
     const cityReady = withDeadline(onCovered(), 8000, signal);
-    await Promise.all([animate('approach'), cityReady]);
-    await animate('part');
-    await animate('crouch');
-    await animate('jump');
-    await animate('reveal');
+    await cityReady;
+    signal.throwIfAborted();
+    await animate();
   } finally {
     cancelAnimationFrame(frame);
     element.style.visibility = visibility;

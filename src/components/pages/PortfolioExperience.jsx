@@ -246,6 +246,7 @@ export default function PortfolioExperience() {
                   busy={portalBusy}
                   onPrepare={() => {
                     loadCity().catch(() => {});
+                    import('../city/createCityScene').catch(() => {});
                     loadPortal().catch(() => {});
                   }}
                 />
