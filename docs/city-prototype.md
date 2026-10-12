@@ -1,5 +1,23 @@
 # City prototype
 
+## Current baseline — 2026-10-12
+
+The city experience is published. The maintenance review starts from main commit `6f15ec4`, released on 2026-10-09. On 2026-10-12 the user approved this maintenance commit, branch push, main merge, production release and the scoped Portfolio Miro update. Deployment completion must be verified separately.
+
+There are six project buildings, including QGIS after BirdMap. After QGIS, the camera descends into a third-person view following the procedural guide, then frames the restart and portfolio-return actions at the end. Contact no longer returns to the opening aerial view. The Blender draft is not integrated.
+
+`createJourneyGuide` owns the running character and resources; `guideJourney` supplies the rounded route, running pose and chase camera. Character entry uses a continuous 2.47-second animation timeline after viewport capture and city readiness, not a fixed total load time. Poses crossfade and canvas drawing uses fractional coordinates.
+
+This maintenance branch fixes classic background frame scheduling, live reduced-motion changes, closed-menu keyboard focus and theme continuity when returning from the city. It does not change the model or project content. Commit, push and Miro updates require explicit approval.
+
+Local validation on 2026-10-12: 67 Node tests, ESLint and the production build passed. Six new tests cover contour scheduling, idle settling, visibility changes, live reduced-motion settings, cleanup and missing canvas support. Production-preview browser checks covered 390px keyboard navigation, English menu labels, dark-theme city entry/return, returning to scroll position zero and Turkish/light defaults after reload. No console warnings or errors were observed in these checked flows. This is not a full cross-browser or physical-device validation.
+
+Open items: the lazy city chunk still exceeds Vite's 500 kB warning threshold (about 640 kB minified / 167 kB gzip); some interactive demos, including AuthDemo and SlopeDemo, still contain hard-coded Turkish text. External embedded applications and dependency security advisories were not revalidated in this maintenance pass.
+
+The sections below are historical implementation and validation notes. Their branch names, test counts, dependency audit results and pre-publication statements are not current release status. Run the checks below for current evidence; automated test counts are not a measure of product correctness.
+
+## Historical prototype notes
+
 Branch: `da/3d-sehir-portfolyo`. Production remains unchanged.
 
 The existing portfolio is the default entry. A persistent desktop-only guide opens the city with a short transition. There is no dismiss button or hidden state. The desktop gate requires a viewport of at least 1024px, hover support and a fine pointer. Mobile visitors keep the existing site, including when opening `?view=city` directly.

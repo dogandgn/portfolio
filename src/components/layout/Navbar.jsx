@@ -6,7 +6,9 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(() =>
+    document.documentElement.classList.contains('dark'),
+  );
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -91,7 +93,7 @@ export default function Navbar() {
             onClick={() => setIsMobileMenuOpen((current) => !current)}
             aria-expanded={isMobileMenuOpen}
             aria-controls="mobile-navigation"
-            aria-label={isMobileMenuOpen ? 'Menüyü kapat' : 'Menüyü aç'}
+            aria-label={isMobileMenuOpen ? t('nav.closeMenu') : t('nav.openMenu')}
             className="text-ink hover:text-signal transition-colors p-1"
           >
             <i className={`fa-solid ${isMobileMenuOpen ? 'fa-xmark' : 'fa-bars'} text-xl`}></i>
@@ -99,7 +101,7 @@ export default function Navbar() {
         </div>
       </nav>
 
-      <div id="mobile-navigation" aria-hidden={!isMobileMenuOpen} className={`md:hidden absolute top-[62px] left-0 w-full bg-void border-b border-gunmetal transition-all duration-300 overflow-hidden ${isMobileMenuOpen ? 'max-h-80 opacity-100' : 'max-h-0 opacity-0 pointer-events-none'}`}>
+      <div id="mobile-navigation" inert={!isMobileMenuOpen} aria-hidden={!isMobileMenuOpen} className={`md:hidden absolute top-[62px] left-0 w-full bg-void border-b border-gunmetal transition-all duration-300 overflow-hidden ${isMobileMenuOpen ? 'max-h-80 opacity-100' : 'max-h-0 opacity-0 pointer-events-none'}`}>
         <div className="flex flex-col px-6 py-4 gap-4">
           <a href="#about" onClick={() => setIsMobileMenuOpen(false)} className="text-fog hover:text-ink transition-colors font-medium">{t('nav.about')}</a>
           <a href="#work-areas" onClick={() => setIsMobileMenuOpen(false)} className="text-fog hover:text-ink transition-colors font-medium">{t('nav.workAreas')}</a>
