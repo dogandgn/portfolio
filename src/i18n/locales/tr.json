@@ -6,7 +6,9 @@
     "projects": "Projeler",
     "contact": "İletişim",
     "lightMode": "Açık Tema",
-    "darkMode": "Koyu Tema"
+    "darkMode": "Koyu Tema",
+    "openMenu": "Menüyü aç",
+    "closeMenu": "Menüyü kapat"
   },
   "hero": {
     "title1": "Şehir Plancısı",

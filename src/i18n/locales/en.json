@@ -6,7 +6,9 @@
     "projects": "Projects",
     "contact": "Contact",
     "lightMode": "Light Theme",
-    "darkMode": "Dark Theme"
+    "darkMode": "Dark Theme",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu"
   },
   "hero": {
     "title1": "Urban Planner",
