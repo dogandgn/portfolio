@@ -1,5 +1,5 @@
-import { BIRDMAP_URL, LUMA_DEMO_URL, LUMA_REPOSITORY_URL } from './projectLinks';
-import { getQgisProject } from './qgisPlugins';
+import { BIRDMAP_URL, LUMA_DEMO_URL, LUMA_REPOSITORY_URL } from './projectLinks.js';
+import { getQgisProject } from './qgisPlugins.js';
 
 const getLayerManagerDetails = (t) => ({
   title: t('projects.p2_detail_title'),
@@ -43,7 +43,7 @@ const getBirdMapDetails = (t) => ({
   title: t('projects.p4_detail_title'),
   environment: t('projects.p4_environment'),
   summary: t('projects.p4_summary'),
-  features: [1, 2, 3, 4, 5].map((number) => ({
+  features: [1, 2, 3, 4, 5, 6, 7, 8].map((number) => ({
     title: t(`projects.p4_feature${number}_title`),
     description: t(`projects.p4_feature${number}_desc`),
   })),
@@ -64,7 +64,7 @@ export const getProjects = (t) => {
   const slopeTech = ["React", "ArcGIS JS API", "ElevationLayer", "geometryEngine", "Spatial Reference", "Throttle/Debounce"];
   const authTech = ["React", "ArcGIS Identity Manager", "OAuth2", "OAuthInfo", "Jimu Page Routing"];
   const layerManagerDetails = getLayerManagerDetails(t);
-  const birdMapTech = ["React 19", "TypeScript", "React-Leaflet", "Zustand", "Turf.js", "Vite"];
+  const birdMapTech = ["React 19", "TypeScript", "React-Leaflet", "Zustand", "TanStack Query", "Turf.js", "Web Workers", "jsPDF", "Vite"];
   const lumaTech = ["React 19", "TypeScript", "MapLibre GL JS", "Three.js", "jsPDF", "Vite"];
   const birdMapDetails = getBirdMapDetails(t);
 
