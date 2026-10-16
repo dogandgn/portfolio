@@ -18,6 +18,14 @@ export default function QgisPluginDemo({ content }) {
         <p className="mt-3 text-sm leading-relaxed text-fog">
           {t('qgis.screenHint')}
         </p>
+        <a
+          href={content.repositoryUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-4 inline-flex min-h-11 items-center gap-2 rounded-full border border-signal bg-signal/15 px-4 py-2 text-sm font-semibold text-ink transition-colors hover:bg-signal/25 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-signal"
+        >
+          {t('qgis.repository')} <span aria-hidden="true">↗</span>
+        </a>
       </header>
       <div
         className="flex flex-wrap gap-2"
@@ -53,14 +61,6 @@ export default function QgisPluginDemo({ content }) {
           {t(`qgis.${selected.id}`)} · {t('qgis.openImage')} ↗
         </figcaption>
       </figure>
-      <a
-        href={content.repositoryUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="inline-flex min-h-11 items-center gap-2 rounded-full border border-gunmetal px-4 py-2 text-sm hover:border-signal"
-      >
-        {t('qgis.repository')} <span aria-hidden="true">↗</span>
-      </a>
     </div>
   );
 }

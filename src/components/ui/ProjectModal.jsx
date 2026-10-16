@@ -309,6 +309,41 @@ export default function ProjectModal({
                         ))}
                       </div>
                     </div>
+                    {activeDetails.sources?.length > 0 && (
+                      <div className="mt-8 border-t border-gunmetal pt-8">
+                        <h5 className="text-base font-bold text-ink">
+                          {t('projects.sourcesLabel')}
+                        </h5>
+                        <div className="mt-4 space-y-6">
+                          {activeDetails.sources.map((source) => (
+                            <section key={source.id}>
+                              <h6 className="text-[15px] font-bold text-ink">{source.title}</h6>
+                              <p className="mt-1.5 text-[15px] leading-relaxed text-fog">
+                                {source.description}
+                              </p>
+                              <ul className="mt-2 list-disc space-y-1.5 pl-5 text-[15px] leading-relaxed text-fog marker:text-signal">
+                                {source.items.map((item) => <li key={item}>{item}</li>)}
+                              </ul>
+                              <p className="mt-3 text-sm leading-relaxed text-muted">{source.citation}</p>
+                              <ul className="mt-2 space-y-2 text-sm">
+                                {source.links.map((link) => (
+                                  <li key={link.url}>
+                                    <a
+                                      href={link.url}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className="rounded-sm text-ink underline decoration-signal underline-offset-4 hover:decoration-ink focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-signal"
+                                    >
+                                      {link.label} <span aria-hidden="true">↗</span>
+                                    </a>
+                                  </li>
+                                ))}
+                              </ul>
+                            </section>
+                          ))}
+                        </div>
+                      </div>
+                    )}
                   </div>
                 )}
               </Motion.div>

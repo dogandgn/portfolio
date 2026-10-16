@@ -1,5 +1,5 @@
-import { BIRDMAP_URL, LUMA_DEMO_URL, LUMA_REPOSITORY_URL } from './projectLinks';
-import { getQgisProject } from './qgisPlugins';
+import { BIRDMAP_URL, LUMA_DEMO_URL } from './projectLinks.js';
+import { getQgisProject } from './qgisPlugins.js';
 
 const getLayerManagerDetails = (t) => ({
   title: t('projects.p2_detail_title'),
@@ -43,17 +43,40 @@ const getBirdMapDetails = (t) => ({
   title: t('projects.p4_detail_title'),
   environment: t('projects.p4_environment'),
   summary: t('projects.p4_summary'),
-  features: [1, 2, 3, 4, 5].map((number) => ({
+  features: [1, 2, 3, 4, 5, 6, 7, 8].map((number) => ({
     title: t(`projects.p4_feature${number}_title`),
     description: t(`projects.p4_feature${number}_desc`),
   })),
+  sources: [
+    {
+      id: 'birdbase',
+      title: t('projects.p4_birdbase_title'),
+      description: t('projects.p4_birdbase_desc'),
+      items: [1, 2, 3].map((number) => t(`projects.p4_birdbase_item${number}`)),
+      citation: t('projects.p4_birdbase_citation'),
+      links: [
+        { label: t('projects.p4_birdbase_dataset'), url: 'https://doi.org/10.6084/m9.figshare.27051040' },
+        { label: t('projects.p4_birdbase_paper'), url: 'https://doi.org/10.1038/s41597-025-05615-3' },
+      ],
+    },
+    {
+      id: 'ebird',
+      title: t('projects.p4_ebird_title'),
+      description: t('projects.p4_ebird_desc'),
+      items: [1, 2, 3].map((number) => t(`projects.p4_ebird_item${number}`)),
+      citation: t('projects.p4_ebird_citation'),
+      links: [
+        { label: t('projects.p4_ebird_dataset'), url: 'https://science.ebird.org/en/use-ebird-data/download-ebird-data-products' },
+      ],
+    },
+  ],
 });
 
 const getLumaDetails = (t) => ({
   title: t('projects.p4_luma_title'),
   environment: t('projects.p4_luma_environment'),
   summary: t('projects.p4_luma_summary'),
-  features: [1, 2, 3, 4, 5, 6].map((number) => ({
+  features: [1, 2, 3, 4, 5, 6, 7, 8].map((number) => ({
     title: t(`projects.p4_luma_feature${number}_title`),
     description: t(`projects.p4_luma_feature${number}_desc`),
   })),
@@ -64,8 +87,8 @@ export const getProjects = (t) => {
   const slopeTech = ["React", "ArcGIS JS API", "ElevationLayer", "geometryEngine", "Spatial Reference", "Throttle/Debounce"];
   const authTech = ["React", "ArcGIS Identity Manager", "OAuth2", "OAuthInfo", "Jimu Page Routing"];
   const layerManagerDetails = getLayerManagerDetails(t);
-  const birdMapTech = ["React 19", "TypeScript", "React-Leaflet", "Zustand", "Turf.js", "Vite"];
-  const lumaTech = ["React 19", "TypeScript", "MapLibre GL JS", "Three.js", "jsPDF", "Vite"];
+  const birdMapTech = ["React 19", "TypeScript", "React-Leaflet", "Zustand", "TanStack Query", "Turf.js", "Web Workers", "jsPDF", "Vite"];
+  const lumaTech = ["React 19", "TypeScript", "MapLibre GL JS", "Three.js", "CesiumJS", "jsPDF", "Vite"];
   const birdMapDetails = getBirdMapDetails(t);
 
   return [
@@ -80,7 +103,6 @@ export const getProjects = (t) => {
       details: getLumaDetails(t),
       demoProjectId: 4,
       externalUrl: LUMA_DEMO_URL,
-      repositoryUrl: LUMA_REPOSITORY_URL,
       liveTitle: t('projects.p4_luma_liveTitle'),
       iframeTitle: t('projects.p4_luma_iframeTitle'),
       icon: 'fa-building',
