@@ -10,7 +10,7 @@
   "floorHint": "Each floor represents a plugin. Select a floor to open its details.",
   "screens": "Plugin interface",
   "screenHint": "Actual QGIS Desktop screenshots with synthetic sample data. This plugin does not run in the browser; it runs within QGIS on your computer.",
-  "repository": "GitHub repository",
+  "repository": "Get the plugin on GitHub",
   "workflow": "Workflow",
   "attributes": "Attributes",
   "coordinates": "Coordinates",

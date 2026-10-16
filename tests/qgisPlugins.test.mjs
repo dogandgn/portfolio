@@ -31,6 +31,22 @@ test('QGIS follows BirdMap and its building matches the plugin registry', () => 
   );
 });
 
+test('plugin repository access appears in the header before screenshots', () => {
+  const source = readFileSync(new URL('../src/components/demos/QgisPluginDemo.jsx', import.meta.url), 'utf8');
+  const header = source.match(/<header[\s\S]*?<\/header>/)?.[0];
+  assert.ok(header);
+  assert.match(header, /href=\{content\.repositoryUrl\}/);
+  assert.match(header, /target="_blank"/);
+  assert.match(header, /rel="noopener noreferrer"/);
+  assert.match(header, /t\('qgis\.repository'\)/);
+  assert.equal(source.match(/href=\{content\.repositoryUrl\}/g)?.length, 1);
+  assert.equal(qgisPlugins[0].repositoryUrl, 'https://github.com/dogandgn/vector-converter');
+  for (const language of ['tr', 'en']) {
+    const translation = JSON.parse(readFileSync(new URL(`../src/i18n/locales/qgis.${language}.json`, import.meta.url), 'utf8'));
+    assert.match(translation.repository, /GitHub/);
+  }
+});
+
 test('both languages provide complete descriptions and real local screenshots', async () => {
   for (const language of ['tr', 'en']) {
     const qgis = JSON.parse(

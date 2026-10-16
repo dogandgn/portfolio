@@ -10,7 +10,7 @@
   "floorHint": "Her kat bir eklentiyi temsil eder. Kata tıklayarak ilgili eklentiyi açabilirsiniz.",
   "screens": "Eklenti arayüzü",
   "screenHint": "QGIS Desktop’tan alınan gerçek ekranlar, sentetik örnek veriler içerir. Eklenti tarayıcıda çalışmaz; bilgisayarda QGIS içinde kullanılır.",
-  "repository": "GitHub deposu",
+  "repository": "Eklentiye GitHub’dan ulaş",
   "workflow": "İş akışı",
   "attributes": "Öznitelikler",
   "coordinates": "Koordinatlar",
