@@ -12,6 +12,8 @@ export function createPluginFloors(
   root.position.set(building.x, 0, building.z);
   const glass = new THREE.MeshStandardMaterial({
     color: '#527a68',
+    emissive: '#ffd197',
+    emissiveIntensity: 0,
     roughness: 0.4,
   });
   const trim = new THREE.MeshStandardMaterial({
@@ -207,6 +209,7 @@ export function createPluginFloors(
         material.color.set(dark ? '#646d68' : '#dedfd5'),
       );
       glass.color.set(dark ? '#507f70' : '#527a68');
+      glass.emissiveIntensity = dark ? 1.25 : 0;
       stone.color.set(dark ? '#798378' : '#e7e6dc');
       frames.color.set(dark ? '#a3aaa0' : '#59665d');
     },

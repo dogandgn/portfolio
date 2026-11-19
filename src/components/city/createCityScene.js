@@ -99,7 +99,8 @@ export function createCityScene(
   const landscape = createLandscape(scene, geometry);
   const journeyRoute = createCityRoute(scene, geometry);
   const guide = createJourneyGuide(scene, requestRender);
-  const details = createCityDetails(scene, geometry);
+  const neighborhood = createBuildings(compact);
+  const details = createCityDetails(scene, geometry, neighborhood);
   const selection = createProjectHighlight(scene, geometry);
   const emblems = createProjectEmblems(scene);
   const finale = createStreetFinale(scene);
@@ -111,7 +112,7 @@ export function createCityScene(
   let activePluginId = qgisPlugins[0]?.id;
   let activeProjectId = null;
 
-  const blocks = [...createBuildings(compact), ...landmarks];
+  const blocks = [...neighborhood, ...landmarks];
   const volumes = [];
   const seams = [];
   blocks.forEach((building) => {
