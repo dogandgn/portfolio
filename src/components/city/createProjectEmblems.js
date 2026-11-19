@@ -261,6 +261,49 @@ export function createProjectEmblems(scene) {
     };
   }
 
+  function observationCamera(parent) {
+    const group = new THREE.Group();
+    parent.add(group);
+    mesh(group, 'cylinder', 'dark', [0, -0.65, 0], [0.48, 0.16, 0.48]);
+    mesh(group, 'sphere', 'gold', [0, -0.42, 0], [0.21, 0.23, 0.21]);
+    const housing = new THREE.Group();
+    group.add(housing);
+    mesh(housing, 'box', 'sage', [0, 0, 0], [1.26, 0.72, 0.95]);
+    mesh(housing, 'box', 'stone', [0, 0.38, 0.1], [1.43, 0.1, 1.27]);
+    const lens = mesh(housing, 'cylinder', 'gold', [0, 0, 0.52], [0.32, 0.24, 0.32]);
+    lens.rotation.x = Math.PI / 2;
+    mesh(housing, 'sphere', 'blue', [0, 0, 0.65], [0.24, 0.24, 0.09]);
+    mesh(housing, 'sphere', 'eye', [-0.08, 0.075, 0.73], [0.044, 0.044, 0.017]);
+    return { group, animate(wave) { housing.rotation.y = wave * 0.45; } };
+  }
+
+  function soundCity(parent) {
+    const group = new THREE.Group();
+    group.name = 'sound-city-sculpture';
+    parent.add(group);
+    mesh(group, 'box', 'dark', [0, -0.7, 0], [2.1, 0.14, 0.75]);
+    for (const side of [-1, 1]) {
+      mesh(group, 'box', 'stone', [side * 0.94, -0.34, 0], [0.32, 0.59, 0.48]);
+      const speaker = mesh(group, 'cylinder', 'dark', [side * 0.94, -0.37, 0.25], [0.13, 0.045, 0.13]);
+      speaker.rotation.x = Math.PI / 2;
+    }
+    const bars = [0.6, 1.05, 1.6, 1.2, 0.75].map((height, index) => {
+      const bar = mesh(group, 'box', index % 2 ? 'sage' : 'gold', [(index - 2) * 0.38, -0.62 + height / 2, 0], [0.25, height, 0.35]);
+      bar.name = `sound-city-bar-${index}`;
+      return { bar, height, index };
+    });
+    return {
+      group,
+      animate(wave, flourish) {
+        bars.forEach(({ bar, height, index }) => {
+          const scaled = height * (1 + flourish * 0.18 + wave * (index % 2 ? -0.16 : 0.16));
+          bar.scale.y = scaled;
+          bar.position.y = -0.62 + scaled / 2;
+        });
+      },
+    };
+  }
+
   function qgis(parent) {
     const group = new THREE.Group();
     group.name = 'qgis-sculpture';
@@ -277,6 +320,8 @@ export function createProjectEmblems(scene) {
     automation: python,
     luma: architecture,
     birdmap: bird,
+    'kent-gozlemi': observationCamera,
+    soundcity: soundCity,
     qgis,
   };
   landmarks

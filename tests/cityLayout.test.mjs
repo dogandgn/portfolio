@@ -83,6 +83,8 @@ test('chapter order and project identities match the portfolio journey', () => {
       'automation',
       'luma',
       'birdmap',
+      'kent-gozlemi',
+      'soundcity',
       'qgis',
       'street',
       'services',
@@ -94,7 +96,7 @@ test('chapter order and project identities match the portfolio journey', () => {
     cityStops
       .filter((stop) => stop.projectId != null)
       .map((stop) => stop.projectId),
-    [1, 2, 3, 'luma', 'birdmap', 'qgis'],
+    [1, 2, 3, 'luma', 'birdmap', 'kent-gozlemi', 'soundcity', 'qgis'],
   );
   cityStops.forEach((stop, index) =>
     assert.deepEqual(getCameraPose(index / (cityStops.length - 1)), stop.pose),

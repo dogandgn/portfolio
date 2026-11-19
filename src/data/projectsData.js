@@ -1,4 +1,4 @@
-import { BIRDMAP_URL, LUMA_DEMO_URL } from './projectLinks.js';
+import { BIRDMAP_URL, KENT_GOZLEMI_URL, LUMA_DEMO_URL, SOUND_CITY_URL } from './projectLinks.js';
 import { getQgisProject } from './qgisPlugins.js';
 
 const getLayerManagerDetails = (t) => ({
@@ -123,6 +123,54 @@ export const getProjects = (t) => {
       iframeTitle: t('projects.p4_iframeTitle'),
       icon: 'fa-crow',
       image: '/projects/birdmap-preview.jpg',
+    },
+    {
+      id: 'kent-gozlemi',
+      title: 'Kent Gözlemi',
+      featured: true,
+      wideDemo: true,
+      description: t('projects.kent.description'),
+      cardDescription: t('projects.kent.description'),
+      tech: ['React', 'TypeScript', 'MapLibre', 'Python', t('projects.kent.vision')],
+      tags: ['MapLibre', 'Python', t('projects.kent.vision')],
+      externalUrl: KENT_GOZLEMI_URL,
+      actionLabel: t('projects.kent.action'),
+      demoProjectId: 'project-preview',
+      screenshot: '/projects/kent-gozlemi-screen.jpg',
+      image: '/projects/kent-gozlemi-preview.jpg',
+      details: {
+        title: 'Kent Gözlemi',
+        environment: t('projects.kent.environment'),
+        summary: t('projects.kent.summary'),
+        features: [1, 2, 3, 4, 5].map((number) => ({
+          title: t(`projects.kent.feature${number}Title`),
+          description: t(`projects.kent.feature${number}Description`),
+        })),
+      },
+    },
+    {
+      id: 'soundcity',
+      title: 'Sound City',
+      cardDescription: t('projects.soundCity.description'),
+      description: t('projects.soundCity.description'),
+      featured: true,
+      wideDemo: true,
+      tech: ['React', 'TypeScript', 'MapLibre GL JS', 'deck.gl', 'Web Audio API', 'PMTiles'],
+      tags: [1, 2, 3].map((number) => t(`projects.soundCity.tag${number}`)),
+      actionLabel: t('projects.soundCity.action'),
+      externalUrl: SOUND_CITY_URL,
+      image: '/projects/sound-city-preview.jpg',
+      demoProjectId: 'project-preview',
+      screenshot: '/projects/sound-city-screen.jpg',
+      details: {
+        title: 'Sound City',
+        environment: t('projects.soundCity.environment'),
+        summary: t('projects.soundCity.summary'),
+        features: [1, 2, 3, 4, 5].map((number) => ({
+          title: t(`projects.soundCity.feature${number}Title`),
+          description: t(`projects.soundCity.feature${number}Description`),
+        })),
+      },
     },
     getQgisProject(t),
     {

@@ -28,6 +28,8 @@ export function createCityDetails(scene, geometry) {
     box('stone', x, 1.65, front + 0.28, width * 0.86, 0.16, 0.9);
     box('stone', x, 0.17, front + 0.55, width * 0.9, 0.18, 1.2);
     box('metal', x, 0.85, front + 0.09, 0.065, 1.45, 0.05);
+    box('metal', x, 1.56, front + 0.1, width * 0.76, 0.06, 0.08);
+    box('light', x, 1.55, front + 0.48, width * 0.54, 0.045, 0.1);
     if (id === 'qgis') {
       for (const sign of [-1, 1]) {
         box(
@@ -41,17 +43,42 @@ export function createCityDetails(scene, geometry) {
         );
         box('metal', x + sign * 0.17, 0.9, front + 0.14, 0.04, 0.28, 0.05);
       }
-      box('metal', x, 1.56, front + 0.1, width * 0.76, 0.06, 0.08);
-      box('light', x, 1.54, front + 0.47, width * 0.52, 0.045, 0.1);
       return;
     }
     for (let y = 2.4; y < height - 0.4; y += 1.6) {
+      if (id === 'kent-gozlemi') {
+        box('glass', x, y, front + 0.04, width - 0.24, 1.1, 0.09);
+        box('glass', side + 0.04, y, z, 0.09, 1.1, depth - 0.24);
+        box('stone', x, y - 0.59, front + 0.16, width + 0.24, 0.12, 0.48);
+        box('stone', side + 0.16, y - 0.59, z, 0.48, 0.12, depth + 0.24);
+        for (const fraction of [-0.32, -0.12, 0.12, 0.32]) {
+          box('metal', x + width * fraction, y, front + 0.1, 0.045, 1.12, 0.06);
+          box('metal', side + 0.1, y, z + depth * fraction, 0.06, 1.12, 0.045);
+        }
+        continue;
+      }
       for (let dx = -width / 2 + 0.75; dx < width / 2 - 0.4; dx += 1.1)
         box('glass', x + dx, y, front + 0.035, 0.65, 0.88, 0.06);
       for (let dz = -depth / 2 + 0.8; dz < depth / 2 - 0.4; dz += 1.1)
         box('glass', side + 0.035, y, z + dz, 0.06, 0.88, 0.65);
-      if (id === 'luma')
+      if (id === 'luma') {
         box('stone', x, y - 0.55, front + 0.16, width + 0.1, 0.12, 0.5);
+        box('glass', x, y - 0.27, front + 0.37, width - 0.18, 0.42, 0.04);
+        box('metal', x, y - 0.04, front + 0.37, width - 0.12, 0.04, 0.05);
+      } else {
+        box('stone', side + 0.06, y - 0.49, z, 0.18, 0.09, depth);
+        if (id === 'widgets')
+          box('stone', x, y + 0.5, front + 0.14, width - 0.15, 0.11, 0.4);
+      }
+    }
+    if (id === 'soundcity') {
+      const fins = [0.36, 0.52, 0.78, 0.91, 0.66, 0.48, 0.72, 0.58, 0.38];
+      fins.forEach((fraction, index) => {
+        const rise = (height - 2) * fraction;
+        const finX = x + (index - 4) * width * 0.096;
+        box('wood', finX, 2 + rise / 2, front + 0.22, 0.12, rise, 0.36);
+        box('light', finX, 2 + rise, front + 0.22, 0.13, 0.06, 0.37);
+      });
     }
     for (const sign of [-1, 1]) {
       box(
@@ -149,6 +176,8 @@ export function createCityDetails(scene, geometry) {
   return {
     setTheme(dark) {
       materials.glass.color.set(dark ? '#344d50' : '#779899');
+      materials.glass.emissive.set(dark ? '#aa8051' : '#000000');
+      materials.glass.emissiveIntensity = dark ? 0.24 : 0;
       materials.stone.color.set(dark ? '#798378' : '#e7e6dc');
       materials.metal.color.set(dark ? '#a3aaa0' : '#59665d');
       materials.wood.color.set(dark ? '#9d895d' : '#ae9265');

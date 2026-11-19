@@ -107,13 +107,13 @@ export default function CityStopContent({
           </div>
         )}
         <div className="city-tags">
-          {project.tech.slice(0, 4).map((tech) => (
+          {(project.tags ?? project.tech.slice(0, 4)).map((tech) => (
             <span key={tech}>{tech}</span>
           ))}
         </div>
         {!project.plugins && (
           <button className="city-button" onClick={() => onOpen(project.id)}>
-            {t('city.open')} <span>↗</span>
+            {project.actionLabel ?? t('city.open')} <span>↗</span>
           </button>
         )}
         <SectionLink id="projects">{t('city.allProjects')}</SectionLink>

@@ -378,64 +378,22 @@
   height: 174px;
   pointer-events: none;
 }
-.city-guide-frame,
-.city-guide-fallback {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-}
 .city-guide-frame {
-  overflow: hidden;
-  width: 174px;
-  left: -11px;
-  opacity: 0;
-  filter: drop-shadow(0 5px 3px #17261b22);
-}
-.city-guide-image,
-.city-guide-arm img {
-  width: 200%;
-  height: 200%;
-  max-width: none;
-}
-.city-guide-arm {
+  display: block;
   position: absolute;
-  inset: 0;
-  overflow: hidden;
-  translate: -1.5% -4%;
-  transform-origin: 70% 40%;
-  animation: city-guide-wave 16s ease-in-out infinite;
+  inset: 0 auto auto -11px;
+  width: 174px;
+  height: 174px;
+  background: url('/mascot/robot-wave.webp') 0% center / 1600% 100% no-repeat;
+  filter: drop-shadow(0 5px 3px #17261b22);
+  animation: city-guide-wave 6s steps(15, end) infinite;
 }
-.city-guide-arm img {
-  transform: translateX(-50%);
-}
-.city-guide[data-ready='true'] .city-guide-frame {
-  opacity: 1;
-}
-.city-guide[data-paused='true'] .city-guide-arm {
+.city-guide[data-paused='true'] .city-guide-frame {
   animation-play-state: paused;
 }
-.city-mascot:is(:hover, :focus-visible) .city-guide-arm {
-  animation-name: city-guide-greeting;
-  animation-duration: 4.8s;
-  animation-iteration-count: 1;
-}
 @keyframes city-guide-wave {
-  0%, 32%, 100% { transform: rotate(0deg); }
-  8%, 24% { transform: rotate(7deg); }
-  16% { transform: rotate(-7deg); }
-}
-@keyframes city-guide-greeting {
-  0%, 100% { transform: rotate(0deg); }
-  25%, 75% { transform: rotate(7deg); }
-  50% { transform: rotate(-7deg); }
-}
-.city-guide-fallback {
-  opacity: 1;
-  transition: opacity 150ms;
-}
-.city-guide[data-ready='true'] .city-guide-fallback {
-  opacity: 0;
+  0% { background-position-x: 0%; }
+  32%, 100% { background-position-x: 100%; }
 }
 .city-mascot-label {
   font-size: 12px;
@@ -713,9 +671,7 @@
   }
   .city-invitation,
   .city-mascot,
-  .city-guide-arm,
-  .city-mascot:is(:hover, :focus-visible) .city-guide-arm,
-  .city-guide-fallback,
+  .city-guide-frame,
   .city-button {
     animation: none;
     transition: none;

@@ -23,7 +23,7 @@ export default function Projects() {
         <p className="mt-4 max-w-3xl text-base leading-relaxed text-fog">{t('projects.intro')}</p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4">
         {projects.filter((project) => project.featured).map((project) => (
           <ProjectCard 
             key={project.id} 
@@ -36,7 +36,7 @@ export default function Projects() {
 
       <div className="mt-16 border-t border-gunmetal pt-10">
         <h4 className="mb-7 text-xl font-bold text-ink">{t('projects.otherWork')}</h4>
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4">
           {projects.filter((project) => !project.featured).map((project) => (
             <ProjectCard key={project.id} project={project} onClick={() => setActiveProjectId(project.id)} t={t} />
           ))}

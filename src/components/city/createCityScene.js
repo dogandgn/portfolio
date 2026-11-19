@@ -16,7 +16,7 @@ import { createPluginFloors } from './createPluginFloors';
 import { qgisPlugins } from '../../data/qgisPlugins';
 import { createStreetFinale } from './createStreetFinale';
 import { createJourneyGuide } from './createJourneyGuide';
-import { getJourneyCameraPose } from './guideJourney';
+import { getFinaleBlend, getJourneyCameraPose } from './guideJourney';
 
 export function createCityScene(
   canvas,
@@ -51,7 +51,8 @@ export function createCityScene(
   };
   const hemisphere = new THREE.HemisphereLight('#ffffff', '#bab9ac', 2.8);
   const sunlight = new THREE.DirectionalLight('#fff8e7', 3.5);
-  sunlight.position.set(-25, 48, 20);
+  const sunOffset = new THREE.Vector3(-25, 48, 20);
+  sunlight.position.copy(sunOffset);
   sunlight.castShadow = true;
   sunlight.shadow.mapSize.set(compact ? 1024 : 2048, compact ? 1024 : 2048);
   Object.assign(sunlight.shadow.camera, {
@@ -62,8 +63,28 @@ export function createCityScene(
     near: 1,
     far: 130,
   });
-  sunlight.shadow.normalBias = 0.08;
-  scene.add(hemisphere, sunlight);
+  sunlight.shadow.normalBias = 0.025;
+  scene.add(hemisphere, sunlight, sunlight.target);
+  const lightDirection = sunOffset.clone().normalize();
+  const shadowRight = new THREE.Vector3(lightDirection.z, 0, -lightDirection.x).normalize();
+  const shadowUp = new THREE.Vector3().crossVectors(lightDirection, shadowRight);
+
+  function focusShadows(blend, position) {
+    const radius = THREE.MathUtils.lerp(60, 14, blend);
+    const lens = sunlight.shadow.camera;
+    if (lens.right !== radius) {
+      Object.assign(lens, { left: -radius, right: radius, top: radius, bottom: -radius });
+      lens.updateProjectionMatrix();
+    }
+    const target = sunlight.target.position.copy(position).multiplyScalar(blend);
+    const texel = 2 * radius / sunlight.shadow.mapSize.x;
+    for (const axis of [shadowRight, shadowUp]) {
+      const value = target.dot(axis);
+      target.addScaledVector(axis, Math.round(value / texel) * texel - value);
+    }
+    sunlight.position.copy(target).add(sunOffset);
+    sunlight.shadow.normalBias = THREE.MathUtils.lerp(0.025, 0.006, blend);
+  }
 
   const ground = new THREE.Mesh(geometry, materials.ground);
   ground.scale.set(240, 0.15, 240);
@@ -77,7 +98,7 @@ export function createCityScene(
   scene.add(grid);
   const landscape = createLandscape(scene, geometry);
   const journeyRoute = createCityRoute(scene, geometry);
-  const guide = createJourneyGuide(scene);
+  const guide = createJourneyGuide(scene, requestRender);
   const details = createCityDetails(scene, geometry);
   const selection = createProjectHighlight(scene, geometry);
   const emblems = createProjectEmblems(scene);
@@ -229,6 +250,7 @@ export function createCityScene(
     updateLens();
     journeyRoute.update(progress);
     const animatingGuide = guide.update(progress, delta, motionPreference.matches, resetGuide);
+    focusShadows(getStreetBlend(progress) * (1 - getFinaleBlend(progress)), guide.position);
     resetGuide = false;
     const highlighting = selection.update(delta, motionPreference.matches);
     const animatingEmblems = emblems.update(delta, motionPreference.matches);

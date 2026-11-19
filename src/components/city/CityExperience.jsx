@@ -124,6 +124,8 @@ export default function CityExperience({ onReturn, onReady, onUnavailable }) {
     let engine;
     let offsets = [];
     const sections = [...mainRef.current.querySelectorAll('[data-stop]')];
+    const initialSection = sections.find((section) => '#' + section.id === window.location.hash);
+    initialSection?.scrollIntoView({ behavior: 'instant', block: 'start' });
     function updateProgress() {
       engine?.setProgress(getJourneyProgress(window.scrollY, offsets));
     }
@@ -180,8 +182,8 @@ export default function CityExperience({ onReturn, onReady, onUnavailable }) {
           });
           sceneRef.current = engine;
           engine.setTheme(document.documentElement.classList.contains('dark'));
+          engine.setProgress(getJourneyProgress(window.scrollY, offsets), true);
           setStatus('ready');
-          updateProgress();
         } catch {
           setStatus('failed');
         }

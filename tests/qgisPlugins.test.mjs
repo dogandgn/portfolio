@@ -16,10 +16,10 @@ import {
 import { createPluginFloors } from '../src/components/city/createPluginFloors.js';
 import { cityStops, landmarks } from '../src/components/city/cityLayout.js';
 
-test('QGIS follows BirdMap and its building matches the plugin registry', () => {
+test('QGIS follows Sound City and its building matches the plugin registry', () => {
   assert.equal(
     cityStops.findIndex((stop) => stop.id === 'qgis'),
-    cityStops.findIndex((stop) => stop.id === 'birdmap') + 1,
+    cityStops.findIndex((stop) => stop.id === 'soundcity') + 1,
   );
   assert.equal(
     landmarks.find((building) => building.id === 'qgis').height,

@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import {
   getRouteDistance,
+  pavementHeight,
   route,
 } from './cityLayout';
 
@@ -28,7 +29,7 @@ export function createCityRoute(scene, geometry) {
     const horizontal = z1 === z2;
     const length = Math.hypot(x2 - x1, z2 - z1);
     const paving = box(materials.paving);
-    paving.position.set((x1 + x2) / 2, 0.14, (z1 + z2) / 2);
+    paving.position.set((x1 + x2) / 2, pavementHeight - 0.06, (z1 + z2) / 2);
     paving.scale.set(
       horizontal ? length + 2.4 : 2.4,
       0.12,
@@ -38,12 +39,12 @@ export function createCityRoute(scene, geometry) {
       const base = box(materials.track);
       base.position.set(
         (x1 + x2) / 2 + (horizontal ? 0 : offset),
-        0.215,
+        pavementHeight + 0.001,
         (z1 + z2) / 2 + (horizontal ? offset : 0),
       );
       base.scale.set(
         horizontal ? length : 0.09,
-        0.025,
+        0.002,
         horizontal ? 0.09 : length,
       );
       segments.push({
@@ -70,12 +71,12 @@ export function createCityRoute(scene, geometry) {
           mesh.visible = filled > 0.001;
           mesh.position.set(
             x1 + ((x2 - x1) * fraction) / 2 + (horizontal ? 0 : offset),
-            0.24,
+            pavementHeight + 0.003,
             z1 + ((z2 - z1) * fraction) / 2 + (horizontal ? offset : 0),
           );
           mesh.scale.set(
             horizontal ? filled : 0.16,
-            0.03,
+            0.002,
             horizontal ? 0.16 : filled,
           );
         },

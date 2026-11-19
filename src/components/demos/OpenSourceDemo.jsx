@@ -5,8 +5,8 @@ import { BIRDMAP_URL } from '../../data/projectLinks';
 export default function OpenSourceDemo({ content }) {
   const { t } = useTranslation();
   const externalUrl = content?.externalUrl ?? BIRDMAP_URL;
-  const liveTitle = content?.liveTitle ?? t('projects.p4_liveTitle');
-  const iframeTitle = content?.iframeTitle ?? t('projects.p4_iframeTitle');
+  const liveTitle = content?.liveTitle ?? content?.title ?? t('projects.p4_liveTitle');
+  const iframeTitle = content?.iframeTitle ?? content?.title ?? t('projects.p4_iframeTitle');
   const icon = content?.icon ?? 'fa-crow';
 
   return (
@@ -45,6 +45,7 @@ export default function OpenSourceDemo({ content }) {
       <iframe
         src={externalUrl}
         title={iframeTitle}
+        allowFullScreen
         loading="lazy"
         referrerPolicy="strict-origin-when-cross-origin"
         className="min-h-0 w-full flex-1 border-0 bg-white"

@@ -56,28 +56,33 @@ export function getJourneyCameraPose(progress, compact = false) {
   const forwardZ = (guide.z - behind.z) / length;
   const leftX = forwardZ;
   const leftZ = -forwardX;
+  const ahead = getGuidePoint(distance + 2.2);
   const follow = [
     behind.x + leftX * 0.2,
     compact ? 12.6 : 2.6,
     behind.z + leftZ * 0.2,
-    guide.x + forwardX * 2.2 + leftX * 1.65,
+    guide.x + forwardX * 1.76 + (ahead.x - guide.x) * 0.2 + leftX * 1.65,
     1.25,
-    guide.z + forwardZ * 2.2 + leftZ * 1.65,
+    guide.z + forwardZ * 1.76 + (ahead.z - guide.z) * 0.2 + leftZ * 1.65,
   ];
   return base.map((value, index) => value + (follow[index] - value) * blend);
 }
 
 export function getRunPose(phase, amount) {
+  if (amount === 0) phase = 0;
   const stride = Math.sin(phase) * amount;
+  const lift = Math.sin(phase - 0.68);
+  const vertical = (1 - Math.cos(phase * 2)) / 2;
   return {
-    leftHip: stride * 0.72,
-    rightHip: -stride * 0.72,
-    leftKnee: Math.max(0, -Math.sin(phase - 0.5)) * amount * 1.15,
-    rightKnee: Math.max(0, Math.sin(phase - 0.5)) * amount * 1.15,
+    leftHip: stride * 0.78 - amount * 0.13,
+    rightHip: -stride * 0.78 - amount * 0.13,
+    leftKnee: (0.1 + 0.98 * ((1 + lift) / 2) ** 2) * amount,
+    rightKnee: (0.1 + 0.98 * ((1 - lift) / 2) ** 2) * amount,
     leftArm: -stride * 0.6,
     rightArm: stride * 0.6,
-    bounce: (1 - Math.cos(phase * 2)) * 0.028 * amount,
-    lean: 0.12 * amount,
+    bounce: vertical * 0.034 * amount,
+    sway: Math.cos(phase) * amount * 0.023,
+    lean: (0.08 + vertical * 0.025) * amount,
     twist: stride * 0.055,
   };
 }

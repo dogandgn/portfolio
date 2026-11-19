@@ -1,6 +1,11 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
+import deployment from './vercel.json'
+
+const previewHeaders = Object.fromEntries(
+  deployment.headers[0].headers.map(({ key, value }) => [key, value]),
+)
 
 export default defineConfig({
   plugins: [
@@ -20,11 +25,11 @@ export default defineConfig({
       },
     },
   },
+  preview: { headers: previewHeaders },
   server: {
     headers: {
       'X-Content-Type-Options': 'nosniff',
       'X-Frame-Options': 'DENY',
-      'X-XSS-Protection': '1; mode=block',
       'Referrer-Policy': 'strict-origin-when-cross-origin',
     },
   },

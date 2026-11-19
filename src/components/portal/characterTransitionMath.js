@@ -99,11 +99,10 @@ export function getContourPoint(x, y, layout, pull) {
 }
 
 export function getHandGrips(pose) {
-  const shift = 0.065 * (1 - pose.pull);
+  const reach = pose.size * (0.82 + pose.pull * 0.18) * 0.42;
   return {
-    shift,
-    y: pose.y - pose.size * 0.091,
-    left: pose.x + pose.size * (-0.246 + shift),
-    right: pose.x + pose.size * (0.292 - shift),
+    y: pose.y - pose.size * 0.065,
+    left: pose.x - reach,
+    right: pose.x + reach,
   };
 }

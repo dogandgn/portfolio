@@ -4,7 +4,7 @@ export const landmarks = [
   {
     id: 'property',
     projectId: 1,
-    x: -10,
+    x: -16,
     z: 2,
     width: 4.5,
     depth: 5,
@@ -13,7 +13,7 @@ export const landmarks = [
   {
     id: 'widgets',
     projectId: 2,
-    x: -3,
+    x: -10,
     z: 2,
     width: 4.8,
     depth: 4.8,
@@ -22,7 +22,7 @@ export const landmarks = [
   {
     id: 'automation',
     projectId: 3,
-    x: 4,
+    x: -4,
     z: 2,
     width: 4.5,
     depth: 4,
@@ -31,7 +31,7 @@ export const landmarks = [
   {
     id: 'luma',
     projectId: 'luma',
-    x: 11,
+    x: 2,
     z: 2,
     width: 4.4,
     depth: 4.4,
@@ -40,16 +40,34 @@ export const landmarks = [
   {
     id: 'birdmap',
     projectId: 'birdmap',
-    x: 18,
+    x: 8,
     z: 2,
     width: 5,
     depth: 4,
     height: 4,
   },
   {
+    id: 'kent-gozlemi',
+    projectId: 'kent-gozlemi',
+    x: 14,
+    z: 2,
+    width: 4.5,
+    depth: 4,
+    height: 5.4,
+  },
+  {
+    id: 'soundcity',
+    projectId: 'soundcity',
+    x: 20,
+    z: 2,
+    width: 4.5,
+    depth: 4.5,
+    height: 6.6,
+  },
+  {
     id: 'qgis',
     projectId: 'qgis',
-    x: 25,
+    x: 26,
     z: 2,
     width: 4.8,
     depth: 4.8,
@@ -59,7 +77,7 @@ export const landmarks = [
 export const districts = [
   { id: 'overview', chapter: 'intro', x: -25, z: -19, width: 18, depth: 17 },
   { id: 'about', chapter: 'about', x: -25, z: 13, width: 18, depth: 15 },
-  { id: 'projects', chapter: 'projects', x: 7.5, z: 2, width: 45, depth: 17 },
+  { id: 'projects', chapter: 'projects', x: 4.5, z: 2, width: 51, depth: 17 },
   { id: 'services', chapter: 'services', x: 33, z: 15, width: 16, depth: 20 },
 ];
 export const parks = [
@@ -77,6 +95,7 @@ export const finaleActions = [
 ];
 export const landmark = landmarks.find((building) => building.id === 'luma');
 
+export const pavementHeight = 0.20;
 export const route = [
   [-25, -19],
   [-25, 9],
@@ -103,7 +122,7 @@ export const cityStops = [
     id: 'projects',
     chapter: 'projects',
     routeDistance: 35,
-    pose: cameraPose(0, 2, 78),
+    pose: cameraPose(-6, 2, 78),
   },
   ...landmarks.map((building) => ({
     id: building.id,

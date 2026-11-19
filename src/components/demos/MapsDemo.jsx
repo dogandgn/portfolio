@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { MapContainer, TileLayer, Polygon, Popup, useMap } from 'react-leaflet';
 import { motion as Motion, AnimatePresence } from 'framer-motion';
 import 'leaflet/dist/leaflet.css';
@@ -28,15 +28,10 @@ const categories = [
   }
 ];
 
-function FlyToParcel({ coords }) {
-  const map = useMap();
-  if (coords && coords.length > 0) {
-    const lat = coords.reduce((s, c) => s + c[0], 0) / coords.length;
-    const lng = coords.reduce((s, c) => s + c[1], 0) / coords.length;
-    map.flyTo([lat, lng], 16, { duration: 0.8 });
-  }
-  return null;
-}
+const allParcels = categories.flatMap(category =>
+  category.parcels.map(parcel => ({ ...parcel, catColor: category.color }))
+);
+const parcelBounds = allParcels.flatMap(parcel => parcel.coords);
 
 function MapResizeHandler() {
   const map = useMap();
@@ -60,7 +55,15 @@ export default function MapsDemo() {
   const [openCategories, setOpenCategories] = useState({ arsa: true, konut: true });
   const [selectedParcel, setSelectedParcel] = useState(null);
   const [split3D, setSplit3D] = useState(false);
-  const [flyTarget, setFlyTarget] = useState(null);
+  const mapRef = useRef(null);
+  const [query, setQuery] = useState('');
+  const search = query.trim().toLocaleLowerCase('tr');
+  const visibleCategories = categories.map(category => ({
+    ...category,
+    parcels: category.parcels.filter(parcel =>
+      (category.label + ' ' + parcel.label).toLocaleLowerCase('tr').includes(search)
+    ),
+  })).filter(category => category.parcels.length);
 
   const toggleCategory = (id) => {
     setOpenCategories(prev => ({ ...prev, [id]: !prev[id] }));
@@ -69,7 +72,8 @@ export default function MapsDemo() {
   const selectParcel = (parcel, catColor) => {
     setSelectedParcel({ ...parcel, catColor });
     setSplit3D(false);
-    setFlyTarget(parcel.coords);
+    const animate = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    mapRef.current?.stop().flyToBounds(parcel.coords, { maxZoom: 16, animate, duration: 0.8 });
   };
 
   const closePanel = () => {
@@ -77,9 +81,6 @@ export default function MapsDemo() {
     setSplit3D(false);
   };
 
-  const allParcels = categories.flatMap(cat =>
-    cat.parcels.map(p => ({ ...p, catColor: cat.color }))
-  );
 
   return (
     <div className="relative flex w-full min-h-0 flex-col bg-void lg:h-full lg:overflow-hidden lg:flex-row">
@@ -99,13 +100,20 @@ export default function MapsDemo() {
             <input 
               type="text" 
               placeholder="Kayıt ara..."
+              aria-label="Kayıt ara"
+              value={query}
+              onChange={event => {
+                setQuery(event.target.value);
+                setOpenCategories({ arsa: true, konut: true });
+              }}
               className="w-full bg-deep/80 border border-gunmetal rounded-lg text-xs text-ink px-8 py-2 outline-none focus:border-signal/60 transition-colors placeholder-pewter"
             />
           </div>
         </div>
 
         <div className="flex-grow overflow-y-auto custom-scrollbar">
-          {categories.map(cat => (
+          {!visibleCategories.length && <p role="status" className="p-3 text-xs text-fog">Eşleşen kayıt yok.</p>}
+          {visibleCategories.map(cat => (
             <div key={cat.id}>
               <button 
                 onClick={() => toggleCategory(cat.id)}
@@ -152,18 +160,18 @@ export default function MapsDemo() {
 
         <div className="border-t border-gunmetal bg-deep/40 p-2">
           <div className="flex items-center justify-around text-ash">
-            <button className="flex flex-col items-center gap-0.5 hover:text-signal transition-colors p-1.5 rounded">
+            <span className="flex flex-col items-center gap-0.5 p-1.5">
               <i className="fa-solid fa-ruler-combined text-sm"></i>
               <span className="text-[9px]">Ölçüm</span>
-            </button>
-            <button className="flex flex-col items-center gap-0.5 hover:text-signal transition-colors p-1.5 rounded">
+            </span>
+            <span className="flex flex-col items-center gap-0.5 p-1.5">
               <i className="fa-solid fa-table text-sm"></i>
               <span className="text-[9px]">Öznitelik</span>
-            </button>
-            <button className="flex flex-col items-center gap-0.5 hover:text-signal transition-colors p-1.5 rounded">
+            </span>
+            <span className="flex flex-col items-center gap-0.5 p-1.5">
               <i className="fa-solid fa-file-pdf text-sm"></i>
               <span className="text-[9px]">Rapor</span>
-            </button>
+            </span>
           </div>
         </div>
       </div>
@@ -172,6 +180,7 @@ export default function MapsDemo() {
         
         <div className={`relative min-h-[260px] flex-1 transition-all duration-500 lg:h-full lg:min-h-0 ${split3D ? 'lg:w-1/2' : 'w-full'}`}>
           <MapContainer 
+            ref={mapRef}
             center={[41.0125, 28.9800]} 
             zoom={15} 
             style={{ height: '100%', width: '100%' }}
@@ -185,7 +194,6 @@ export default function MapsDemo() {
               maxZoom={19}
             />
             
-            {flyTarget && <FlyToParcel coords={flyTarget} />}
 
             {allParcels.map(p => (
               <Polygon 
@@ -208,9 +216,9 @@ export default function MapsDemo() {
           </MapContainer>
 
           <div className="absolute top-3 left-3 z-[400] flex flex-col gap-1.5">
-            <button className="w-7 h-7 bg-deep/90 text-ink border border-graphite/50 hover:bg-gunmetal flex items-center justify-center rounded text-xs"><i className="fa-solid fa-plus"></i></button>
-            <button className="w-7 h-7 bg-deep/90 text-ink border border-graphite/50 hover:bg-gunmetal flex items-center justify-center rounded text-xs"><i className="fa-solid fa-minus"></i></button>
-            <button className="w-7 h-7 bg-deep/90 text-ink border border-graphite/50 hover:bg-gunmetal flex items-center justify-center rounded text-xs mt-1"><i className="fa-solid fa-expand"></i></button>
+            <button type="button" aria-label="Yakınlaştır" onClick={() => mapRef.current?.zoomIn()} className="w-7 h-7 bg-deep/90 text-ink border border-graphite/50 hover:bg-gunmetal flex items-center justify-center rounded text-xs"><i className="fa-solid fa-plus"></i></button>
+            <button type="button" aria-label="Uzaklaştır" onClick={() => mapRef.current?.zoomOut()} className="w-7 h-7 bg-deep/90 text-ink border border-graphite/50 hover:bg-gunmetal flex items-center justify-center rounded text-xs"><i className="fa-solid fa-minus"></i></button>
+            <button type="button" aria-label="Tüm parselleri göster" onClick={() => mapRef.current?.stop().fitBounds(parcelBounds, { padding: [20, 20] })} className="w-7 h-7 bg-deep/90 text-ink border border-graphite/50 hover:bg-gunmetal flex items-center justify-center rounded text-xs mt-1"><i className="fa-solid fa-expand"></i></button>
           </div>
 
           <div className="absolute bottom-0 left-0 right-0 z-[400] bg-deep/80 backdrop-blur-sm text-fog px-3 py-1 text-[10px] font-mono flex items-center gap-3 border-t border-gunmetal">

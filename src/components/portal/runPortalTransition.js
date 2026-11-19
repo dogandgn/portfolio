@@ -10,8 +10,8 @@ import {
   transitionDurations,
 } from './characterTransitionMath';
 
-const atlasUrl = '/mascot/guide-motion-v3.webp';
-const actionAtlasUrl = '/mascot/guide-action-v4.webp';
+const atlasUrl = '/mascot/robot-wave.webp';
+const actionAtlasUrl = '/mascot/robot-portal.webp';
 
 export async function runPortalTransition({ element, origin, signal, onCovered }) {
   const canvas = document.createElement('canvas');
@@ -43,45 +43,18 @@ export async function runPortalTransition({ element, origin, signal, onCovered }
     context.setTransform(ratio, 0, 0, ratio, 0, 0);
     const layout = getTransitionLayout(origin, width, height);
     const paper = getComputedStyle(document.body).backgroundColor;
-    const cell = atlas.naturalWidth / 2;
-    const actionCell = actionAtlas.naturalWidth / 2;
-
-    function tile(column, row, x, y, size) {
-      context.drawImage(atlas, column * cell, row * cell, cell, cell,
-        x, y, size, size);
-    }
+    const cell = atlas.naturalHeight;
+    const actionCell = actionAtlas.naturalHeight;
+    const guideFrame = invitation?.querySelector('.city-guide-frame');
+    const position = guideFrame ? parseFloat(getComputedStyle(guideFrame).backgroundPositionX) : 0;
+    const waveIndex = Math.round((position || 0) * (atlas.naturalWidth / cell - 1) / 100);
     function standing(size) {
-      tile(0, 0, -size / 2, -size / 2, size);
-      context.save();
-      context.translate(size * 0.2, -size * 0.1);
-      context.rotate(-0.06);
-      tile(1, 0, -size * 0.715, -size * 0.44, size);
-      context.restore();
+      context.drawImage(atlas, waveIndex * cell, 0, cell, cell, -size / 2, -size / 2, size, size);
     }
     function pulling(pose) {
-      const { size } = pose;
-      const { shift } = getHandGrips(pose);
-      const slice = (x, y, w, h, targetX, targetWidth = w) => {
-        const left = (targetX - 0.5) * size;
-        const top = (y - 0.5) * size;
-        context.drawImage(actionAtlas, x * actionCell, y * actionCell,
-          w * actionCell, h * actionCell,
-          left, top, targetWidth * size, h * size + 0.2 / ratio);
-      };
-      slice(0, 0, 1, 0.27, 0);
-      slice(0, 0.5, 1, 0.5, 0);
-      for (let row = 0; row < 32; row++) {
-        const y = 0.27 + row * 0.23 / 32;
-        const h = 0.23 / 32;
-        const weight = easePortal((y - 0.27) / 0.06) *
-          (1 - easePortal((y - 0.43) / 0.07));
-        const offset = shift * weight;
-        slice(0, y, 0.35, h, offset);
-        slice(0.35, y, 0.10, h, 0.35 + offset, 0.10 - offset);
-        slice(0.45, y, 0.13, h, 0.45);
-        slice(0.58, y, 0.11, h, 0.58, 0.11 - offset);
-        slice(0.69, y, 0.31, h, 0.69 - offset);
-      }
+      const width = pose.size * (0.82 + pose.pull * 0.18);
+      context.drawImage(actionAtlas, 0, 0, actionCell, actionCell,
+        -width / 2, -pose.size / 2, width, pose.size);
     }
     function contours(pull, opacity) {
       context.save();
