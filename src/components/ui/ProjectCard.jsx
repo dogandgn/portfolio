@@ -3,6 +3,9 @@ import TechBadge from './TechBadge';
 
 export default function ProjectCard({ project, onClick, t }) {
   const titleId = `project-card-title-${project.id}`;
+  const demoLabel = t('projects.viewDemo');
+  const accessibleLabel = `${demoLabel}: ${project.title}`;
+  const tags = project.tags ?? project.tech.slice(0, 3);
 
   return (
     <article aria-labelledby={titleId} className="project-card group flex h-full min-w-0 flex-col overflow-hidden rounded-2xl border border-gunmetal bg-deep hover:border-signal/60">
@@ -10,7 +13,7 @@ export default function ProjectCard({ project, onClick, t }) {
         type="button"
         onClick={onClick}
         aria-haspopup="dialog"
-        aria-label={`${t('projects.viewProject')}: ${project.title}`}
+        aria-label={accessibleLabel}
         className="project-cover relative block w-full overflow-hidden text-left focus-visible:outline-2 focus-visible:-outline-offset-4 focus-visible:outline-signal"
       >
         <img
@@ -32,20 +35,18 @@ export default function ProjectCard({ project, onClick, t }) {
           {project.title}
         </h5>
         <p className={`mt-3 leading-relaxed text-fog ${project.featured ? 'text-sm' : 'text-base'}`}>{project.cardDescription ?? project.description}</p>
-        {project.tags && (
-          <div className="mt-4 flex flex-wrap gap-1.5">
-            {project.tags.map((tag) => <TechBadge key={tag} text={tag} />)}
-          </div>
-        )}
+        <div className="mt-4 flex flex-wrap gap-1.5">
+          {tags.map((tag) => <TechBadge key={tag} text={tag} />)}
+        </div>
         <div className="mt-auto flex flex-wrap items-center gap-x-5 gap-y-3 pt-6">
             <button
               type="button"
               onClick={onClick}
               aria-haspopup="dialog"
-              aria-label={`${project.actionLabel ?? t(project.featured ? 'projects.viewDemo' : 'projects.viewProject')}: ${project.title}`}
+              aria-label={accessibleLabel}
               className={`inline-flex min-h-11 items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-signal ${project.featured ? 'bg-signal text-neutral-950 hover:bg-deep-signal' : 'border border-gunmetal text-ink hover:border-signal hover:text-signal'}`}
             >
-              {project.actionLabel ?? t(project.featured ? 'projects.viewDemo' : 'projects.viewProject')}
+              {demoLabel}
               <i className="fa-solid fa-arrow-right" aria-hidden="true" />
             </button>
           {project.externalUrl && (
